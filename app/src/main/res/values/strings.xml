@@ -1,3 +1,18 @@
 <resources>
-    <string name="app_name">DrugStore</string>
+    <string name="app_name">HAGL</string>
+    <string name="please_click_back_again_to_exit">Please click back again to exit.</string>
+    <string name="please_wait">Please Wait&#8230;</string>
+    <string name="welcome_to_app_name">Welcome to Drug store</string>
+    <string name="Login">Log In</string>
+    <string name="SignUp">New to DrugStore? Sign Up!</string>
+    <string name="client_id">728070969789-078v2p4nu3h47tt02140u4lilj1b59p6.apps.googleusercontent.com</string>
+    <string name="Quote">your pleasure is my mission</string>
+    <string name="continue_with_phone">Continue With Mobile Number</string>
+    <string name="continue_with_Google">Continue With Google</string>
+    <string name="continue_with_facebook">Continue With Facebook</string>
+    <string name="enter_phone">Next</string>
+    <string name="get_started">Get Started</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="enter_the_6_digit_code_sent_to">Enter the 6-digit code sent to:</string>
+    <string name="confirm_phone">Confirm</string>
 </resources>
