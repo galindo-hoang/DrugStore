@@ -56,7 +56,7 @@
         android:layout_marginHorizontal="10dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/rlHeaderTop"
+            android:id="@+id/clHeaderTop"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
@@ -96,13 +96,13 @@
         android:layout_marginHorizontal="10dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/rlHeaderNews"
+            android:id="@+id/clHeaderNews"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/Category"
+                android:text="@string/News"
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -135,7 +135,7 @@
         android:layout_marginHorizontal="10dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/rlHeaderCategory"
+            android:id="@+id/clHeaderCategory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
@@ -180,7 +180,7 @@
         android:layout_marginHorizontal="10dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/rlHeaderSupplement"
+            android:id="@+id/clHeaderSupplement"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
