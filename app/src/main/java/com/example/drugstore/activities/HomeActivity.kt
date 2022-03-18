@@ -35,7 +35,6 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-
     private fun replaceFragment(fragment: Fragment){
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(binding.fragmentBottomNav.id,fragment)
