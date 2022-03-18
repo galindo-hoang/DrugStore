@@ -16,4 +16,13 @@
     <color name="primary_text_color">#363A43</color>
     <color name="secondary_text_color">#7A8089</color>
     <color name="divider_color">#9C9B9B</color>
+
+
+
+    <color name="gray_color">#DCDCDC</color>
+
+    <color name="price_color">#D82148</color>
+    <color name="btn_add">#4D77FF</color>
+    <color name="btn_sub">#56BBF1</color>
+
 </resources>
