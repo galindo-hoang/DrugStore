@@ -15,4 +15,10 @@
     <string name="phone_number">Phone Number</string>
     <string name="enter_the_6_digit_code_sent_to">Enter the 6-digit code sent to:</string>
     <string name="confirm_phone">Confirm</string>
+    <string name="bottom_nav_home">Home</string>
+    <string name="bottom_nav_order">Orders</string>
+    <string name="bottom_nav_notification">Notification</string>
+    <string name="bottom_nav_profile">Profile</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
