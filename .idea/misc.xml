@@ -3,6 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Nam3-hk2/App/DrugStore/DrugStore/app/src/main/res/layout/activity_confirm_otp.xml" value="0.12635869565217392" />
+        <entry key="..\:/Nam3-hk2/App/DrugStore/DrugStore/app/src/main/res/layout/activity_home.xml" value="0.20416666666666666" />
+        <entry key="..\:/Nam3-hk2/App/DrugStore/DrugStore/app/src/main/res/layout/activity_sign_in.xml" value="0.12635869565217392" />
+        <entry key="..\:/Nam3-hk2/App/DrugStore/DrugStore/app/src/main/res/layout/dialog_progress.xml" value="0.20416666666666666" />
+        <entry key="..\:/Nam3-hk2/App/DrugStore/DrugStore/app/src/main/res/layout/fragment_category.xml" value="0.12635869565217392" />
+        <entry key="..\:/Nam3-hk2/App/DrugStore/DrugStore/app/src/main/res/layout/fragment_drug_by_category.xml" value="0.20416666666666666" />
+        <entry key="..\:/Nam3-hk2/App/DrugStore/DrugStore/app/src/main/res/layout/fragment_home.xml" value="0.15" />
+        <entry key="..\:/Nam3-hk2/App/DrugStore/DrugStore/app/src/main/res/layout/fragment_notification.xml" value="0.20416666666666666" />
+        <entry key="..\:/Nam3-hk2/App/DrugStore/DrugStore/app/src/main/res/layout/fragment_order.xml" value="0.20416666666666666" />
+        <entry key="..\:/Nam3-hk2/App/DrugStore/DrugStore/app/src/main/res/layout/fragment_profile.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/project/DrugStore/app/src/main/res/drawable/background_transparent.xml" value="0.135" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/project/DrugStore/app/src/main/res/drawable/bottom_item_status.xml" value="0.135" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/project/DrugStore/app/src/main/res/drawable/btn.xml" value="0.326" />
@@ -34,8 +44,6 @@
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/project/DrugStore/app/src/main/res/layout/activity_sign_in.xml" value="0.25" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/project/DrugStore/app/src/main/res/layout/activity_splash.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/project/DrugStore/app/src/main/res/layout/dialog_progress.xml" value="0.18802083333333333" />
-        <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/project/DrugStore/app/src/main/res/layout/fragment_category.xml" value="0.33" />
-        <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/project/DrugStore/app/src/main/res/layout/fragment_drug_by_category.xml" value="0.25" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/project/DrugStore/app/src/main/res/layout/fragment_home.xml" value="0.33" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/project/DrugStore/app/src/main/res/layout/fragment_notification.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/project/DrugStore/app/src/main/res/layout/fragment_order.xml" value="0.35260416666666666" />
