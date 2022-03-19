@@ -1,4 +1,4 @@
-package com.example.drugstore.fragment
+package com.example.drugstore.fragment.home
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,10 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.drugstore.R
-import com.example.drugstore.adapter.ProductAdapter
-import com.example.drugstore.databinding.FragmentHomeBinding
+import com.example.drugstore.adapter.CategoryAdapter
+import com.example.drugstore.databinding.FragmentCategoryBinding
+import com.example.drugstore.models.Category
+import com.example.drugstore.utils.Constants
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -18,15 +19,14 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [DrugByCategoryFragment.newInstance] factory method to
+ * Use the [CategoryFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class DrugByCategoryFragment : Fragment() {
-    private lateinit var binding: FragmentHomeBinding
-
+class CategoryFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private lateinit var binding: FragmentCategoryBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,15 +39,35 @@ class DrugByCategoryFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
+        binding = FragmentCategoryBinding.inflate(inflater,container,false)
+        val a = listOf("a","a","a","a","a","a","a","a","a","a","a","a","a","a")
 
-        binding = FragmentHomeBinding.inflate(inflater,container,false)
-        val a = listOf("a","a","a","a","a","a")
-        binding.rvTopTrending.adapter = ProductAdapter(a)
-        binding.rvTopTrending.layoutManager = GridLayoutManager(context,2)
+
+        val adapter = CategoryAdapter(a)
+        adapter.onItemClick = { category -> setUpDrugByCategoryFragment(category) }
+        binding.rvCategory.adapter = adapter
+        binding.rvCategory.layoutManager = GridLayoutManager(context,2)
+
+        binding.tb.setNavigationOnClickListener {
+            parentFragmentManager.popBackStack()
+        }
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_drug_by_category, container, false)
+        return binding.root
+    }
+
+    private fun setUpDrugByCategoryFragment(category: Category) {
+        val parentFM = parentFragmentManager
+        val parentFMTransition = parentFM.beginTransaction()
+        val bundle = Bundle()
+        bundle.putParcelable(Constants.OBJECT_CATEGORY,category)
+        val fragment = DrugByCategoryFragment()
+        fragment.arguments = bundle
+        parentFMTransition.replace(R.id.fmTransition,fragment)
+        parentFMTransition.addToBackStack("DrugByCategoryFragment")
+        parentFMTransition.commit()
+
     }
 
     companion object {
@@ -57,12 +77,12 @@ class DrugByCategoryFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment DrugByCategoryFragment.
+         * @return A new instance of fragment CategoryFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            DrugByCategoryFragment().apply {
+            CategoryFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

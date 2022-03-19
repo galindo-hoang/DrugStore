@@ -1,14 +1,15 @@
-package com.example.drugstore.fragment
+package com.example.drugstore.fragment.home
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.fragment.app.FragmentManager
 import com.example.drugstore.R
-import com.example.drugstore.adapter.CategoryAdapter
-import com.example.drugstore.databinding.FragmentCategoryBinding
+import com.example.drugstore.databinding.FragmentHomeBinding
+import com.example.drugstore.fragment.home.MainFragment
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -17,14 +18,15 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [CategoryFragment.newInstance] factory method to
+ * Use the [HomeFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class CategoryFragment : Fragment() {
+class HomeFragment : Fragment() {
+    private lateinit var binding: FragmentHomeBinding
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private lateinit var binding: FragmentCategoryBinding
+    private lateinit var fm: FragmentManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,18 +34,26 @@ class CategoryFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+        fm = childFragmentManager
+
+
+        fm.addOnBackStackChangedListener {
+            Log.e("----size",fm.backStackEntryCount.toString())
+            for (entry in 0 until fm.backStackEntryCount) {
+                Log.e("----", "Found fragment: " + fm.getBackStackEntryAt(entry).name)
+            }
+        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentCategoryBinding.inflate(inflater,container,false)
-        val a = listOf("a","a","a","a","a","a","a","a","a","a","a","a","a","a")
-
-        binding.rvCategory.adapter = CategoryAdapter(a)
-        binding.rvCategory.layoutManager = GridLayoutManager(context,2)
         // Inflate the layout for this fragment
+
+        binding = FragmentHomeBinding.inflate(inflater,container,false)
+        fm.beginTransaction().add(binding.fmTransition.id,MainFragment()).commit()
+
         return binding.root
     }
 
@@ -54,12 +64,12 @@ class CategoryFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment CategoryFragment.
+         * @return A new instance of fragment HomeFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            CategoryFragment().apply {
+            HomeFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

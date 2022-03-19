@@ -20,7 +20,7 @@
             android:theme="@style/Theme.DrugStore.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".activities.HomeActivity"
+            android:name=".activities.SplashActivity"
             android:exported="false"
             android:theme="@style/Theme.DrugStore.NoActionBar" />
         <activity
@@ -32,7 +32,7 @@
             android:exported="false"
             android:theme="@style/Theme.DrugStore.NoActionBar" />
         <activity
-            android:name=".activities.SplashActivity"
+            android:name=".activities.HomeActivity"
             android:exported="true"
             android:theme="@style/Theme.DrugStore.NoActionBar">
             <intent-filter>

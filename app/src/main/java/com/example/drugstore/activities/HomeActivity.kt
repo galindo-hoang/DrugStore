@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import com.example.drugstore.R
 import com.example.drugstore.databinding.ActivityHomeBinding
 import com.example.drugstore.fragment.*
+import com.example.drugstore.fragment.home.HomeFragment
 import com.google.android.material.navigation.NavigationBarView
 
 class HomeActivity : AppCompatActivity() {
