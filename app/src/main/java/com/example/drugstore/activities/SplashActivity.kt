@@ -23,7 +23,7 @@ class SplashActivity : BaseActivity() {
             if(FirebaseClass.getFirebaseAuth().currentUser == null){
                 startActivity(Intent(this,MainActivity::class.java))
             }else{
-                startActivity(Intent(this,HomeActivity::class.java))
+                startActivity(Intent(this,ChatActivity::class.java))
             }
             finish()
         },2, TimeUnit.SECONDS)

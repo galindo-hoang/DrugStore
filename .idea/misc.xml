@@ -19,12 +19,16 @@
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/project/DrugStore/app/src/main/res/drawable/ic_notifications_24.xml" value="0.135" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/project/DrugStore/app/src/main/res/drawable/ic_order_list_24.xml" value="0.135" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/project/DrugStore/app/src/main/res/drawable/ic_outline_home_24.xml" value="0.135" />
+        <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/project/DrugStore/app/src/main/res/drawable/ic_send_24.xml" value="0.1" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/project/DrugStore/app/src/main/res/drawable/ic_user_profile_24.xml" value="0.135" />
+        <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/project/DrugStore/app/src/main/res/drawable/item_receive_mess.xml" value="0.1" />
+        <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/project/DrugStore/app/src/main/res/drawable/item_send_mess.xml" value="0.1" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/project/DrugStore/app/src/main/res/drawable/solid_blue_button.xml" value="0.1" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/project/DrugStore/app/src/main/res/drawable/solid_gray_button.xml" value="0.326" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/project/DrugStore/app/src/main/res/drawable/solid_pink_button.xml" value="0.115" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/project/DrugStore/app/src/main/res/drawable/white_solid_blue_border_button.xml" value="0.1" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/project/DrugStore/app/src/main/res/layout-v28/activity_confirm_otpactivity.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/project/DrugStore/app/src/main/res/layout/activity_chat.xml" value="0.25" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/project/DrugStore/app/src/main/res/layout/activity_confirm_otp.xml" value="0.33" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/project/DrugStore/app/src/main/res/layout/activity_confirm_otpactivity.xml" value="0.33" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/project/DrugStore/app/src/main/res/layout/activity_home.xml" value="0.25" />
@@ -45,8 +49,11 @@
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/project/DrugStore/app/src/main/res/layout/item_news.xml" value="0.5" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/project/DrugStore/app/src/main/res/layout/item_notification.xml" value="0.36879432624113473" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/project/DrugStore/app/src/main/res/layout/item_product.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/project/DrugStore/app/src/main/res/layout/item_receive.xml" value="0.25" />
+        <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/project/DrugStore/app/src/main/res/layout/item_send.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/project/DrugStore/app/src/main/res/layout/item_top.xml" value="0.33" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/project/DrugStore/app/src/main/res/menu/bottom_menu.xml" value="0.22592592592592592" />
+        <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/project/DrugStore/app/src/main/res/menu/chat_menu.xml" value="0.33" />
       </map>
     </option>
   </component>
