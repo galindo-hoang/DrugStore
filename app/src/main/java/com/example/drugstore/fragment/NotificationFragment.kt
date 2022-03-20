@@ -40,7 +40,7 @@ class NotificationFragment : Fragment() {
     ): View? {
         binding = FragmentNotificationBinding.inflate(inflater,container,false)
 
-        val a = listOf("a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a")
+        val a = listOf("a","b","c","d","e","f","a","a","a","a","a","a","a","a","a","a")
 
         binding.rvNotification.adapter = NotificationAdapter(a)
         binding.rvNotification.layoutManager = LinearLayoutManager(context)
