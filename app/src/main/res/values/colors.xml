@@ -28,5 +28,7 @@
     <color name="price_color">#D82148</color>
     <color name="btn_add">#4D77FF</color>
     <color name="btn_sub">#56BBF1</color>
+    <color name="yellow">#FFC618</color>
+    <color name="turquoise">#37B9C5</color>
 
 </resources>
