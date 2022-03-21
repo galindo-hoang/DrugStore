@@ -28,4 +28,10 @@
     <string name="notification">Notification</string>
     <string name="orderhistory">Order History</string>
     <string name="order">Order</string>
+    <string name="drug">Drug</string>
+    <string name="drug_preview">Drug preview</string>
+    <string name="reminder">Reminder</string>
+    <string name="remind_to_take_medicine">Remind to take medicine</string>
+    <string name="date">Date</string>
+    <string name="time">Time</string>
 </resources>
