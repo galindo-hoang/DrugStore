@@ -28,6 +28,7 @@
     <string name="notification">Notification</string>
     <string name="orderhistory">Order History</string>
     <string name="order">Order</string>
+    <string name="ordersummary">Order Summary</string>
     <string name="drug">Drug</string>
     <string name="drug_preview">Drug preview</string>
     <string name="reminder">Reminder</string>
