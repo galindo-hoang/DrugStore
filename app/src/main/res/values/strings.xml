@@ -26,5 +26,7 @@
     <string name="Category">Category</string>
     <string name="News">News</string>
     <string name="notification">Notification</string>
+    <string name="confirm_delivery_location">Confirm Delivery Location</string>
     <string name="orderhistory">Order History</string>
+    <string name="google_map_api_key">AIzaSyAhX49C_y6sYfnKeyNdo9BNq-loky0OahE</string>
 </resources>
