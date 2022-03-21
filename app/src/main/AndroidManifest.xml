@@ -35,6 +35,12 @@
             android:exported="false"
             android:theme="@style/Theme.DrugStore.NoActionBar" />
         <activity
+            android:name=".activities.OrderActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.OrderSummary"
+            android:exported="false" />
+        <activity
             android:name=".activities.ChatActivity"
             android:exported="false"
             android:theme="@style/Theme.DrugStore.NoActionBar"

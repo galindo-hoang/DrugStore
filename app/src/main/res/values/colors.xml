@@ -8,6 +8,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="red">#FFF44336</color>
 
     <color name="colorPrimary">#0C90F1</color>
     <color name="colorPrimaryDark">#0591F8</color>
@@ -22,11 +23,13 @@
     <color name="mess_color">#E1F4F4</color>
 
 
-
     <color name="gray_color">#DCDCDC</color>
 
     <color name="price_color">#D82148</color>
     <color name="btn_add">#4D77FF</color>
     <color name="btn_sub">#56BBF1</color>
+    <color name="yellow">#FFC618</color>
+    <color name="turquoise">#37B9C5</color>
+    <color name="text_gray_color">#787878</color>
 
 </resources>
