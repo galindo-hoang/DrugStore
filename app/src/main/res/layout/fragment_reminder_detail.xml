@@ -26,7 +26,7 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layoutDate"
+        android:id="@+id/layoutStartDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/toolbar">
@@ -66,7 +66,7 @@
         android:id="@+id/layoutTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/layoutDate">
+        app:layout_constraintTop_toBottomOf="@id/layoutStartDate">
 
         <TextView
             android:layout_width="wrap_content"
