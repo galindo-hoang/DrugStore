@@ -31,7 +31,7 @@ class HomeActivity : AppCompatActivity() {
                 R.id.navBtnNotify -> {
                     replaceFragment(NotificationFragment())
                 }
-                else -> replaceFragment(ProfileFragment())
+                else -> replaceFragment(ProductDetailFragment())
             }
             true
         }
