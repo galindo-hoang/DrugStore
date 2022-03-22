@@ -19,6 +19,8 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.get
 import com.example.drugstore.databinding.ActivityAddPlaceBinding
 import com.example.drugstore.fragment.AddPlacesFragment
 import com.example.drugstore.models.viewModel.ListViewModel
@@ -32,11 +34,12 @@ class AddPlaceActivity : AppCompatActivity() {
     private lateinit var mLocationRequest: LocationRequest
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var binding: ActivityAddPlaceBinding
-    private val viewModel: ListViewModel by viewModels()
+    private lateinit var viewModel: ListViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddPlaceBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        viewModel = ViewModelProvider(this).get()
         viewModel.selectedItem.observe(this) {
             convertLatLongToAddress(it)
         }

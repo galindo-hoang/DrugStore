@@ -3,9 +3,12 @@ package com.example.drugstore.fragment
 import androidx.fragment.app.Fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.*
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.get
 import com.example.drugstore.R
 import com.example.drugstore.databinding.FragmentAddPlacesBinding
 import com.example.drugstore.models.viewModel.ListViewModel
@@ -16,7 +19,7 @@ import com.google.android.gms.maps.model.LatLng
 
 class AddPlacesFragment : Fragment() {
     private lateinit var binding: FragmentAddPlacesBinding
-    private val viewModel: ListViewModel by activityViewModels()
+    private lateinit var viewModel: ListViewModel
     private var curLatLng: LatLng? = null
 
     private val callback = OnMapReadyCallback { googleMap ->
@@ -44,6 +47,7 @@ class AddPlacesFragment : Fragment() {
     ): View {
         curLatLng = LatLng(requireArguments().getDouble(Constants.LATITUDE),requireArguments().getDouble(Constants.LONGITUDE))
         binding = FragmentAddPlacesBinding.inflate(inflater,container,false)
+        viewModel = ViewModelProvider(requireActivity()).get()
         binding.ivCurrent.setOnClickListener{
             val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
             mapFragment?.getMapAsync(callback)
