@@ -149,8 +149,6 @@
                     android:id="@+id/separator"
                     android:layout_width="fill_parent"
                     android:layout_height="2dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerVertical="true"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
 
@@ -158,6 +156,7 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rcProductDetail"
+                    tools:listitem="@layout/item_nutrition"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -344,6 +343,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcIngredient"
+            tools:listitem="@layout/item_ingredient"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center" />

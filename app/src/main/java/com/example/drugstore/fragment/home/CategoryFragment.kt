@@ -64,7 +64,7 @@ class CategoryFragment : Fragment() {
         bundle.putParcelable(Constants.OBJECT_CATEGORY,category)
         val fragment = DrugByCategoryFragment()
         fragment.arguments = bundle
-        parentFMTransition.replace(R.id.fmTransition,fragment)
+        parentFMTransition.replace(R.id.fragmentBottomNav,fragment)
         parentFMTransition.addToBackStack("DrugByCategoryFragment")
         parentFMTransition.commit()
 
