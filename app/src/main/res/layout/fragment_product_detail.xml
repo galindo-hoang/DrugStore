@@ -127,11 +127,14 @@
             </LinearLayout>
 
 
-            <LinearLayout
+            <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:layout_marginEnd="20dp"
+                app:cardCornerRadius="20dp">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
 
@@ -158,6 +161,7 @@
                     android:layout_width="150dp"
                     android:layout_height="wrap_content" />
             </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
 
         </androidx.cardview.widget.CardView>
@@ -216,39 +220,111 @@
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
 
-
-            <TextView
-                android:id="@+id/textView4"
+            <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_marginTop="25dp"
                 android:layout_marginEnd="20dp"
-                android:layout_marginBottom="25dp"
+                app:cardCornerRadius="20dp"
+                android:layout_marginBottom="25dp">
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
                 android:text="Quantity: 100" />
+            </androidx.cardview.widget.CardView>
 
         </androidx.cardview.widget.CardView>
     </LinearLayout>
 
-
     <androidx.cardview.widget.CardView
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:layout_marginTop="12dp"
+        android:layout_margin="20dp"
         android:layout_weight="11"
-        android:backgroundTint="@color/white"
-        app:cardCornerRadius="10dp"
+
         app:cardElevation="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.473"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView20">
-
-        <Spinner
-            android:layout_width="fill_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp" />
+            android:orientation="vertical">
+            <androidx.cardview.widget.CardView
+                android:layout_width="fill_parent"
+                android:layout_height="40dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="Enter Quantity"
+                    android:textColor="@color/black"
+                    android:fontFamily="sans-serif"
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="start"/>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"
+                    app:cardCornerRadius="10dp"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="5dp"
+                    android:backgroundTint="@color/divider_color"
+
+                    android:background="@drawable/solid_gray_button">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnSub"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/btn_sub"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/productQuantity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@id/btnAdd"
+                        app:layout_constraintStart_toStartOf="@id/btnSub"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnAdd"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/btn_add"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </androidx.cardview.widget.CardView>
+        <Button
+            android:layout_gravity="center"
+            android:id="@+id/button3"
+            android:layout_width="300dp"
+            android:backgroundTint="@color/btn_cart"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:text="Add to cart - 225.000VNĐ" />
+        </LinearLayout>
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
@@ -263,8 +339,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout7">
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcIngredient"

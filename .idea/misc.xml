@@ -28,12 +28,13 @@
         <entry key="..\:/ProjectApp/DrugStore/drug/DrugStore/app/src/main/res/drawable/circle_image.xml" value="0.214" />
         <entry key="..\:/ProjectApp/DrugStore/drug/DrugStore/app/src/main/res/layout/activity_order_summary.xml" value="0.21240942028985507" />
         <entry key="..\:/ProjectApp/DrugStore/drug/DrugStore/app/src/main/res/layout/activity_sign_in.xml" value="0.21240942028985507" />
-        <entry key="..\:/ProjectApp/DrugStore/drug/DrugStore/app/src/main/res/layout/fragment_cart.xml" value="0.16" />
+        <entry key="..\:/ProjectApp/DrugStore/drug/DrugStore/app/src/main/res/layout/fragment_cart.xml" value="0.152" />
         <entry key="..\:/ProjectApp/DrugStore/drug/DrugStore/app/src/main/res/layout/fragment_drug_by_category.xml" value="0.21240942028985507" />
         <entry key="..\:/ProjectApp/DrugStore/drug/DrugStore/app/src/main/res/layout/fragment_order_ongoing.xml" value="0.17753623188405798" />
-        <entry key="..\:/ProjectApp/DrugStore/drug/DrugStore/app/src/main/res/layout/fragment_product_detail.xml" value="0.16" />
+        <entry key="..\:/ProjectApp/DrugStore/drug/DrugStore/app/src/main/res/layout/fragment_product_detail.xml" value="0.12195121951219512" />
+        <entry key="..\:/ProjectApp/DrugStore/drug/DrugStore/app/src/main/res/layout/fragment_profile.xml" value="0.1160081053698075" />
         <entry key="..\:/ProjectApp/DrugStore/drug/DrugStore/app/src/main/res/layout/fragment_update_profile.xml" value="0.22282608695652173" />
-        <entry key="..\:/ProjectApp/DrugStore/drug/DrugStore/app/src/main/res/layout/item_cart.xml" value="0.1" />
+        <entry key="..\:/ProjectApp/DrugStore/drug/DrugStore/app/src/main/res/layout/item_cart.xml" value="0.2" />
         <entry key="..\:/ProjectApp/DrugStore/drug/DrugStore/app/src/main/res/layout/item_category.xml" value="0.17753623188405798" />
         <entry key="..\:/ProjectApp/DrugStore/drug/DrugStore/app/src/main/res/layout/item_drug.xml" value="0.17753623188405798" />
         <entry key="..\:/ProjectApp/DrugStore/drug/DrugStore/app/src/main/res/layout/item_ingredient.xml" value="0.1956521739130435" />
