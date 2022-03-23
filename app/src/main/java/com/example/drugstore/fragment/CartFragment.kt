@@ -41,7 +41,7 @@ class CartFragment : Fragment() {
         binding = FragmentCartBinding.inflate(inflater,container,false)
 
 
-        binding.rcViewCart.adapter = CartAdapter(Cart.createListOfCart())
+//        binding.rcViewCart.adapter = CartAdapter(Cart.createListOfCart())
         binding.rcViewCart.layoutManager = LinearLayoutManager(context)
         // Inflate the layout for this fragment
         return binding.root

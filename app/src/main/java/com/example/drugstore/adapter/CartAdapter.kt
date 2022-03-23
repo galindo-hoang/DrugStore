@@ -37,11 +37,11 @@ class CartAdapter(private val proCart: List<Cart>) :
         val textView1 = holder.imgProduct
         textView1.setImageResource(cart.img)
         val textView2 = holder.quantityProduct
-        textView2.text=cart.Quantity.toString()
+//        textView2.text=cart.ProductList[0].toString()
         val textView3=holder.priceProduct
         textView3.text=cart.Total.toString().plus("VND")
         val textView4=holder.nameProduct
-        textView4.text=cart.proName.toString()
+//        textView4.text=cart.proName.toString()
     }
 
     override fun getItemCount(): Int {

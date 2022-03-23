@@ -41,10 +41,10 @@ class ProductDetailFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
         binding=FragmentProductDetailBinding.inflate(inflater,container,false)
-        binding.rcProductDetail.adapter = NutritionAdapter(Nutrition.createListOfNutrition())
+//        binding.rcProductDetail.adapter = NutritionAdapter(Nutrition.createListOfNutrition())
         binding.rcProductDetail.layoutManager = LinearLayoutManager(context)
 
-        binding.rcIngredient.adapter=IngredientAdapter(Ingredient.createListIngredient());
+//        binding.rcIngredient.adapter=IngredientAdapter(Ingredient.createListIngredient());
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.rcIngredient.layoutManager=layoutManager;
         // Inflate the layout for this fragment

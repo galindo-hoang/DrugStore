@@ -28,7 +28,7 @@ class IngredientAdapter(private val ingredient: List<Ingredient>) :
         val cart: Ingredient = ingredient.get(position)
 // Set item views based on your views and data model
         val textView1 = holder.imgIngredient
-        textView1.setImageResource(cart.IngredientImage)
+//        textView1.setImageResource(cart.IngredientImage)
     }
 
     override fun getItemCount(): Int {

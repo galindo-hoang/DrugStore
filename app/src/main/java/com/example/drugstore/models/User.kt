@@ -4,23 +4,23 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 data class User(
-    private var UserID:String = "",
-    private var UserName:String = "",
-    private var Password:String = "",
-    private var Name:String = "",
+    var UserID:String = "",
+    var UserName:String = "",
+    var Password:String = "",
+    var Name:String = "",
     // 0: other
     // 1: female
     // 2: male
-    private var Gender:Int = 0,
-    private var Address:String = "",
-    private var Birthday:Date = Date(),
-    private var PhoneNumber:String = "",
-    private var UserImage:String = "",
-    private var Point:Float = 0.0f,
+    var Gender:Int = 0,
+    var Address:String = "",
+    var Birthday:Date = Date(),
+    var PhoneNumber:String = "",
+    var UserImage:String = "",
+    var Point:Float = 0.0f,
     // 0: User
     // 1: Shipper
     // 2: Admin
-    private var Permission:Int = 0,
+    var Permission:Int = 0,
     // list of productID
-    private var FavoriteProducts: ArrayList<String> = arrayListOf()
+    var FavoriteProducts: ArrayList<Int> = arrayListOf()
 )

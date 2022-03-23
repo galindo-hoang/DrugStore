@@ -42,7 +42,7 @@ class OrderAlreadyFragment : Fragment() {
         binding = FragmentOrderAlreadyBinding.inflate(inflater,container,false)
 
 
-        binding.rcViewOrderHistory.adapter = OrderAdapter(OrderHistory.createListOrderHistory())
+//        binding.rcViewOrderHistory.adapter = OrderAdapter(OrderHistory.createListOrderHistory())
         binding.rcViewOrderHistory.layoutManager = LinearLayoutManager(context)
         // Inflate the layout for this fragment
         return binding.root

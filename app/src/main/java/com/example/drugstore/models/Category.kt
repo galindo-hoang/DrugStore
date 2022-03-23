@@ -2,14 +2,17 @@ package com.example.drugstore.models
 
 import android.os.Parcel
 import android.os.Parcelable
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class Category(
-    private var CatID:String = "",
+    var CatID:Int = 0,
     var CatName:String = "",
-    private var CatImage:String = "",
-):Parcelable {
+    var CatImage:String = "",
+)
+    :Parcelable {
     constructor(parcel: Parcel) : this(
-        parcel.readString()!!,
+        parcel.readInt(),
         parcel.readString()!!,
         parcel.readString()!!
     ) {
@@ -18,7 +21,7 @@ data class Category(
     override fun describeContents() = 0
 
     override fun writeToParcel(p0: Parcel, p1: Int) = with(p0) {
-        p0.writeString(CatID)
+        p0.writeInt(CatID)
         p0.writeString(CatName)
         p0.writeString(CatImage)
     }
