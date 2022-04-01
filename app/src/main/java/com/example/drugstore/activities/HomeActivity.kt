@@ -10,6 +10,7 @@ import com.example.drugstore.R
 import com.example.drugstore.databinding.ActivityHomeBinding
 import com.example.drugstore.fragment.*
 import com.example.drugstore.fragment.home.HomeFragment
+import com.example.drugstore.fragment.order.OrderFragment
 import com.google.android.material.navigation.NavigationBarView
 
 class HomeActivity : AppCompatActivity() {
@@ -30,7 +31,7 @@ class HomeActivity : AppCompatActivity() {
                 R.id.navBtnNotify -> {
                     replaceFragment(NotificationFragment())
                 }
-                else -> replaceFragment(ProfileFragment())
+                else -> replaceFragment(ProductDetailFragment())
             }
             true
         }

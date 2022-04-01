@@ -7,9 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.drugstore.R
+import com.example.drugstore.adapter.CategoryAdapter
+import com.example.drugstore.adapter.NewsAdapter
+import com.example.drugstore.adapter.ProductAdapter
 import com.example.drugstore.databinding.FragmentHomeBinding
-import com.example.drugstore.fragment.home.MainFragment
+import com.example.drugstore.models.Category
+import com.example.drugstore.utils.Constants
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -49,12 +55,58 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
-
         binding = FragmentHomeBinding.inflate(inflater,container,false)
-        fm.beginTransaction().add(binding.fmTransition.id,MainFragment()).commit()
 
+        val a = listOf("a","a","a","a","a","a")
+        binding.rvTopTrending.adapter = ProductAdapter(a)
+        binding.rvTopTrending.layoutManager = LinearLayoutManager(context,
+            LinearLayoutManager.HORIZONTAL,false)
+
+
+        binding.rvSupplement.adapter = ProductAdapter(a)
+        binding.rvSupplement.layoutManager = LinearLayoutManager(context,
+            LinearLayoutManager.HORIZONTAL,false)
+
+        val adapterCate = CategoryAdapter(a)
+        adapterCate.onItemClick = {category -> setUpTransitToDrugByCategoryFragment(category) }
+        binding.rvCategory.adapter = adapterCate
+        binding.rvCategory.layoutManager = GridLayoutManager(context,2,
+            GridLayoutManager.HORIZONTAL,false)
+
+
+
+        binding.rvNews.adapter = NewsAdapter(a)
+        binding.rvNews.layoutManager = LinearLayoutManager(context,
+            LinearLayoutManager.HORIZONTAL,false)
+
+        binding.clHeaderCategory.setOnClickListener {
+            setUpChangeFragment()
+        }
+
+        // Inflate the layout for this fragment
         return binding.root
+    }
+
+
+    private fun setUpTransitToDrugByCategoryFragment(category: Category) {
+        val parentFM = parentFragmentManager
+        val parentFMTransition = parentFM.beginTransaction()
+        val bundle = Bundle()
+        bundle.putParcelable(Constants.OBJECT_CATEGORY,category)
+        val fragment = DrugByCategoryFragment()
+        fragment.arguments = bundle
+        parentFMTransition.replace(R.id.fragmentBottomNav,fragment)
+        parentFMTransition.addToBackStack("DrugByCategoryFragment")
+        parentFMTransition.commit()
+    }
+
+    private fun setUpChangeFragment() {
+
+        val parentFM = parentFragmentManager
+        val parentFMTransition = parentFM.beginTransaction()
+        parentFMTransition.replace(R.id.fragmentBottomNav,CategoryFragment())
+        parentFMTransition.addToBackStack("CategoryFragment")
+        parentFMTransition.commit()
     }
 
     companion object {
