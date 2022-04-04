@@ -30,44 +30,44 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_map_api_key" />
         <activity
-            android:name=".activities.AddPlaceActivity"
+            android:name=".presentation.order.AddPlaceActivity"
             android:exported="false"
             android:theme="@style/Theme.DrugStore.NoActionBar" />
         <activity
-            android:name=".activities.OrderActivity"
+            android:name=".presentation.order.OrderActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.OrderSummary"
+            android:name=".presentation.order.OrderSummary"
             android:exported="false" />
         <activity
-            android:name=".activities.ChatActivity"
+            android:name=".presentation.order.ChatActivity"
             android:exported="false"
             android:theme="@style/Theme.DrugStore.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".activities.phoneNumberSignIn.ConfirmOTPActivity"
+            android:name=".presentation.auth.ConfirmOTPActivity"
             android:exported="false"
             android:theme="@style/Theme.DrugStore.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".activities.phoneNumberSignIn.InputPhoneActivity"
+            android:name=".presentation.auth.InputPhoneActivity"
             android:exported="false"
             android:theme="@style/Theme.DrugStore.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".activities.SplashActivity"
+            android:name=".presentation.auth.SplashActivity"
             android:exported="false"
             android:theme="@style/Theme.DrugStore.NoActionBar" />
         <activity
-            android:name=".activities.SignInActivity"
+            android:name=".presentation.auth.SignInActivity"
             android:exported="false"
             android:theme="@style/Theme.DrugStore.NoActionBar" />
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".presentation.auth.MainActivity"
             android:exported="false"
             android:theme="@style/Theme.DrugStore.NoActionBar" />
         <activity
-            android:name=".activities.HomeActivity"
+            android:name=".presentation.home.HomeActivity"
             android:exported="true"
             android:theme="@style/Theme.DrugStore.NoActionBar">
             <intent-filter>

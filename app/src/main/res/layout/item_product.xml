@@ -19,8 +19,8 @@
 
         <ImageView
             android:id="@+id/ivDrug"
-            android:layout_width="wrap_content"
-            android:layout_height="300dp"
+            android:layout_width="130dp"
+            android:layout_height="250dp"
             android:src="@drawable/drug"
             android:scaleType="fitCenter"
             android:adjustViewBounds="true"/>
@@ -31,6 +31,7 @@
             android:layout_height="wrap_content"
             android:text="Compeed пластырь от влажных мозолей, 5 шт"
             android:minLines="3"
+            android:maxLines="3"
             android:gravity="start"
             android:textSize="15sp"
             android:textColor="@color/black"/>
