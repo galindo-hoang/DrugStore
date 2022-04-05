@@ -5,8 +5,9 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "cart")
 data class CartProduct(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = false)
     var ProID:Int = 0,
+
     var ProName:String = "",
     var Quantity:Int = 0,
     var Price:Int = 0,

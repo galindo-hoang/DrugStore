@@ -22,7 +22,7 @@ interface CartProductDao {
     @Query("select * from cart where cart.ProID=:id")
     fun fetchProductById(id: Int):LiveData<CartProduct>
 
-    @Query("update cart set Quantity=:quantity where ProID=:proId")
+    @Query("update cart set Quantity=:quantity where cart.ProID=:proId")
     suspend fun updateQuantityProduct(quantity: Int,proId: Int)
 
     @Query("delete from cart where cart.ProID=:id")

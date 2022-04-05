@@ -7,9 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.drugstore.R
+import com.example.drugstore.data.models.CartProduct
 import com.example.drugstore.data.models.Product
 import com.example.drugstore.databinding.FragmentProductDetailBinding
 import com.example.drugstore.presentation.adapter.NutritionAdapter
@@ -27,6 +29,7 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class ProductDetailFragment : Fragment() {
+    private var cartProduct: CartProduct? = null
     private lateinit var product: Product
 
     // TODO: Rename and change types of parameters
@@ -34,6 +37,7 @@ class ProductDetailFragment : Fragment() {
     private var param2: String? = null
     private lateinit var binding: FragmentProductDetailBinding
     private val categoryVM: CategoryVM by activityViewModels()
+    private lateinit var cartVM: CartVM
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +46,7 @@ class ProductDetailFragment : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
 
+        cartVM = ViewModelProvider(this,CartVM.CartProductVMFactory(requireActivity().application))[CartVM::class.java]
         if(requireArguments().containsKey(Constants.OBJECT_PRODUCT)){
             product = arguments?.getParcelable(Constants.OBJECT_PRODUCT)!!
         }
@@ -55,7 +60,20 @@ class ProductDetailFragment : Fragment() {
 
         setUpView()
 
+        setUpEvent()
+
         return binding.root
+    }
+
+    private fun setUpEvent() {
+        binding.btnMinus.setOnClickListener {
+            if(cartProduct != null) cartVM.decreaseQuantityProduct(cartProduct!!.Quantity,product.ProID)
+        }
+
+        binding.btnAdd.setOnClickListener {
+            if(cartProduct == null) cartVM.insertProduct(product)
+            else cartVM.increaseQuantityProduct(cartProduct!!.Quantity,product.ProID)
+        }
     }
 
     private fun setUpView() {
@@ -73,6 +91,30 @@ class ProductDetailFragment : Fragment() {
 
         binding.rcProductDetail.adapter = NutritionAdapter(product.NutritionList)
         binding.rcProductDetail.layoutManager = LinearLayoutManager(context)
+
+        cartVM.getQuantityProducts().observe(viewLifecycleOwner){
+            if(it > 0){
+                binding.tvQuantityProduct.visibility = View.VISIBLE
+                binding.tvQuantityProduct.text = it.toString()
+            }else{
+                binding.tvQuantityProduct.visibility = View.INVISIBLE
+            }
+        }
+
+        cartVM.fetchProductById(product.ProID).observe(viewLifecycleOwner){
+            if(it != null){
+                binding.tvProductQuantityInCart.text = it.Quantity.toString()
+                cartProduct = it
+            }else{
+                binding.tvProductQuantityInCart.text = "0"
+            }
+        }
+
+        cartVM.fetchCartProducts().observe(viewLifecycleOwner){
+            for(i in it){
+                Log.e("---------",i.toString())
+            }
+        }
     }
 
     companion object {

@@ -6,9 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".presentation.home.ProductDetailFragment">
 
-
-
-
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/profileTB"
         android:layout_width="fill_parent"
@@ -33,13 +30,35 @@
             android:minLines="1"
             android:fontFamily="sans-serif-black"
             android:textStyle="bold" />
-        <ImageButton
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:backgroundTint="@color/white"
-            android:layout_marginEnd="15dp"
-            android:src="@drawable/ic_cart_30"/>
+            android:layout_marginEnd="15dp">
+
+
+            <ImageButton
+                android:id="@+id/btnCartTop"
+                app:layout_anchorGravity = "center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:backgroundTint="@color/white"
+                android:src="@drawable/ic_cart_30"/>
+
+
+            <TextView
+                android:id="@+id/tvQuantityProduct"
+                app:layout_anchor="@id/btnCartTop"
+                app:layout_anchorGravity="right"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:visibility="visible"
+                android:gravity="center"
+                android:background="@drawable/solid_pink_button"
+                android:text="1"/>
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
     </androidx.appcompat.widget.Toolbar>
 
 
@@ -326,7 +345,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:paddingHorizontal="10dp"
-                    android:paddingVertical="2dp">
+                    android:paddingVertical="4dp">
 
                     <ImageButton
                         android:id="@+id/btnMinus"
@@ -337,7 +356,7 @@
                         android:src="@drawable/ic_minus_detail" />
 
                     <TextView
-                        android:id="@+id/tvQuantityCart"
+                        android:id="@+id/tvProductQuantityInCart"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
