@@ -35,7 +35,6 @@ class HomeFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private lateinit var fm: FragmentManager
     private val categoryVM: CategoryVM by activityViewModels()
     private val productVM: ProductVM by activityViewModels()
     private var cartVM: CartVM? = null
@@ -54,6 +53,18 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeBinding.inflate(inflater,container,false)
+
+
+        cartVM!!.getQuantityProducts().observe(viewLifecycleOwner){
+            if(it > 0) {
+                binding.tvQuantityProduct.visibility = View.VISIBLE
+                binding.tvQuantityProduct.text = it.toString()
+            }else{
+                binding.tvQuantityProduct.visibility = View.INVISIBLE
+            }
+        }
+
+
 
         val productTrendingAdapter = ProductAdapter()
         productVM.getAllListProducts().observe(viewLifecycleOwner){

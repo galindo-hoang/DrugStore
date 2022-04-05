@@ -17,6 +17,7 @@ import com.example.drugstore.databinding.FragmentProductDetailBinding
 import com.example.drugstore.presentation.adapter.NutritionAdapter
 import com.example.drugstore.presentation.adapter.ProductAdapter
 import com.example.drugstore.utils.Constants
+import java.text.DecimalFormat
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -102,11 +103,13 @@ class ProductDetailFragment : Fragment() {
         }
 
         cartVM.fetchProductById(product.ProID).observe(viewLifecycleOwner){
+            cartProduct = it
             if(it != null){
                 binding.tvProductQuantityInCart.text = it.Quantity.toString()
-                cartProduct = it
+                binding.tvSumPrice.text = "${DecimalFormat("##,###").format(it.Quantity*product.Price.toDouble())}"
             }else{
                 binding.tvProductQuantityInCart.text = "0"
+                binding.tvSumPrice.text = "${DecimalFormat("##,###").format(product.Price.toDouble())}"
             }
         }
 

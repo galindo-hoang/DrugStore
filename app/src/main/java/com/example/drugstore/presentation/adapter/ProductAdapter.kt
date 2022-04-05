@@ -33,7 +33,7 @@ class ProductAdapter(
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         val model = list[position]
         holder.binding.tvDes.text = model.ProName
-        holder.binding.tvQuantity.text = "0"
+//        holder.binding.tvQuantity.text = "0"
         holder.binding.tvPrice.text = "${DecimalFormat("##,###").format(model.Price.toDouble())} VND"
         Glide
             .with(holder.binding.root)
