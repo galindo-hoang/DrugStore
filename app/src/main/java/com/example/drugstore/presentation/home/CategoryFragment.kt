@@ -46,7 +46,7 @@ class CategoryFragment : Fragment() {
 
 
         val adapter = CategoryAdapter()
-        categoryVM.getListCategories().observe(viewLifecycleOwner){
+        categoryVM.fetchAllCategories().observe(viewLifecycleOwner){
             adapter.setList(it)
         }
         adapter.onItemClick = { category -> setUpDrugByCategoryFragment(category) }

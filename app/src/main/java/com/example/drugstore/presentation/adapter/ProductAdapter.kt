@@ -10,10 +10,14 @@ import com.example.drugstore.data.models.Product
 import com.example.drugstore.databinding.ItemProductBinding
 import java.text.DecimalFormat
 
-class ProductAdapter(): RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
+class ProductAdapter(
+    var onItemClick: ((Product) -> Unit)? = null
+): RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
     class ProductViewHolder(item:ItemProductBinding):RecyclerView.ViewHolder(item.root){
         val binding = item
     }
+
+
     private var list: List<Product> = listOf()
 
     @SuppressLint("NotifyDataSetChanged")
@@ -36,6 +40,10 @@ class ProductAdapter(): RecyclerView.Adapter<ProductAdapter.ProductViewHolder>()
             .load(model.ProImage)
             .placeholder(R.drawable.ic_launcher_foreground)
             .into(holder.binding.ivDrug)
+
+        holder.binding.ivDrug.setOnClickListener {
+            onItemClick!!.invoke(model)
+        }
     }
 
     override fun getItemCount(): Int {

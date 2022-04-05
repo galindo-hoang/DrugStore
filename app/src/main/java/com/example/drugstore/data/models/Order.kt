@@ -4,7 +4,7 @@ import java.util.*
 import kotlin.collections.HashMap
 
 data class Order(
-    var OrderID:Int = 0,
+    var OrderID:String = "",
     var UserID:String = "",
     var DateOrder:Date = Date(),
     var ShipperID:String = "",

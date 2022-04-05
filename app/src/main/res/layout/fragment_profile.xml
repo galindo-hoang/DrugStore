@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.ProfileFragment">
+    tools:context=".presentation.user.ProfileFragment">
 
 
     <LinearLayout
@@ -170,18 +170,19 @@
                         android:layout_height="match_parent"
                         android:layout_marginStart="5dp"
                         android:backgroundTint="#DFE1E0"
-                        android:src="@drawable/profile_icon" />
+                        android:src="@drawable/profile_icon"
+                        />
 
                     <TextView
                         android:id="@+id/textView45"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginStart="20dp"
+                        android:layout_marginStart="45dp"
                         android:layout_marginEnd="65dp"
                         android:layout_marginBottom="15dp"
                         android:fontFamily="sans-serif-black"
-                        android:text="Saved Beneficiary " />
+                        android:text="Reminder to take medicine" />
 
                     <TextView
                         android:id="@+id/textView55"
@@ -189,8 +190,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginTop="10dp"
-                        android:layout_marginEnd="18dp"
-                        android:text="Manage your saved account" />
+                        android:layout_marginEnd="20dp"
+                        android:text="Manage your pill reminders" />
 
                     <ImageButton
                         android:id="@+id/imageButton5"

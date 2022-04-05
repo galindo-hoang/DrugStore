@@ -2,6 +2,7 @@ package com.example.drugstore.utils
 
 object Constants {
 
+    const val OBJECT_PRODUCT: String = "OBJECT_PRODUCT"
     const val CAT_ID: String = "catID"
     const val REQUEST_CURRENT_LOCATION: Int = 1
     const val LATITUDE: String = "LATITUDE"

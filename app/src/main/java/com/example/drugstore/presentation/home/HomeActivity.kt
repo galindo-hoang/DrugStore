@@ -12,6 +12,7 @@ import com.example.drugstore.R
 import com.example.drugstore.databinding.ActivityHomeBinding
 import com.example.drugstore.presentation.notify.NotificationFragment
 import com.example.drugstore.presentation.order.OrderFragment
+import com.example.drugstore.presentation.user.ProfileFragment
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
@@ -31,7 +32,7 @@ class HomeActivity : AppCompatActivity() {
                 R.id.navBtnNotify -> {
                     replaceFragment(NotificationFragment())
                 }
-                else -> replaceFragment(ProductDetailFragment())
+                else -> replaceFragment(ProfileFragment())
             }
             true
         }

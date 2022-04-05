@@ -1,13 +1,13 @@
 package com.example.drugstore.presentation.home
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.drugstore.R
@@ -15,6 +15,7 @@ import com.example.drugstore.presentation.adapter.CategoryAdapter
 import com.example.drugstore.presentation.adapter.ProductAdapter
 import com.example.drugstore.databinding.FragmentHomeBinding
 import com.example.drugstore.data.models.Category
+import com.example.drugstore.data.models.Product
 import com.example.drugstore.utils.Constants
 
 //import androidx.lifecycle.ViewModelProviders
@@ -37,6 +38,7 @@ class HomeFragment : Fragment() {
     private lateinit var fm: FragmentManager
     private val categoryVM: CategoryVM by activityViewModels()
     private val productVM: ProductVM by activityViewModels()
+    private var cartVM: CartVM? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,14 +46,7 @@ class HomeFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
-        fm = childFragmentManager
-
-        fm.addOnBackStackChangedListener {
-            Log.e("----size",fm.backStackEntryCount.toString())
-            for (entry in 0 until fm.backStackEntryCount) {
-                Log.e("----", "Found fragment: " + fm.getBackStackEntryAt(entry).name)
-            }
-        }
+        cartVM = ViewModelProvider(this,CartVM.CartProductVMFactory(requireActivity().application))[CartVM::class.java]
     }
 
     override fun onCreateView(
@@ -64,23 +59,28 @@ class HomeFragment : Fragment() {
         productVM.getAllListProducts().observe(viewLifecycleOwner){
             productTrendingAdapter.setList(it.subList(0,10))
         }
+        productTrendingAdapter.onItemClick = {product -> transitProductDetail(product) }
         binding.rvTopTrending.adapter = productTrendingAdapter
         binding.rvTopTrending.layoutManager = LinearLayoutManager(context,
             LinearLayoutManager.HORIZONTAL,false)
+
+
 
 
         val productSupplementAdapter = ProductAdapter()
         productVM.getAllListProducts().observe(viewLifecycleOwner){
             productSupplementAdapter.setList(it.subList(it.size/2,it.size/2 + 6))
         }
+        productSupplementAdapter.onItemClick = {product -> transitProductDetail(product) }
         binding.rvSupplement.adapter = productSupplementAdapter
         binding.rvSupplement.layoutManager = LinearLayoutManager(context,
             LinearLayoutManager.HORIZONTAL,false)
 
 
-        val adapterCate = CategoryAdapter()
 
-        categoryVM.getListCategories().observe(viewLifecycleOwner){
+
+        val adapterCate = CategoryAdapter()
+        categoryVM.fetchAllCategories().observe(viewLifecycleOwner){
             adapterCate.setList(it.subList(0,4))
         }
         adapterCate.onItemClick = {category -> setUpTransitToDrugByCategoryFragment(category) }
@@ -100,6 +100,17 @@ class HomeFragment : Fragment() {
 
         // Inflate the layout for this fragment
         return binding.root
+    }
+
+    private fun transitProductDetail(product: Product) {
+        val fragmentTransaction = parentFragmentManager.beginTransaction()
+        val bundle = Bundle()
+        bundle.putParcelable(Constants.OBJECT_PRODUCT,product)
+        val fragment = ProductDetailFragment()
+        fragment.arguments = bundle
+        fragmentTransaction.replace(R.id.fragmentBottomNav,fragment)
+        fragmentTransaction.addToBackStack("DrugDetailCate")
+        fragmentTransaction.commit()
     }
 
 

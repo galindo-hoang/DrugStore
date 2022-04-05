@@ -68,6 +68,7 @@
             android:theme="@style/Theme.DrugStore.NoActionBar" />
         <activity
             android:name=".presentation.home.HomeActivity"
+            android:windowSoftInputMode="adjustPan"
             android:exported="true"
             android:theme="@style/Theme.DrugStore.NoActionBar">
             <intent-filter>

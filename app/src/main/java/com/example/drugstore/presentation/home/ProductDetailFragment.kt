@@ -1,12 +1,20 @@
 package com.example.drugstore.presentation.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.example.drugstore.R
+import com.example.drugstore.data.models.Product
 import com.example.drugstore.databinding.FragmentProductDetailBinding
+import com.example.drugstore.presentation.adapter.NutritionAdapter
+import com.example.drugstore.presentation.adapter.ProductAdapter
+import com.example.drugstore.utils.Constants
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -19,10 +27,13 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class ProductDetailFragment : Fragment() {
+    private lateinit var product: Product
+
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var binding: FragmentProductDetailBinding
+    private val categoryVM: CategoryVM by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,21 +41,38 @@ class ProductDetailFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
+        if(requireArguments().containsKey(Constants.OBJECT_PRODUCT)){
+            product = arguments?.getParcelable(Constants.OBJECT_PRODUCT)!!
+        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
         binding=FragmentProductDetailBinding.inflate(inflater,container,false)
-//        binding.rcProductDetail.adapter = NutritionAdapter(Nutrition.createListOfNutrition())
-        binding.rcProductDetail.layoutManager = LinearLayoutManager(context)
 
-//        binding.rcIngredient.adapter=IngredientAdapter(Ingredient.createListIngredient());
-        val layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        binding.rcIngredient.layoutManager=layoutManager;
-        // Inflate the layout for this fragment
+        setUpView()
+
         return binding.root
+    }
+
+    private fun setUpView() {
+        Glide.with(this)
+            .load(product.ProImage)
+            .placeholder(R.drawable.ic_launcher_foreground)
+            .into(binding.ivPro)
+        categoryVM.fetchCategory(product.CatID).observe(viewLifecycleOwner){
+            binding.tvCatName.text = it.CatName
+        }
+        binding.tvQuantity.text = "Quantity: ${product.Quantity.toString()}"
+        binding.tvDes.text = product.Description
+        binding.tvProName.text = product.ProName
+
+
+        binding.rcProductDetail.adapter = NutritionAdapter(product.NutritionList)
+        binding.rcProductDetail.layoutManager = LinearLayoutManager(context)
     }
 
     companion object {

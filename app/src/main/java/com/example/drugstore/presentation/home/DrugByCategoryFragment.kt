@@ -1,15 +1,16 @@
 package com.example.drugstore.presentation.home
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.drugstore.R
 import com.example.drugstore.databinding.FragmentDrugByCategoryBinding
 import com.example.drugstore.data.models.Category
+import com.example.drugstore.data.models.Product
 import com.example.drugstore.presentation.adapter.ProductAdapter
 import com.example.drugstore.utils.Constants
 
@@ -38,6 +39,9 @@ class DrugByCategoryFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+        if(requireArguments().containsKey(Constants.OBJECT_CATEGORY)){
+            category = arguments?.getParcelable(Constants.OBJECT_CATEGORY)!!
+        }
     }
 
     override fun onCreateView(
@@ -46,9 +50,6 @@ class DrugByCategoryFragment : Fragment() {
     ): View {
 
         binding = FragmentDrugByCategoryBinding.inflate(inflater,container,false)
-        if(requireArguments().containsKey(Constants.OBJECT_CATEGORY)){
-            category = arguments?.getParcelable(Constants.OBJECT_CATEGORY)!!
-        }
         binding.tvToolbar.text = category.CatName
         binding.tb.setNavigationOnClickListener {
             parentFragmentManager.popBackStack()
@@ -57,11 +58,23 @@ class DrugByCategoryFragment : Fragment() {
         productVM.getListProductsByCategory(category.CatID).observe(viewLifecycleOwner){
             productAdapter.setList(it)
         }
+        productAdapter.onItemClick = {product -> transitProductDetail(product) }
         binding.rvProduct.adapter = productAdapter
         binding.rvProduct.layoutManager = GridLayoutManager(context,2)
 
         // Inflate the layout for this fragment
         return binding.root
+    }
+
+    private fun transitProductDetail(product: Product) {
+        val fragmentTransaction = parentFragmentManager.beginTransaction()
+        val bundle = Bundle()
+        bundle.putParcelable(Constants.OBJECT_PRODUCT,product)
+        val fragment = ProductDetailFragment()
+        fragment.arguments = bundle
+        fragmentTransaction.replace(R.id.fragmentBottomNav,fragment)
+        fragmentTransaction.addToBackStack("DrugDetail")
+        fragmentTransaction.commit()
     }
 
     companion object {

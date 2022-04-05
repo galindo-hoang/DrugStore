@@ -8,7 +8,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 class CategoryRepo {
     private val collection = FirebaseFirestore.getInstance().collection("category")
 
-    fun fetchAllCategory(): MutableLiveData<List<Category>>{
+    fun fetchAllCategories(): MutableLiveData<List<Category>>{
         val value = mutableListOf<Category>()
         val result: MutableLiveData<List<Category>> = MutableLiveData()
         collection
@@ -18,6 +18,17 @@ class CategoryRepo {
                     i.toObject(Category::class.java)?.let { it1 -> value.add(it1) }
                 }
                 result.postValue(value)
+            }
+        return result
+    }
+
+    fun fetchCategory(id: Int): MutableLiveData<Category> {
+        val result: MutableLiveData<Category> = MutableLiveData()
+        collection
+            .document(id.toString())
+            .get()
+            .addOnSuccessListener {
+                result.postValue(it.toObject(Category::class.java))
             }
         return result
     }
