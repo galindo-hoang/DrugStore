@@ -75,6 +75,10 @@ class ProductDetailFragment : Fragment() {
             if(cartProduct == null) cartVM.insertProduct(product)
             else cartVM.increaseQuantityProduct(cartProduct!!.Quantity,product.ProID)
         }
+
+        binding.btnCartTop.setOnClickListener {
+            transitCart()
+        }
     }
 
     private fun setUpView() {
@@ -118,6 +122,15 @@ class ProductDetailFragment : Fragment() {
                 Log.e("---------",i.toString())
             }
         }
+    }
+
+
+
+    private fun transitCart() {
+        val fragmentTransaction = parentFragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.fragmentBottomNav,CartFragment())
+        fragmentTransaction.addToBackStack("CartFragment")
+        fragmentTransaction.commit()
     }
 
     companion object {

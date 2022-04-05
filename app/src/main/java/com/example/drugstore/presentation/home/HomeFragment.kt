@@ -55,6 +55,9 @@ class HomeFragment : Fragment() {
         binding = FragmentHomeBinding.inflate(inflater,container,false)
 
 
+        binding.btnCart.setOnClickListener {
+            transitCart()
+        }
         cartVM!!.getQuantityProducts().observe(viewLifecycleOwner){
             if(it > 0) {
                 binding.tvQuantityProduct.visibility = View.VISIBLE
@@ -111,6 +114,13 @@ class HomeFragment : Fragment() {
 
         // Inflate the layout for this fragment
         return binding.root
+    }
+
+    private fun transitCart() {
+        val fragmentTransaction = parentFragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.fragmentBottomNav,CartFragment())
+        fragmentTransaction.addToBackStack("CartFragment")
+        fragmentTransaction.commit()
     }
 
     private fun transitProductDetail(product: Product) {

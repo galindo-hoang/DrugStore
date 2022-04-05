@@ -11,6 +11,7 @@
         android:layout_width="0dp"
         android:layout_height="?attr/actionBarSize"
         android:gravity="center_horizontal"
+        app:navigationIcon="@drawable/ic_arrow_left_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -29,10 +30,10 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcViewCart"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="300dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        tools:listitem="@layout/item_cart"
+        android:layout_marginEnd="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cartTB" />
 
@@ -155,6 +156,7 @@
 
 
                         <TextView
+                            android:id="@+id/tvRawPrice"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="end"
@@ -202,13 +204,14 @@
 
 
                         <TextView
+                            android:id="@+id/tvShip"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="end"
                             android:layout_marginTop="6dp"
                             android:layout_marginEnd="20dp"
                             android:layout_marginBottom="10dp"
-                            android:text="285.000VND"
+                            android:text="0"
                             android:textColor="@color/black" />
 
                     </androidx.cardview.widget.CardView>
@@ -255,7 +258,7 @@
                             android:layout_marginTop="6dp"
                             android:layout_marginEnd="20dp"
                             android:layout_marginBottom="10dp"
-                            android:text="285.000VND"
+                            android:text="0"
                             android:textColor="@color/black" />
 
                     </androidx.cardview.widget.CardView>
@@ -306,6 +309,7 @@
 
 
                         <TextView
+                            android:id="@+id/tvSumPrice"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="end"
