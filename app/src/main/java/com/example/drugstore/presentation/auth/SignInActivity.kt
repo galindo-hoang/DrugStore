@@ -10,6 +10,7 @@ import com.example.drugstore.databinding.ActivitySignInBinding
 import com.example.drugstore.data.firebase.FirebaseClass
 import com.example.drugstore.presentation.BaseActivity
 import com.example.drugstore.presentation.home.HomeActivity
+import com.example.drugstore.service.SUserRepo
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.*
@@ -74,6 +75,7 @@ class SignInActivity : BaseActivity() {
         FirebaseClass.getFirebaseAuth().signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
+                    SUserRepo().connectUserByGoogle(task.result.user!!)
                     startActivity(Intent(this@SignInActivity, HomeActivity::class.java))
                     finish()
                 } else {

@@ -8,6 +8,7 @@ import com.example.drugstore.presentation.BaseActivity
 import com.example.drugstore.presentation.home.HomeActivity
 import com.example.drugstore.databinding.ActivityConfirmOtpBinding
 import com.example.drugstore.data.firebase.FirebaseClass
+import com.example.drugstore.service.SUserRepo
 import com.example.drugstore.utils.Constants
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
@@ -82,8 +83,6 @@ class ConfirmOTPActivity : BaseActivity() {
                         // 2 - Auto-retrieval. On some devices Google Play services can automatically
                         //     detect the incoming verification SMS and perform verification without
                         //     user action.
-                        Log.d("---", "onVerificationCompleted:${credential.provider}")
-                        Log.d("---", "onVerificationCompleted:${credential.smsCode}")
                         signInWithPhoneAuthCredential(credential)
                     }
 
@@ -130,12 +129,14 @@ class ConfirmOTPActivity : BaseActivity() {
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d("---", "signInWithCredential:success")
+                    task.result.user?.let { SUserRepo().connectUserByPhone(it) }
                     startActivity(Intent(this, HomeActivity::class.java))
                     finish()
                 } else {
                     // Sign in failed, display a message and update the UI
                     Log.w("---", "signInWithCredential:failure", task.exception)
                     if (task.exception is FirebaseAuthInvalidCredentialsException) {
+                        Toast.makeText(this,"The verification code entered was invalid",Toast.LENGTH_LONG).show()
                         Log.e("---","The verification code entered was invalid")
                     }
                     // Update UI

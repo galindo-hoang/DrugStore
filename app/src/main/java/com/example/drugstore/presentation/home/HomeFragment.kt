@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -16,6 +15,7 @@ import com.example.drugstore.presentation.adapter.ProductAdapter
 import com.example.drugstore.databinding.FragmentHomeBinding
 import com.example.drugstore.data.models.Category
 import com.example.drugstore.data.models.Product
+import com.example.drugstore.presentation.adapter.NewsTopicAdapter
 import com.example.drugstore.utils.Constants
 
 //import androidx.lifecycle.ViewModelProviders
@@ -37,6 +37,7 @@ class HomeFragment : Fragment() {
     private var param2: String? = null
     private val categoryVM: CategoryVM by activityViewModels()
     private val productVM: ProductVM by activityViewModels()
+    private val newsVM: NewsVM by activityViewModels()
     private var cartVM: CartVM? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -94,7 +95,7 @@ class HomeFragment : Fragment() {
 
 
         val adapterCate = CategoryAdapter()
-        categoryVM.fetchAllCategories().observe(viewLifecycleOwner){
+        categoryVM.getAllCategories().observe(viewLifecycleOwner){
             adapterCate.setList(it.subList(0,4))
         }
         adapterCate.onItemClick = {category -> setUpTransitToDrugByCategoryFragment(category) }
@@ -103,13 +104,27 @@ class HomeFragment : Fragment() {
             GridLayoutManager.HORIZONTAL,false)
 
 
+        val newsAdapter = NewsTopicAdapter()
+        binding.rvNews.adapter = newsAdapter
+        newsVM.getListTopics().observe(viewLifecycleOwner){
+            newsAdapter.setList(it)
+        }
+        newsAdapter.onItemClick = {topicNews ->
+            val fragment = NewsTopicFragment()
+            val bundle = Bundle()
+            bundle.putString(Constants.TOPIC_NAME, topicNews.topic)
+            fragment.arguments = bundle
+            setUpTransitionFragment(fragment)
+        }
+        binding.rvNews.layoutManager = LinearLayoutManager(context,
+            LinearLayoutManager.HORIZONTAL,false)
+        binding.clHeaderNews.setOnClickListener {
+            setUpTransitionFragment(NewsTopicFragment())
+        }
 
-//        binding.rvNews.adapter = NewsAdapter(a)
-//        binding.rvNews.layoutManager = LinearLayoutManager(context,
-//            LinearLayoutManager.HORIZONTAL,false)
 
         binding.clHeaderCategory.setOnClickListener {
-            setUpChangeFragment()
+            setUpTransitionFragment(CategoryFragment())
         }
 
         // Inflate the layout for this fragment
@@ -147,12 +162,11 @@ class HomeFragment : Fragment() {
         parentFMTransition.commit()
     }
 
-    private fun setUpChangeFragment() {
-
+    private fun setUpTransitionFragment(fragment: Fragment) {
         val parentFM = parentFragmentManager
         val parentFMTransition = parentFM.beginTransaction()
-        parentFMTransition.replace(R.id.fragmentBottomNav,CategoryFragment())
-        parentFMTransition.addToBackStack("CategoryFragment")
+        parentFMTransition.replace(R.id.fragmentBottomNav,fragment)
+        parentFMTransition.addToBackStack("")
         parentFMTransition.commit()
     }
 

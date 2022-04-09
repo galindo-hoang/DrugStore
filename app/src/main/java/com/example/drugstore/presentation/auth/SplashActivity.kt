@@ -7,6 +7,7 @@ import com.example.drugstore.presentation.order.ChatActivity
 import com.example.drugstore.databinding.ActivitySplashBinding
 import com.example.drugstore.data.firebase.FirebaseClass
 import com.example.drugstore.presentation.BaseActivity
+import com.example.drugstore.presentation.home.HomeActivity
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
@@ -22,7 +23,7 @@ class SplashActivity : BaseActivity() {
             if(FirebaseClass.getFirebaseAuth().currentUser == null){
                 startActivity(Intent(this, MainActivity::class.java))
             }else{
-                startActivity(Intent(this, ChatActivity::class.java))
+                startActivity(Intent(this, HomeActivity::class.java))
             }
             finish()
         },2, TimeUnit.SECONDS)

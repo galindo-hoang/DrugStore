@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp"
+    tools:context=".presentation.home.NewsFragment">
+
+    <ImageView
+        android:id="@+id/ivNews"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="fitXY"/>
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:padding="5dp"
+        android:textColor="@color/black"
+        android:text="Signs and symptoms of subungual melanoma by US woman who noticed a ‘cool streak’ under her thumbnail for 10 years"
+        android:textSize="22sp"/>
+
+    <TextView
+        android:id="@+id/tvContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="A woman who noticed a cool streak under her thumbnail for 10 years discovered the brown stripe was actually cancer.\r\nMaria Sylvia, from the US, said she first noticed a pale line under her nail bed i"
+        android:textColor="@color/black"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/tvAuthor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:gravity="end"
+        android:padding="5dp"
+        android:text="Cindy Tran"
+        android:textStyle="bold"
+        android:textColor="@color/colorAccent"/>
+
+</LinearLayout>

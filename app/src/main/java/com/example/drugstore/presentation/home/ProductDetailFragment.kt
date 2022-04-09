@@ -15,7 +15,6 @@ import com.example.drugstore.data.models.CartProduct
 import com.example.drugstore.data.models.Product
 import com.example.drugstore.databinding.FragmentProductDetailBinding
 import com.example.drugstore.presentation.adapter.NutritionAdapter
-import com.example.drugstore.presentation.adapter.ProductAdapter
 import com.example.drugstore.utils.Constants
 import java.text.DecimalFormat
 
@@ -86,7 +85,7 @@ class ProductDetailFragment : Fragment() {
             .load(product.ProImage)
             .placeholder(R.drawable.ic_launcher_foreground)
             .into(binding.ivPro)
-        categoryVM.fetchCategory(product.CatID).observe(viewLifecycleOwner){
+        categoryVM.getCategory(product.CatID).observe(viewLifecycleOwner){
             binding.tvCatName.text = it.CatName
         }
         binding.tvQuantity.text = "Quantity: ${product.Quantity.toString()}"
@@ -106,7 +105,7 @@ class ProductDetailFragment : Fragment() {
             }
         }
 
-        cartVM.fetchProductById(product.ProID).observe(viewLifecycleOwner){
+        cartVM.getProductById(product.ProID).observe(viewLifecycleOwner){
             cartProduct = it
             if(it != null){
                 binding.tvProductQuantityInCart.text = it.Quantity.toString()
@@ -117,7 +116,7 @@ class ProductDetailFragment : Fragment() {
             }
         }
 
-        cartVM.fetchCartProducts().observe(viewLifecycleOwner){
+        cartVM.getCartProducts().observe(viewLifecycleOwner){
             for(i in it){
                 Log.e("---------",i.toString())
             }

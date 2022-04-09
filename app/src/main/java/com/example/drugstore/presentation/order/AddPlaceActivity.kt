@@ -22,6 +22,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import com.example.drugstore.databinding.ActivityAddPlaceBinding
 import com.example.drugstore.utils.Constants
+import com.example.drugstore.utils.Constants.isNetworkAvailable
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.model.LatLng
 import java.util.*
@@ -103,33 +104,10 @@ class AddPlaceActivity : AppCompatActivity() {
         override fun onLocationResult(p0: LocationResult?) {
             latLong = LatLng(p0!!.lastLocation.latitude, p0.lastLocation.longitude)
             convertLatLongToAddress(latLong!!)
-            if(isNetworkAvailable()) {
+            if(isNetworkAvailable(this@AddPlaceActivity)) {
                 transactionGoogleMapFragment()
             }
             else Toast.makeText(this@AddPlaceActivity,"Please access internet",Toast.LENGTH_LONG).show()
-        }
-    }
-
-    private fun isNetworkAvailable():Boolean{
-
-        val connectivityManager = this.getSystemService(android.content.Context.CONNECTIVITY_SERVICE)
-                as ConnectivityManager
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            val networkCapabilities = connectivityManager.activeNetwork ?: return false
-            val activeNetwork = connectivityManager.getNetworkCapabilities(networkCapabilities) ?: return false
-
-            return when {
-
-                activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ||
-                        activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) ||
-                        activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
-                else -> false
-            }
-        }
-        else {
-            return connectivityManager.activeNetworkInfo != null &&
-                    connectivityManager.activeNetworkInfo!!.isConnectedOrConnecting
         }
     }
 

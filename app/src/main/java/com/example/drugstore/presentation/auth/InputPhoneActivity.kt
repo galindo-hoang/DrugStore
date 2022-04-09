@@ -9,6 +9,7 @@ import com.example.drugstore.presentation.BaseActivity
 import com.example.drugstore.presentation.home.HomeActivity
 import com.example.drugstore.databinding.ActivityInputPhoneBinding
 import com.example.drugstore.data.firebase.FirebaseClass
+import com.example.drugstore.service.SUserRepo
 import com.example.drugstore.utils.Constants
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
@@ -113,6 +114,7 @@ class InputPhoneActivity : BaseActivity() {
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d("---", "signInWithCredential:success")
+                    task.result.user?.let { SUserRepo().connectUserByPhone(it) }
                     startActivity(Intent(this, HomeActivity::class.java))
                     finish()
                 } else {

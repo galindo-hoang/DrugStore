@@ -55,7 +55,7 @@
             android:theme="@style/Theme.DrugStore.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".presentation.auth.SplashActivity"
+            android:name=".presentation.home.HomeActivity"
             android:exported="false"
             android:theme="@style/Theme.DrugStore.NoActionBar" />
         <activity
@@ -67,7 +67,7 @@
             android:exported="false"
             android:theme="@style/Theme.DrugStore.NoActionBar" />
         <activity
-            android:name=".presentation.home.HomeActivity"
+            android:name=".presentation.auth.SplashActivity"
             android:windowSoftInputMode="adjustPan"
             android:exported="true"
             android:theme="@style/Theme.DrugStore.NoActionBar">

@@ -24,6 +24,7 @@
 
 
     <color name="gray_color">#DCDCDC</color>
+    <color name="transparent">#48FFFFFF</color>
     <color name="profile_color">#3BCCD1</color>
 
     <color name="price_color">#D82148</color>

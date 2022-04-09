@@ -6,6 +6,6 @@ import com.example.drugstore.data.models.Category
 import com.example.drugstore.service.SCategoryRepo
 
 class CategoryVM: ViewModel() {
-    fun fetchAllCategories() = SCategoryRepo().fetchAllCategories()
-    fun fetchCategory(id:Int) = SCategoryRepo().fetchCategory(id)
+    fun getAllCategories() = SCategoryRepo().fetchAllCategories()
+    fun getCategory(id:Int) = SCategoryRepo().fetchCategory(id)
 }

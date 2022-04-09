@@ -13,9 +13,9 @@ import java.lang.IllegalArgumentException
 
 class CartVM(private val application: Application): ViewModel() {
 
-    fun fetchCartProducts(): LiveData<List<CartProduct>> = SCartRepo(application).fetchAllProducts()
+    fun getCartProducts(): LiveData<List<CartProduct>> = SCartRepo(application).fetchAllProducts()
 
-    fun fetchProductById(id: Int): LiveData<CartProduct> = SCartRepo(application).fetchProductById(id)
+    fun getProductById(id: Int): LiveData<CartProduct> = SCartRepo(application).fetchProductById(id)
 
 
     fun getQuantityProducts(): LiveData<Int> = SCartRepo(application).getQuantityProducts()
