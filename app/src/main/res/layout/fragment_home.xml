@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragment.home.HomeFragment"
+    tools:context=".presentation.home.HomeActivity"
     android:orientation="vertical">
 
     <LinearLayout
@@ -38,12 +38,36 @@
             </com.google.android.material.textfield.TextInputLayout>
         </androidx.cardview.widget.CardView>
 
-        <ImageButton
-            android:layout_width="0dp"
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/background_transparent"
-            android:src="@drawable/ic_cart_24"
-            android:layout_weight="2"/>
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginEnd="15dp">
+
+
+            <ImageButton
+                android:id="@+id/btnCart"
+                app:layout_anchorGravity = "center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:backgroundTint="@color/white"
+                android:src="@drawable/ic_cart_30"/>
+
+
+            <TextView
+                android:id="@+id/tvQuantityProduct"
+                app:layout_anchor="@id/btnCart"
+                app:layout_anchorGravity="right"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:visibility="visible"
+                android:gravity="center"
+                android:background="@drawable/solid_pink_button"
+                android:text="1"/>
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -121,7 +145,7 @@
             android:id="@+id/rvNews"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:listitem="@layout/item_news"/>
+            tools:listitem="@layout/item_news_topic"/>
     </LinearLayout>
 
 

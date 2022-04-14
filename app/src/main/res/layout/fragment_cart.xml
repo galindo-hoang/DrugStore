@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.CartFragment">
+    tools:context=".presentation.home.CartFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/cartTB"
         android:layout_width="0dp"
         android:layout_height="?attr/actionBarSize"
         android:gravity="center_horizontal"
+        app:navigationIcon="@drawable/ic_arrow_left_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -29,12 +30,13 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcViewCart"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="300dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        tools:listitem="@layout/item_cart"
+        android:layout_marginEnd="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cartTB" />
+
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView7"
@@ -100,8 +102,9 @@
                             android:layout_width="78dp"
                             android:layout_height="match_parent"
                             android:layout_marginStart="320dp"
-                            android:layout_marginTop="6dp"
+                            android:layout_marginTop="10dp"
                             android:layout_marginEnd="20dp"
+
                             android:layout_marginBottom="10dp"
                             android:background="@drawable/toggle_seletor"
                             android:textOff=""
@@ -153,6 +156,7 @@
 
 
                         <TextView
+                            android:id="@+id/tvRawPrice"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="end"
@@ -200,13 +204,14 @@
 
 
                         <TextView
+                            android:id="@+id/tvShip"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="end"
                             android:layout_marginTop="6dp"
                             android:layout_marginEnd="20dp"
                             android:layout_marginBottom="10dp"
-                            android:text="285.000VND"
+                            android:text="0"
                             android:textColor="@color/black" />
 
                     </androidx.cardview.widget.CardView>
@@ -253,7 +258,7 @@
                             android:layout_marginTop="6dp"
                             android:layout_marginEnd="20dp"
                             android:layout_marginBottom="10dp"
-                            android:text="285.000VND"
+                            android:text="0"
                             android:textColor="@color/black" />
 
                     </androidx.cardview.widget.CardView>
@@ -304,6 +309,7 @@
 
 
                         <TextView
+                            android:id="@+id/tvSumPrice"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="end"
@@ -321,12 +327,13 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button"
                 android:layout_width="350dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
-                android:backgroundTint="@color/btn_cart"
+                android:textColor="@color/white"
+                android:background="@drawable/cart_blue_border_button"
                 android:text="Order" />
 
         </LinearLayout>

@@ -29,6 +29,7 @@
     <string name="confirm_delivery_location">Confirm Delivery Location</string>
     <string name="orderhistory">Order History</string>
     <string name="google_map_api_key">AIzaSyAhX49C_y6sYfnKeyNdo9BNq-loky0OahE</string>
+    <string name="news_api">54db42e432d84365af90fcde5c12c8ff</string>
 
     <string name="order">Order</string>
     <string name="ordersummary">Order Summary</string>

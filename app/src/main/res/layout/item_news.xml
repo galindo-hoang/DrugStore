@@ -1,44 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout
+<androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_height="wrap_content"
-    android:layout_width="wrap_content"
-    android:layout_margin="10dp">
+    android:layout_width="match_parent"
+    app:cardElevation="10dp"
+    app:cardCornerRadius="10dp"
+    android:layout_marginBottom="20dp"
+    android:layout_marginHorizontal="5dp">
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="300dp"
-        android:layout_height="100dp"
-        android:background="@drawable/solid_pink_button">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        >
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="140dp"
-            android:layout_height="50dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clContent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:padding="10dp"
+            app:layout_constraintBottom_toBottomOf="@id/ivNews"
+            app:layout_constraintEnd_toStartOf="@id/guideline"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:maxLines="4"
+                android:minLines="4"
+                android:textSize="22sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:text="Rejuvenation of woman's skin could tackle diseases of aging"
+                app:layout_constraintStart_toStartOf="@id/clContent"
+                app:layout_constraintEnd_toEndOf="@id/clContent"
+                app:layout_constraintTop_toTopOf="@id/clContent"/>
+
+            <TextView
+                android:id="@+id/tvSource"
+                android:layout_width="0dp"
+                android:textSize="18sp"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                android:text="BBC.com"
+                android:maxLines="1"
+                android:minLines="1"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/clContent"
+                app:layout_constraintEnd_toEndOf="@id/clContent"
+                app:layout_constraintBottom_toBottomOf="@id/clContent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.6"/>
+
+        <ImageView
+            android:id="@+id/ivNews"
+            android:layout_width="0dp"
+            android:layout_height="160dp"
+            android:scaleType="fitXY"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:cardCornerRadius="40dp"
-            app:cardElevation="10dp"
-            android:layout_margin="10dp"/>
+            app:layout_constraintStart_toStartOf="@id/guideline"
+            android:src="@drawable/ic_launcher_foreground"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
-        android:id="@+id/tvDate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="12/11/2022"
-        android:textColor="@color/secondary_text_color"/>
-
-    <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Tiêu đề"
-        android:textColor="@color/black"/>
-
-
-</LinearLayout>
+</androidx.cardview.widget.CardView>

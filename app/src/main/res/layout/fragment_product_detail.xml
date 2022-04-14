@@ -4,10 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.ProductDetailFragment">
-
-
-
+    tools:context=".presentation.home.ProductDetailFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/profileTB"
@@ -21,22 +18,47 @@
         app:layout_constraintVertical_bias="0.001">
 
         <TextView
-            android:id="@+id/profileTBTV"
-            android:layout_width="wrap_content"
+            android:id="@+id/tvProName"
+            android:layout_width="230dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:gravity="center"
             android:text="Product"
             android:textColor="@color/black"
             android:textSize="18sp"
+            android:maxLines="2"
+            android:minLines="1"
             android:fontFamily="sans-serif-black"
             android:textStyle="bold" />
-        <ImageButton
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:backgroundTint="@color/white"
-            android:layout_marginEnd="15dp"
-            android:src="@drawable/ic_cart_30"/>
+            android:layout_marginEnd="15dp">
+
+
+            <ImageButton
+                android:id="@+id/btnCartTop"
+                app:layout_anchorGravity = "center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:backgroundTint="@color/white"
+                android:src="@drawable/ic_cart_30"/>
+
+
+            <TextView
+                android:id="@+id/tvQuantityProduct"
+                app:layout_anchor="@id/btnCartTop"
+                app:layout_anchorGravity="right"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:visibility="visible"
+                android:gravity="center"
+                android:background="@drawable/solid_pink_button"
+                android:text="1"/>
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
     </androidx.appcompat.widget.Toolbar>
 
 
@@ -62,112 +84,127 @@
             app:cardElevation="10dp">
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/ivPro"
                 android:layout_width="fill_parent"
-                android:layout_height="60dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
+                android:layout_height="100dp"
                 android:src="@drawable/drug" />
 
 
         </androidx.cardview.widget.CardView>
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/linearLayout7"
-        android:layout_width="fill_parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/consSectionInfo"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_margin="10dp"
+        android:backgroundTint="@color/white"
+        android:outlineSpotShadowColor="@color/black"
+        tools:targetApi="p"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout6">
+        app:layout_constraintTop_toBottomOf="@+id/llQuantity">
 
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="fill_parent"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/consDes"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_weight="11"
-            android:backgroundTint="@color/white"
-            android:outlineSpotShadowColor="@color/black"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="10dp">
+            app:layout_constraintTop_toTopOf="@id/consSectionInfo"
+            app:layout_constraintRight_toRightOf="@id/glMarginDes"
+            android:layout_marginHorizontal="10dp"
+            android:orientation="vertical">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/ttDes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:fontFamily="sans-serif"
+                android:text="Description"
+                android:textColor="@color/secondary_text_color"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                app:layout_constraintTop_toTopOf="@id/consDes"
+                app:layout_constraintStart_toStartOf="@id/consDes"
+                app:layout_constraintEnd_toEndOf="@id/consDes" />
 
-                <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:layout_weight="11"
-                    android:backgroundTint="@color/white"
-                    app:cardCornerRadius="20dp"
-                    app:cardElevation="10dp">
+            <View
+                android:id="@+id/viewDes"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintStart_toStartOf="@id/consDes"
+                app:layout_constraintEnd_toEndOf="@id/consDes"
+                app:layout_constraintTop_toBottomOf="@id/ttDes"/>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="60dp"
-                        android:fontFamily="sans-serif"
-                        android:text="Description" />
-
-                    <TextView
-                        android:layout_width="180dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="30dp"
-                        android:fontFamily="sans-serif"
-                        android:text="Our fried rice is made from the finest ingredients and veggies. single dish is made with fresh vegetables, rescued." />
-
-                </androidx.cardview.widget.CardView>
-            </LinearLayout>
+            <TextView
+                android:id="@+id/tvDes"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:maxLines="5"
+                android:minLines="5"
+                android:paddingStart="10dp"
+                android:text="Our fried rice is made from the finest ingredients and veggies. single dish is made with fresh vegetables, rescued."
+                app:layout_constraintStart_toStartOf="@id/consDes"
+                app:layout_constraintTop_toBottomOf="@id/viewDes" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-            <androidx.cardview.widget.CardView
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glMarginDes"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="@id/consSectionInfo"
+            app:layout_constraintBottom_toBottomOf="@id/consSectionInfo"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/consNut"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/glMarginDes"
+            app:layout_constraintTop_toTopOf="@id/consSectionInfo"
+            app:layout_constraintEnd_toEndOf="@id/consSectionInfo">
+
+
+            <TextView
+                android:id="@+id/ttNut"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                app:cardCornerRadius="20dp">
-            <LinearLayout
-                android:layout_width="wrap_content"
+                android:textSize="16sp"
+                android:textColor="@color/secondary_text_color"
+                app:layout_constraintTop_toTopOf="@id/consNut"
+                app:layout_constraintStart_toStartOf="@id/consNut"
+                app:layout_constraintEnd_toEndOf="@id/consNut"
+                android:text="Nutritional Value"/>
+
+            <View
+                android:id="@+id/divideNut"
+                android:layout_width="fill_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintTop_toBottomOf="@id/ttNut"
+                app:layout_constraintStart_toStartOf="@id/consNut"
+                app:layout_constraintEnd_toEndOf="@id/consNut"
+                android:background="@color/divider_color" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcProductDetail"
+                tools:listitem="@layout/item_nutrition"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginTop="10dp"
-                    android:text="Nutritional Value" />
-
-                <View
-                    android:id="@+id/separator"
-                    android:layout_width="fill_parent"
-                    android:layout_height="2dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-
-                    android:background="@color/divider_color" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rcProductDetail"
-                    tools:listitem="@layout/item_nutrition"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-
-        </androidx.cardview.widget.CardView>
-    </LinearLayout>
+                android:layout_marginTop="5dp"
+                app:layout_constraintStart_toStartOf="@id/consNut"
+                app:layout_constraintEnd_toEndOf="@id/consNut"
+                app:layout_constraintTop_toBottomOf="@id/divideNut"
+                android:paddingHorizontal="10dp"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout6"
+        android:id="@+id/llQuantity"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -176,158 +213,47 @@
         app:layout_constraintTop_toBottomOf="@+id/Linear_profile">
 
 
-        <androidx.cardview.widget.CardView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_marginHorizontal="10dp"
             android:layout_weight="11"
-            android:backgroundTint="@color/white"
-            android:outlineSpotShadowColor="@color/black"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="10dp">
+            android:orientation="horizontal">
 
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
 
                 <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
+                    android:layout_width="180dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:layout_weight="11"
                     android:backgroundTint="@color/white"
                     app:cardCornerRadius="20dp"
                     app:cardElevation="10dp">
 
+
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:id="@+id/tvCatName"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="50dp"
+                        android:gravity="center"
                         android:fontFamily="sans-serif"
                         android:text="COVID-19" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="30dp"
-                        android:fontFamily="sans-serif"
-                        android:text="Suhani’s Stop, Kukatpally" />
 
                 </androidx.cardview.widget.CardView>
-            </LinearLayout>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginTop="25dp"
-                android:layout_marginEnd="20dp"
-                app:cardCornerRadius="20dp"
-                android:layout_marginBottom="25dp">
-
             <TextView
-                android:id="@+id/textView4"
-                android:layout_width="wrap_content"
+                android:id="@+id/tvQuantity"
+                android:gravity="end"
+                android:layout_gravity="center_vertical"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:layout_marginHorizontal="20dp"
                 android:text="Quantity: 100" />
-            </androidx.cardview.widget.CardView>
-
-        </androidx.cardview.widget.CardView>
+        </LinearLayout>
     </LinearLayout>
 
     <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:layout_weight="11"
-
-        app:cardElevation="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.473"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView20">
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <androidx.cardview.widget.CardView
-                android:layout_width="fill_parent"
-                android:layout_height="40dp">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:text="Enter Quantity"
-                    android:textColor="@color/black"
-                    android:fontFamily="sans-serif"
-                    android:layout_marginTop="10dp"
-                    android:layout_gravity="start"/>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="4"
-                    app:cardCornerRadius="10dp"
-                    android:layout_gravity="end"
-                    android:layout_marginTop="5dp"
-                    android:backgroundTint="@color/divider_color"
-
-                    android:background="@drawable/solid_gray_button">
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/btnSub"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:background="@drawable/btn_sub"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/productQuantity"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0"
-                        android:textColor="@color/black"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="@id/btnAdd"
-                        app:layout_constraintStart_toStartOf="@id/btnSub"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/btnAdd"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:background="@drawable/btn_add"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-            </androidx.cardview.widget.CardView>
-        <Button
-            android:layout_gravity="center"
-            android:id="@+id/button3"
-            android:layout_width="300dp"
-            android:backgroundTint="@color/btn_cart"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:gravity="center"
-            android:text="Add to cart - 225.000VNĐ" />
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView20"
+        android:id="@+id/cvSectionIngredient"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
@@ -335,21 +261,140 @@
         android:backgroundTint="@color/white"
         app:cardCornerRadius="20dp"
         app:cardElevation="10dp"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout7">
+        app:layout_constraintTop_toBottomOf="@+id/consSectionInfo">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/consIngredient"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp">
+
+            <TextView
+                android:id="@+id/ttIngredients"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/consIngredient"
+                app:layout_constraintStart_toStartOf="@id/consIngredient"
+                app:layout_constraintEnd_toEndOf="@id/consIngredient"
+                android:gravity="start"
+                android:text="Ingredients"
+                android:textStyle="italic"
+                android:textSize="16sp"/>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcvIngredient"
+                tools:listitem="@layout/item_ingredient"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/consIngredient"
+                app:layout_constraintEnd_toEndOf="@id/consIngredient"
+                app:layout_constraintTop_toBottomOf="@id/ttIngredients" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        app:cardBackgroundColor="@color/colorAccent"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/cvSectionIngredient"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcIngredient"
-            tools:listitem="@layout/item_ingredient"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/consBottom"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center" />
+            android:padding="10dp">
 
-        </androidx.cardview.widget.CardView>
+            <TextView
+                android:id="@+id/tvSumPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:text="120K VND"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/consBottom"
+                app:layout_constraintEnd_toStartOf="@id/flQuantity"
+                app:layout_constraintStart_toStartOf="@id/consBottom"
+                app:layout_constraintTop_toTopOf="@id/consBottom" />
 
+            <FrameLayout
+                android:id="@+id/flQuantity"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/btn_solid_transparent_border_white"
+                app:layout_constraintBottom_toBottomOf="@id/consBottom"
+                app:layout_constraintEnd_toEndOf="@id/consBottom"
+                app:layout_constraintStart_toStartOf="@id/consBottom"
+                app:layout_constraintTop_toTopOf="@id/consBottom">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="4dp">
+
+                    <ImageButton
+                        android:id="@+id/btnMinus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="?android:selectableItemBackground"
+                        android:src="@drawable/ic_minus_detail" />
+
+                    <TextView
+                        android:id="@+id/tvProductQuantityInCart"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:gravity="center"
+                        android:text="1"
+                        android:textColor="@color/white"
+                        android:textSize="18sp" />
+
+                    <ImageButton
+                        android:id="@+id/btnAdd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="?android:selectableItemBackground"
+                        android:src="@drawable/ic_add_detail" />
+                </LinearLayout>
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/white_solid_blue_border_button"
+                android:padding="5dp"
+                app:layout_constraintBottom_toBottomOf="@id/consBottom"
+                app:layout_constraintEnd_toEndOf="@id/consBottom"
+                app:layout_constraintTop_toTopOf="@id/consBottom">
+
+                <ImageButton
+                    android:id="@+id/btnCart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="?android:selectableItemBackground"
+                    android:src="@drawable/ic_hand_bag" />
+            </FrameLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
