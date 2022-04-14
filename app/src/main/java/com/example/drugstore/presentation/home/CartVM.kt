@@ -7,29 +7,29 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.drugstore.data.models.CartProduct
 import com.example.drugstore.data.models.Product
-import com.example.drugstore.service.SCartRepo
+import com.example.drugstore.service.CartService
 import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
 
 class CartVM(private val application: Application): ViewModel() {
 
-    fun getCartProducts(): LiveData<List<CartProduct>> = SCartRepo(application).fetchAllProducts()
+    fun getCartProducts(): LiveData<List<CartProduct>> = CartService(application).fetchAllProducts()
 
-    fun getProductById(id: Int): LiveData<CartProduct> = SCartRepo(application).fetchProductById(id)
+    fun getProductById(id: Int): LiveData<CartProduct> = CartService(application).fetchProductById(id)
 
 
-    fun getQuantityProducts(): LiveData<Int> = SCartRepo(application).getQuantityProducts()
+    fun getQuantityProducts(): LiveData<Int> = CartService(application).getQuantityProducts()
 
     fun insertProduct(product: Product) = viewModelScope.launch {
-        SCartRepo(application).insertProduct(product)
+        CartService(application).insertProduct(product)
     }
 
     fun increaseQuantityProduct(quantity: Int, ProID: Int) = viewModelScope.launch {
-        SCartRepo(application).updateQuantityProduct(quantity,ProID,true)
+        CartService(application).updateQuantityProduct(quantity,ProID,true)
     }
 
     fun decreaseQuantityProduct(quantity: Int, ProID: Int) = viewModelScope.launch {
-        SCartRepo(application).updateQuantityProduct(quantity,ProID,false)
+        CartService(application).updateQuantityProduct(quantity,ProID,false)
     }
 
     class CartProductVMFactory(private val application: Application): ViewModelProvider.Factory{

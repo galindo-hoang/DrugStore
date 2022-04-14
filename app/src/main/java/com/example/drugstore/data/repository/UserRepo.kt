@@ -5,11 +5,14 @@ import androidx.lifecycle.MutableLiveData
 import com.example.drugstore.data.firebase.FirebaseClass
 import com.example.drugstore.data.models.User
 import com.google.firebase.firestore.FirebaseFirestore
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class UserRepo {
+@Singleton
+class UserRepo @Inject constructor() {
     private val collection = FirebaseFirestore.getInstance().collection("user")
 
-    fun fetchUserByID(Id:String): User? {
+    fun fetchUserByID(Id: String): User? {
         var result: User? = null
         collection
             .document(Id)
@@ -18,12 +21,12 @@ class UserRepo {
                 result = it.toObject(User::class.java)
             }
             .addOnCanceledListener {
-                Log.e("fetchUserByID","addOnCanceledListener");
+                Log.e("fetchUserByID", "addOnCanceledListener");
             }
         return result
     }
 
-    fun registerUser(user: User): Boolean{
+    fun registerUser(user: User): Boolean {
         var result = false
         collection
             .document(user.UserID)
@@ -34,8 +37,8 @@ class UserRepo {
         return result
     }
 
-    fun retrieveUser():MutableLiveData<User>{
-        var result:MutableLiveData<User> = MutableLiveData()
+    fun retrieveUser(): MutableLiveData<User> {
+        var result: MutableLiveData<User> = MutableLiveData()
         collection
             .document(FirebaseClass.getCurrentUserId())
             .get()

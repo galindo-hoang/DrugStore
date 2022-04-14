@@ -43,9 +43,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_marginTop="15dp"
-                android:backgroundTint="#3BCCD1"
                 android:layout_marginEnd="10dp"
-                android:src="@drawable/btn_update_profile"/>
+                android:backgroundTint="#3BCCD1"
+                android:src="@drawable/btn_update_profile" />
 
             <TextView
                 android:id="@+id/textView5"
@@ -54,8 +54,8 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="74dp"
                 android:layout_marginEnd="80dp"
-                android:text="Hoàng Minh Huy"
                 android:fontFamily="sans-serif-black"
+                android:text="Hoàng Minh Huy"
                 android:textColor="@color/white"
                 android:textSize="20dp" />
 
@@ -170,8 +170,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginStart="5dp"
                         android:backgroundTint="#DFE1E0"
-                        android:src="@drawable/profile_icon"
-                        />
+                        android:src="@drawable/profile_icon" />
 
                     <TextView
                         android:id="@+id/textView45"
@@ -215,6 +214,7 @@
 
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/btn_logout"
                     android:layout_width="fill_parent"
                     android:layout_height="80dp"
                     android:layout_margin="10dp"
@@ -327,8 +327,8 @@
                         android:id="@+id/imageView8"
                         android:layout_width="50dp"
                         android:layout_height="36dp"
-                        android:layout_marginTop="6dp"
                         android:layout_marginStart="5dp"
+                        android:layout_marginTop="6dp"
                         android:backgroundTint="#DFE1E0"
 
                         android:src="@drawable/bell_icon" />
@@ -341,7 +341,6 @@
                         android:layout_marginEnd="50dp"
                         android:fontFamily="sans-serif-black"
                         android:text="Help and Support" />
-
 
 
                     <ImageButton
@@ -424,10 +423,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:fontFamily="sans-serif-black"
             android:text="Profile"
             android:textColor="@color/black"
             android:textSize="18sp"
-            android:fontFamily="sans-serif-black"
             android:textStyle="bold" />
     </androidx.appcompat.widget.Toolbar>
 

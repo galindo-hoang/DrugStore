@@ -6,6 +6,7 @@ plugins {
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
+    id 'kotlin-android-extensions'
 }
 
 android {
@@ -70,6 +71,8 @@ dependencies {
 
     // roomDatabase
     implementation 'androidx.room:room-runtime:2.4.2'
+    implementation 'androidx.room:room-common:2.4.2'
+    implementation 'com.google.firebase:firebase-storage-ktx:20.0.1'
     kapt "androidx.room:room-compiler:2.4.2"
 
     //kotlin extensions and coroutines support for room
