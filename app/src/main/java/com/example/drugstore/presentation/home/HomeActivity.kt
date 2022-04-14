@@ -11,13 +11,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.drugstore.R
 import com.example.drugstore.databinding.ActivityHomeBinding
+import com.example.drugstore.presentation.BaseActivity
 import com.example.drugstore.presentation.notify.NotificationFragment
 import com.example.drugstore.presentation.order.OrderFragment
 import com.example.drugstore.presentation.user.ProfileFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : BaseActivity() {
     private lateinit var binding: ActivityHomeBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -4,9 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import com.example.drugstore.databinding.ActivityMainBinding
 import com.example.drugstore.presentation.BaseActivity
-import com.example.drugstore.presentation.auth.inputPhone.InputPhoneActivity
-import com.example.drugstore.presentation.auth.signIn.SignInActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : BaseActivity() {
 
     private lateinit var binding:ActivityMainBinding

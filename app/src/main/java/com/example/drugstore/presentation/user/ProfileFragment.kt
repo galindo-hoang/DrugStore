@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import com.example.drugstore.R
 import com.example.drugstore.databinding.FragmentProfileBinding
+import com.example.drugstore.presentation.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -17,7 +18,7 @@ class ProfileFragment : Fragment() {
     private val binding get() = _binding!!
 
     @Inject
-    lateinit var viewModel: ProfileVM
+    lateinit var profileVM: ProfileVM
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,7 +34,7 @@ class ProfileFragment : Fragment() {
 
     private fun bindComponents() {
         binding.btnLogout.setOnClickListener {
-            activity?.finish()
+            profileVM.signOut(activity as BaseActivity)
         }
     }
 

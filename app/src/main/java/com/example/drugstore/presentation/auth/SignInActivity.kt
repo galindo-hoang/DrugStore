@@ -1,27 +1,26 @@
-package com.example.drugstore.presentation.auth.signIn
+package com.example.drugstore.presentation.auth
 
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import com.example.drugstore.R
 import com.example.drugstore.databinding.ActivitySignInBinding
 import com.example.drugstore.data.firebase.FirebaseClass
 import com.example.drugstore.presentation.BaseActivity
-import com.example.drugstore.presentation.auth.inputPhone.InputPhoneActivity
-import com.example.drugstore.presentation.home.HomeActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.*
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class SignInActivity : BaseActivity() {
     private lateinit var launcherGoogleSignIn: ActivityResultLauncher<Intent>
     private lateinit var binding: ActivitySignInBinding
 
     @Inject
-    lateinit var signInVM: SignInVM
+    lateinit var authVM: AuthVM
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +32,9 @@ class SignInActivity : BaseActivity() {
         setUpLauncherGoogleSignIn()
 
         binding.btnGoogle.setOnClickListener {
-            signIn()
+            launcherGoogleSignIn.launch(
+                authVM.getGoogleSignInIntent()
+            )
         }
         binding.btnMobile.setOnClickListener {
             startActivity(Intent(this, InputPhoneActivity::class.java))
@@ -42,6 +43,7 @@ class SignInActivity : BaseActivity() {
 
     private fun setUpToolBar() {
         setSupportActionBar(binding.tb)
+
         if (supportActionBar != null) {
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)
             supportActionBar!!.title = ""
@@ -55,42 +57,18 @@ class SignInActivity : BaseActivity() {
         launcherGoogleSignIn =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+
                 if (task.isSuccessful) {
                     try {
                         // Google Sign In was successful, authenticate with Firebase
                         val account = task.getResult(ApiException::class.java)!!
-                        firebaseAuthWithGoogle(account.idToken!!)
+                        val credential = GoogleAuthProvider.getCredential(account.idToken!!, null)
+                        authVM.authenticateFirebase(credential, this, authVM::postGoogleSignIn)
                     } catch (e: ApiException) {
                         Log.w("---", "Google sign in failed", e)
                     }
                 } else {
                     Log.w("---", task.exception.toString())
-                }
-            }
-    }
-
-    private fun signIn() {
-        if (FirebaseClass.getInstance().getGoogleSignInClient() == null) {
-            FirebaseClass.getInstance()
-                .setGoogleSignIn(this, resources.getString(R.string.client_id))
-        }
-        launcherGoogleSignIn.launch(
-            FirebaseClass.getInstance().getGoogleSignInClient()!!.signInIntent
-        )
-    }
-
-    private fun firebaseAuthWithGoogle(idToken: String) {
-        val credential = GoogleAuthProvider.getCredential(idToken, null)
-        FirebaseClass.getFirebaseAuth().signInWithCredential(credential)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    val user = task.result.user!!
-                    Log.d("---", user.phoneNumber.toString())
-                    signInVM.signIn(user)
-                    startActivity(Intent(this@SignInActivity, HomeActivity::class.java))
-                    finish()
-                } else {
-                    Log.w("---", "signInWithCredential:failure", task.exception)
                 }
             }
     }

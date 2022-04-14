@@ -47,12 +47,12 @@
             android:theme="@style/Theme.DrugStore.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".presentation.auth.confirmOTP.ConfirmOTPActivity"
+            android:name=".presentation.auth.ConfirmOTPActivity"
             android:exported="false"
             android:theme="@style/Theme.DrugStore.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".presentation.auth.inputPhone.InputPhoneActivity"
+            android:name=".presentation.auth.InputPhoneActivity"
             android:exported="false"
             android:theme="@style/Theme.DrugStore.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
@@ -61,7 +61,7 @@
             android:exported="false"
             android:theme="@style/Theme.DrugStore.NoActionBar" />
         <activity
-            android:name=".presentation.auth.signIn.SignInActivity"
+            android:name=".presentation.auth.SignInActivity"
             android:exported="false"
             android:theme="@style/Theme.DrugStore.NoActionBar" />
         <activity

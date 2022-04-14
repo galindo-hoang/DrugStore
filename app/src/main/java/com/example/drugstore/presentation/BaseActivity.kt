@@ -12,8 +12,9 @@ import com.example.drugstore.R
 import com.google.android.material.snackbar.Snackbar
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
-open class BaseActivity: AppCompatActivity() {
+open class BaseActivity @Inject constructor() : AppCompatActivity() {
     private var doubleClickToExit = false
     private lateinit var mProgessDialog: Dialog
 
@@ -27,31 +28,33 @@ open class BaseActivity: AppCompatActivity() {
         windowInsetsController.hide(WindowInsetsCompat.Type.systemBars())
     }
 
-    fun showProgressDialog(text: String){
+    fun showProgressDialog(text: String) {
         this.mProgessDialog = Dialog(this)
         mProgessDialog.setContentView(R.layout.dialog_progress)
         mProgessDialog.findViewById<TextView>(R.id.tvProgress).text = text
         mProgessDialog.show()
     }
 
-    fun hideProgressDialog(){
+    fun hideProgressDialog() {
         mProgessDialog.dismiss()
     }
 
-    fun doubleBackToExit(){
-        if(doubleClickToExit){
+    fun doubleBackToExit() {
+        if (doubleClickToExit) {
             onBackPressed()
-        }else{
+        } else {
             doubleClickToExit = true
-            Toast.makeText(this, R.string.please_click_back_again_to_exit,Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, R.string.please_click_back_again_to_exit, Toast.LENGTH_SHORT)
+                .show()
             Executors.newSingleThreadScheduledExecutor().schedule({
                 doubleClickToExit = false
-            },2, TimeUnit.SECONDS)
+            }, 2, TimeUnit.SECONDS)
         }
     }
 
-    fun showErrorSnackBar(message: String){
-        val snackBar = Snackbar.make(findViewById(android.R.id.content),message,Snackbar.LENGTH_LONG)
+    fun showErrorSnackBar(message: String) {
+        val snackBar =
+            Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG)
         snackBar.view.setBackgroundColor(ContextCompat.getColor(this, R.color.snackBar_error_color))
         snackBar.show()
     }

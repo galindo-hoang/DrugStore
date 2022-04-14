@@ -5,8 +5,8 @@ import com.example.drugstore.data.local.CartProductDatabase
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
-class BaseApplication: Application() {
-    val cartProductDatabase: CartProductDatabase by lazy{
+class BaseApplication : Application() {
+    val cartProductDatabase: CartProductDatabase by lazy {
         CartProductDatabase.getInstance(this)
     }
 }
