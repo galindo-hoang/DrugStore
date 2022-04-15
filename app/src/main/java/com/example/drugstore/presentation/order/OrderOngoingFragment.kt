@@ -1,20 +1,16 @@
 package com.example.drugstore.presentation.order
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.drugstore.R
 import com.example.drugstore.data.firebase.FirebaseClass
-import com.example.drugstore.databinding.FragmentOrderStatusBinding
+import com.example.drugstore.databinding.FragmentOrderOngoingBinding
 import com.example.drugstore.presentation.adapter.OrderAdapter
-import com.example.drugstore.presentation.adapter.OrderProductAdapter
-import com.example.drugstore.presentation.home.ProductVM
 import com.example.drugstore.utils.Constants
 
 // TODO: Rename parameter arguments, choose names that match
@@ -27,12 +23,12 @@ private const val ARG_PARAM2 = "param2"
  * Use the [OrderFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class OrderStatusFragment : Fragment() {
+class OrderOngoingFragment : Fragment() {
 
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private lateinit var binding: FragmentOrderStatusBinding
+    private lateinit var binding: FragmentOrderOngoingBinding
     private val orderVM: OrderVM by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,16 +43,19 @@ class OrderStatusFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentOrderStatusBinding.inflate(inflater,container,false)
-
-
-
-
+        binding = FragmentOrderOngoingBinding.inflate(inflater,container,false)
 
         val orderAdapter = OrderAdapter()
         orderVM.getOrderByUser(FirebaseClass.getCurrentUserId(),false).observe(viewLifecycleOwner){
             it?.let { it1 -> orderAdapter.setList(it1) }
         }
+
+        orderAdapter.onItemClick = {order ->
+            val intent = Intent(context,OrderStatusActivity::class.java)
+            intent.putExtra(Constants.ORDER_ID,order.OrderID)
+            startActivity(intent)
+        }
+
         binding.rcViewOrderOngoing.adapter = orderAdapter
         binding.rcViewOrderOngoing.layoutManager = LinearLayoutManager(context)
         return binding.root
@@ -74,7 +73,7 @@ class OrderStatusFragment : Fragment() {
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            OrderStatusFragment().apply {
+            OrderOngoingFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

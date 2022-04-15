@@ -12,11 +12,11 @@ class SectionPageAdapter(fm: FragmentManager): FragmentPagerAdapter(fm) {
     }
 
     override fun getItem(position: Int): Fragment {
-        return fragList.get(position)
+        return fragList[position]
     }
 
     override fun getPageTitle(position: Int): CharSequence? {
-        return titleList.get(position)
+        return titleList[position]
     }
     fun addFragment(fragment:Fragment,title:String) {
         fragList.add(fragment)

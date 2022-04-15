@@ -39,7 +39,7 @@ class DrugByCategoryFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
-        if(requireArguments().containsKey(Constants.OBJECT_CATEGORY)){
+        if(arguments?.containsKey(Constants.OBJECT_CATEGORY) == true){
             category = arguments?.getParcelable(Constants.OBJECT_CATEGORY)!!
         }
     }

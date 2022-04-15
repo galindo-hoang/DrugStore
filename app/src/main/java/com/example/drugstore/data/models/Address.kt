@@ -9,7 +9,7 @@ data class Address(
     var id:Int = 0,
     var longitude:Double = 0.0,
     var latitude:Double = 0.0,
-    var PhoneNumber:String = "",
+    var phoneNumber:String = "",
     var address: String = "",
     var title: String = "",
     var check:Boolean = false

@@ -11,7 +11,7 @@ class CartRepo(application: Application) {
     private val cartProductDatabase: CartProductDatabase = CartProductDatabase.getInstance(application)
 
     init {
-        cartProductDao = cartProductDatabase.getNoteDao()
+        cartProductDao = cartProductDatabase.getCartProductDao()
     }
 
     fun fetchAllProducts(): LiveData<List<CartProduct>>{
@@ -31,4 +31,6 @@ class CartRepo(application: Application) {
     suspend fun updateQuantityProduct(quantity: Int,proId: Int) = cartProductDao.updateQuantityProduct(quantity,proId)
 
     suspend fun deleteProduct(id: Int) = cartProductDao.deleteProduct(id)
+
+    suspend fun deleteAll() = cartProductDao.deleteAll()
 }

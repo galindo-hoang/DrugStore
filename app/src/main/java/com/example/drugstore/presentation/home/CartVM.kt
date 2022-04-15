@@ -32,11 +32,14 @@ class CartVM(private val application: Application): ViewModel() {
         SCartRepo(application).updateQuantityProduct(quantity,ProID,false)
     }
 
+    fun deleteAll() = viewModelScope.launch {
+        SCartRepo(application).deleteAll()
+    }
+
     class CartProductVMFactory(private val application: Application): ViewModelProvider.Factory{
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if( modelClass.isAssignableFrom(CartVM::class.java)) return CartVM(application) as T
             throw IllegalArgumentException("Unable construct viewModel")
         }
-
     }
 }

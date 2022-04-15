@@ -77,7 +77,7 @@ class SignInActivity : BaseActivity() {
                 if (task.isSuccessful) {
                     SUserRepo().connectUserByGoogle(task.result.user!!)
                     startActivity(Intent(this@SignInActivity, HomeActivity::class.java))
-                    finish()
+                    finishAffinity()
                 } else {
                     Log.w("---", "signInWithCredential:failure", task.exception)
                 }

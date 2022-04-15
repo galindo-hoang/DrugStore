@@ -47,7 +47,7 @@ class ProductDetailFragment : Fragment() {
         }
 
         cartVM = ViewModelProvider(this,CartVM.CartProductVMFactory(requireActivity().application))[CartVM::class.java]
-        if(requireArguments().containsKey(Constants.OBJECT_PRODUCT)){
+        if(arguments?.containsKey(Constants.OBJECT_PRODUCT) == true){
             product = arguments?.getParcelable(Constants.OBJECT_PRODUCT)!!
         }
     }

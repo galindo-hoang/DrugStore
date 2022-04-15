@@ -50,8 +50,6 @@ class AddPlacesFragment : Fragment() {
             mapFragment?.getMapAsync(callback)
         }
 
-
-//        Log.e("-fm","onCreateView")
         return binding.root
     }
 

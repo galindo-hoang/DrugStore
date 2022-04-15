@@ -7,6 +7,10 @@ import android.os.Build
 
 object Constants {
 
+    const val STATUS: String = "status"
+    const val PRODUCT_ID: String = "proID"
+    const val ORDER_ID: String = "ORDER_ID"
+    const val USER_ID: String = "userID"
     const val OBJECT_ARTICLE: String = "OBJECT_ARTICLE"
     const val TOPIC_NAME: String = "TOPIC_NAME"
     const val OBJECT_PRODUCT: String = "OBJECT_PRODUCT"

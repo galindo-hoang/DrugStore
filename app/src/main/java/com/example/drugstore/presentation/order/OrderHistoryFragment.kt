@@ -1,12 +1,17 @@
 package com.example.drugstore.presentation.order
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.drugstore.databinding.FragmentOrderAlreadyBinding
+import com.example.drugstore.data.firebase.FirebaseClass
+import com.example.drugstore.databinding.FragmentOrderHistoryBinding
+import com.example.drugstore.presentation.adapter.OrderAdapter
+import com.example.drugstore.utils.Constants
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -15,14 +20,15 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [OrderAlreadyFragment.newInstance] factory method to
+ * Use the [OrderHistoryFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class OrderAlreadyFragment : Fragment() {
+class OrderHistoryFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private lateinit var binding: FragmentOrderAlreadyBinding
+    private lateinit var binding: FragmentOrderHistoryBinding
+    private val orderVM: OrderVM by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,12 +42,23 @@ class OrderAlreadyFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentOrderAlreadyBinding.inflate(inflater,container,false)
-
-
-//        binding.rcViewOrderHistory.adapter = OrderAdapter(OrderHistory.createListOrderHistory())
-        binding.rcViewOrderHistory.layoutManager = LinearLayoutManager(context)
+        binding = FragmentOrderHistoryBinding.inflate(inflater,container,false)
         // Inflate the layout for this fragment
+
+        val orderAdapter = OrderAdapter()
+        orderVM.getOrderByUser(FirebaseClass.getCurrentUserId(),true).observe(viewLifecycleOwner){
+            it?.let { it1 -> orderAdapter.setList(it1) }
+        }
+
+        orderAdapter.onItemClick = {order ->
+            val intent = Intent(context,OrderStatusActivity::class.java)
+            intent.putExtra(Constants.ORDER_ID,order.OrderID)
+            startActivity(intent)
+        }
+
+        binding.rcViewOrderHistory.adapter = orderAdapter
+        binding.rcViewOrderHistory.layoutManager = LinearLayoutManager(context)
+
         return binding.root
     }
     companion object {
@@ -56,7 +73,7 @@ class OrderAlreadyFragment : Fragment() {
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            OrderAlreadyFragment().apply {
+            OrderHistoryFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

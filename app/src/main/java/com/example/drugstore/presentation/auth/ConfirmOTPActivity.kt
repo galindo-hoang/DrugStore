@@ -131,7 +131,7 @@ class ConfirmOTPActivity : BaseActivity() {
                     Log.d("---", "signInWithCredential:success")
                     task.result.user?.let { SUserRepo().connectUserByPhone(it) }
                     startActivity(Intent(this, HomeActivity::class.java))
-                    finish()
+                    finishAffinity()
                 } else {
                     // Sign in failed, display a message and update the UI
                     Log.w("---", "signInWithCredential:failure", task.exception)
