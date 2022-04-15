@@ -4,7 +4,7 @@ import android.app.Application
 import com.example.drugstore.data.models.Address
 import com.example.drugstore.data.repository.AddressRepo
 
-class SAddressRepo(val application: Application) {
+class AddressService(val application: Application) {
 
     fun getAllAddress() = AddressRepo(application).fetchAllAddress()
 

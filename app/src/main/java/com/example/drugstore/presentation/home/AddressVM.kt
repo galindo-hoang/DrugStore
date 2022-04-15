@@ -5,17 +5,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.drugstore.data.models.Address
-import com.example.drugstore.service.SAddressRepo
+import com.example.drugstore.service.AddressService
 import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
 
 class AddressVM(val application: Application): ViewModel() {
 
-    fun getListAddresses() = SAddressRepo(application).getAllAddress()
-    fun getAddressByID(ID: Int) = SAddressRepo(application).getAddressById(ID)
+    fun getListAddresses() = AddressService(application).getAllAddress()
+    fun getAddressByID(ID: Int) = AddressService(application).getAddressById(ID)
 
     fun insertAddress(title: String,longitude:Double,latitude:Double,address: String,PhoneNumber:String) = viewModelScope.launch {
-        SAddressRepo(application).insertAddress(Address(
+        AddressService(application).insertAddress(Address(
             longitude = longitude,
             latitude = latitude,
             title = title,

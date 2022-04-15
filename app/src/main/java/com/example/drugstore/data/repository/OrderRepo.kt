@@ -31,7 +31,7 @@ class OrderRepo {
         val document = collection
             .whereEqualTo(Constants.USER_ID,userID)
             .whereEqualTo(Constants.STATUS,status)
-//            .orderBy(Constants.DATE_ORDER,Query.Direction.DESCENDING)
+            .orderBy(Constants.DATE_ORDER,Query.Direction.DESCENDING)
             .get()
             .await()
         val result: MutableList<Order> = mutableListOf()
