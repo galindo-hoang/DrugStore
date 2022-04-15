@@ -5,10 +5,10 @@ import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 data class Order(
-    var OrderID:String = "",
-    var UserID:String = "",
-    var DateOrder:Date = Date(),
-    var ShipperID:String = "",
+    var OrderID: String = "",
+    var UserID: String = "",
+    var DateOrder: Date = Date(),
+    var ShipperID: String = "",
     // false : on Shipping
     // true : Done
     var Status:Boolean = false,

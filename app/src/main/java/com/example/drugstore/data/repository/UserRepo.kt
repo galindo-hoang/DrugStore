@@ -4,26 +4,29 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.drugstore.data.firebase.FirebaseClass
 import com.example.drugstore.data.models.User
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class UserRepo {
+@Singleton
+class UserRepo @Inject constructor() {
     private val collection = FirebaseFirestore.getInstance().collection("user")
 
-    fun fetchUserByID(Id:String): User? {
-        var result: User? = null
-        collection
-            .document(Id)
-            .get()
-            .addOnSuccessListener {
-                result = it.toObject(User::class.java)
-            }
-            .addOnCanceledListener {
-                Log.e("fetchUserByID","addOnCanceledListener");
-            }
-        return result
+    suspend fun fetchUserByID(Id: String): User? = withContext(Dispatchers.IO) {
+        try {
+            val document = collection.document().get().await()
+            document.toObject(User::class.java)
+        } catch (e: Exception) {
+            Log.e("fetchUserByID", "addOnCanceledListener")
+            null
+        }
     }
 
-    fun registerUser(user: User): Boolean{
+    fun registerUser(user: User): Boolean {
         var result = false
         collection
             .document(user.UserID)
@@ -34,10 +37,11 @@ class UserRepo {
         return result
     }
 
-    fun retrieveUser():MutableLiveData<User>{
-        var result:MutableLiveData<User> = MutableLiveData()
+    fun retrieveUser(id: String): MutableLiveData<User> {
+        val result: MutableLiveData<User> = MutableLiveData()
+
         collection
-            .document(FirebaseClass.getCurrentUserId())
+            .document(id)
             .get()
             .addOnSuccessListener {
                 result.postValue(it.toObject(User::class.java))
@@ -45,8 +49,9 @@ class UserRepo {
             .addOnCanceledListener {
                 result.postValue(null)
             }
+
         return result
     }
 
-//    fun getUserByID()
+    //    fun getUserByID()
 }

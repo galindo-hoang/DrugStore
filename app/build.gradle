@@ -55,8 +55,10 @@ dependencies {
 
     implementation 'com.google.gms:google-services:4.3.10'
     implementation 'com.google.firebase:firebase-auth:21.0.3'
-    implementation 'com.google.firebase:firebase-bom:29.3.1'
     implementation 'com.google.firebase:firebase-firestore:24.1.1'
+    implementation 'com.google.firebase:firebase-auth-ktx:21.0.3'
+    implementation 'com.google.firebase:firebase-bom:29.3.1'
+    implementation 'com.google.firebase:firebase-firestore-ktx:24.1.0'
     implementation 'com.google.firebase:firebase-storage:20.0.1'
     implementation 'com.google.android.gms:play-services-auth:20.1.0'
 
@@ -70,6 +72,8 @@ dependencies {
 
     // roomDatabase
     implementation 'androidx.room:room-runtime:2.4.2'
+    implementation 'androidx.room:room-common:2.4.2'
+    implementation 'com.google.firebase:firebase-storage-ktx:20.0.1'
     kapt "androidx.room:room-compiler:2.4.2"
 
     //kotlin extensions and coroutines support for room

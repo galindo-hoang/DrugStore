@@ -4,6 +4,7 @@ import com.example.drugstore.data.models.Order
 import com.example.drugstore.utils.Constants
 import com.example.drugstore.utils.Result
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
 
@@ -30,7 +31,9 @@ class OrderRepo {
         val document = collection
             .whereEqualTo(Constants.USER_ID,userID)
             .whereEqualTo(Constants.STATUS,status)
-            .get().await()
+//            .orderBy(Constants.DATE_ORDER,Query.Direction.DESCENDING)
+            .get()
+            .await()
         val result: MutableList<Order> = mutableListOf()
         for(i in document){
             result.add(i.toObject(Order::class.java))

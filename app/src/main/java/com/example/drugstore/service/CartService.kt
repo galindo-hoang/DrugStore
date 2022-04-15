@@ -6,7 +6,7 @@ import com.example.drugstore.data.models.CartProduct
 import com.example.drugstore.data.models.Product
 import com.example.drugstore.data.repository.CartRepo
 
-class SCartRepo(private val application: Application) {
+class CartService (private val application: Application) {
     
     fun fetchAllProducts(): LiveData<List<CartProduct>> {
         return CartRepo(application).fetchAllProducts()

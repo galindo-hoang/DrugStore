@@ -1,19 +1,19 @@
 package com.example.drugstore.presentation.home
 
 import androidx.lifecycle.*
-import com.example.drugstore.service.SNewsRepo
-import com.example.drugstore.utils.ResultAPI
+import com.example.drugstore.service.NewsService
+import com.example.drugstore.utils.Respond
 import kotlinx.coroutines.Dispatchers
 
 class NewsVM:ViewModel() {
-    fun getListTopics() = SNewsRepo().fetchAllTopics()
+    fun getListTopics() = NewsService().fetchAllTopics()
 
     fun getNotesByTopicFromApi(topic:String) = liveData(Dispatchers.IO){
-        emit(ResultAPI.loading(null))
+        emit(Respond.loading(null))
         try{
-            emit(ResultAPI.success(SNewsRepo().fetchAllNewsByTopic(topic)))
+            emit(Respond.success(NewsService().fetchAllNewsByTopic(topic)))
         }catch (ex:Exception){
-            emit(ResultAPI.error(null,ex.message?: "Error"))
+            emit(Respond.error(null,ex.message?: "Error"))
         }
     }
 

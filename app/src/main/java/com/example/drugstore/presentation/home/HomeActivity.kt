@@ -3,6 +3,7 @@ package com.example.drugstore.presentation.home
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -10,12 +11,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.drugstore.R
 import com.example.drugstore.databinding.ActivityHomeBinding
+import com.example.drugstore.presentation.BaseActivity
 import com.example.drugstore.presentation.notify.NotificationFragment
 import com.example.drugstore.presentation.order.OrderFragment
 import com.example.drugstore.presentation.user.ProfileFragment
+import dagger.hilt.android.AndroidEntryPoint
 
-class HomeActivity : AppCompatActivity() {
+@AndroidEntryPoint
+class HomeActivity : BaseActivity() {
     private lateinit var binding: ActivityHomeBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
@@ -32,15 +37,18 @@ class HomeActivity : AppCompatActivity() {
                 R.id.navBtnNotify -> {
                     replaceFragment(NotificationFragment())
                 }
-                else -> replaceFragment(ProfileFragment())
+                R.id.navBtnProfile -> {
+                    replaceFragment(ProfileFragment())
+                }
+                else -> Toast.makeText(this, "Sorry. Some errors occur", Toast.LENGTH_SHORT).show()
             }
             true
         }
     }
 
-    private fun replaceFragment(fragment: Fragment){
+    private fun replaceFragment(fragment: Fragment) {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.replace(binding.fragmentBottomNav.id,fragment)
+        fragmentTransaction.replace(binding.fragmentBottomNav.id, fragment)
         fragmentTransaction.commit()
     }
 }
