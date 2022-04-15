@@ -51,8 +51,8 @@
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/dialog_progress.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/fragment_add_places.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/fragment_cart.xml" value="0.25" />
-        <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/fragment_category.xml" value="0.18854166666666666" />
-        <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/fragment_drug_by_category.xml" value="0.5" />
+        <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/fragment_category.xml" value="0.33" />
+        <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/fragment_drug_by_category.xml" value="0.44044665012406947" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/fragment_home.xml" value="0.25" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/fragment_new_prescription.xml" value="0.18" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/fragment_news.xml" value="0.33" />
@@ -137,10 +137,6 @@
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/project/DrugStore/app/src/main/res/layout/item_top.xml" value="0.33" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/project/DrugStore/app/src/main/res/menu/bottom_menu.xml" value="0.22592592592592592" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/project/DrugStore/app/src/main/res/menu/chat_menu.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/activity_home.xml" value="0.35333333333333333" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.35333333333333333" />
-        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.33" />
-        <entry key="app/src/main/res/menu/bottom_menu.xml" value="0.35333333333333333" />
       </map>
     </option>
   </component>

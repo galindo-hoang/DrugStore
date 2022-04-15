@@ -1,6 +1,9 @@
 package com.example.drugstore.presentation.home
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -39,6 +42,7 @@ class HomeFragment : Fragment() {
     private val productVM: ProductVM by activityViewModels()
     private val newsVM: NewsVM by activityViewModels()
     private var cartVM: CartVM? = null
+    private val searchAdapter = ProductAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +58,32 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeBinding.inflate(inflater,container,false)
+
+
+        binding.rvSearch.adapter = searchAdapter
+        binding.rvSearch.layoutManager = GridLayoutManager(context,2)
+        searchAdapter.onItemClick = {product -> transitProductDetail(product) }
+        binding.etSearch.addTextChangedListener(object : TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun afterTextChanged(p0: Editable?) {
+                if(!p0.isNullOrEmpty() && p0.toString().trim().length >= 3){
+                    val search = p0.toString().trim().lowercase()
+                    productVM.getProductsWithSearch(search).observe(viewLifecycleOwner){
+                        if (it != null) {
+                            searchAdapter.setList(it)
+                        }
+                    }
+                    binding.rvSearch.visibility = View.VISIBLE
+                    binding.llContent.visibility = View.GONE
+                }else{
+                    binding.rvSearch.visibility = View.GONE
+                    binding.llContent.visibility = View.VISIBLE
+                }
+            }
+        })
 
 
         binding.btnCart.setOnClickListener {

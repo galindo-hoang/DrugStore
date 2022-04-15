@@ -1,6 +1,9 @@
 package com.example.drugstore.presentation.home
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -25,6 +28,7 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class DrugByCategoryFragment : Fragment() {
+    private var listProduct: List<Product>? = null
     private lateinit var category: Category
     private lateinit var binding: FragmentDrugByCategoryBinding
     private val productVM: ProductVM by activityViewModels()
@@ -50,17 +54,39 @@ class DrugByCategoryFragment : Fragment() {
     ): View {
 
         binding = FragmentDrugByCategoryBinding.inflate(inflater,container,false)
+
         binding.tvToolbar.text = category.CatName
         binding.tb.setNavigationOnClickListener {
             parentFragmentManager.popBackStack()
         }
         val productAdapter = ProductAdapter()
         productVM.getListProductsByCategory(category.CatID).observe(viewLifecycleOwner){
+            listProduct = it
             productAdapter.setList(it)
         }
         productAdapter.onItemClick = {product -> transitProductDetail(product) }
         binding.rvProduct.adapter = productAdapter
         binding.rvProduct.layoutManager = GridLayoutManager(context,2)
+
+
+
+        binding.etSearch.addTextChangedListener(object : TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun afterTextChanged(p0: Editable?) {
+                if(!p0.isNullOrEmpty() && p0.toString().trim().length >= 3){
+                    val search = p0.toString().trim().lowercase()
+                    val listSearch = listProduct?.filter { it.ProName.lowercase().contains(search) }
+                    if (listSearch != null) {
+                        productAdapter.setList(listSearch)
+                    }
+                }else{
+                    listProduct?.let { productAdapter.setList(it) }
+                }
+            }
+        })
 
         // Inflate the layout for this fragment
         return binding.root
