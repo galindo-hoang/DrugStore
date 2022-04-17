@@ -1,11 +1,24 @@
 package com.example.drugstore.utils
 
+import android.Manifest
+import android.app.Activity
 import android.content.Context
+import android.content.pm.PackageManager
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
+import android.util.Log
+import androidx.core.app.ActivityCompat
+import com.example.drugstore.data.models.User
 
 object Constants {
+
+    const val BIRTH_DATE: String = "birthday"
+    const val USER_NAME:String = "userName"
+    const val ADDRESS: String = "address"
+    const val URL_IMAGE: String = "userImage"
+    const val GENDER:String = "gender"
+
 
     const val PRODUCT_NAME: String = "proName"
     const val DATE_ORDER: String = "dateOrder"
@@ -18,16 +31,17 @@ object Constants {
     const val OBJECT_PRODUCT: String = "OBJECT_PRODUCT"
     const val CAT_ID: String = "catID"
     const val REQUEST_CURRENT_LOCATION: Int = 1
+    const val REQUEST_STORAGE: Int = 2
     const val LATITUDE: String = "LATITUDE"
     const val LONGITUDE: String = "LONGITUDE"
     const val OBJECT_CATEGORY: String = "OBJECT_CATEGORY"
     const val VERIFICATION_ID: String = "VERIFICATION_ID"
-    const val PHONE_NUMBER: String = "PHONE_NUMBER"
+    const val PHONE_NUMBER: String = "phoneNumber"
     const val BASE_URL_NEWS:String = "https://newsapi.org/"
 
     fun isNetworkAvailable(context: Context):Boolean{
 
-        val connectivityManager = context.getSystemService(android.content.Context.CONNECTIVITY_SERVICE)
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE)
                 as ConnectivityManager
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -46,5 +60,9 @@ object Constants {
             return connectivityManager.activeNetworkInfo != null &&
                     connectivityManager.activeNetworkInfo!!.isConnectedOrConnecting
         }
+    }
+
+    fun checkPermissionRead(context: Context):Boolean{
+        return ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
     }
 }

@@ -1,6 +1,7 @@
 package com.example.drugstore.presentation.order
 
 import android.Manifest
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -13,6 +14,7 @@ import android.os.Bundle
 import android.os.Looper
 import android.provider.Settings
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
@@ -26,6 +28,7 @@ import com.google.android.gms.maps.model.LatLng
 import java.util.*
 
 class AddPlaceActivity : AppCompatActivity() {
+    private var profile: Boolean = false
     private var latLong: LatLng? = null
     private lateinit var mLocationRequest: LocationRequest
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
@@ -37,6 +40,14 @@ class AddPlaceActivity : AppCompatActivity() {
         binding = ActivityAddPlaceBinding.inflate(layoutInflater)
         setContentView(binding.root)
         addressVM = ViewModelProvider(this,AddressVM.AddressVMFactory(application))[AddressVM::class.java]
+
+
+        profile = intent.getBooleanExtra(Constants.ADDRESS,false)
+        if(profile){
+            binding.tvPhoneNumber.visibility = View.GONE
+            binding.tvTitle.visibility = View.GONE
+        }
+
         mapVM = ViewModelProvider(this).get()
         mapVM.selectedItem.observe(this) {
             convertLatLongToAddress(it)
@@ -51,7 +62,13 @@ class AddPlaceActivity : AppCompatActivity() {
         }
 
         binding.btnConfirm.setOnClickListener {
-            insertAddress()
+            if(profile){
+                val callback = Intent()
+                callback.putExtra(Constants.ADDRESS,binding.tvCurrentLocation.text.toString())
+                setResult(Activity.RESULT_OK,callback)
+                finish()
+            }
+            else insertAddress()
         }
     }
 

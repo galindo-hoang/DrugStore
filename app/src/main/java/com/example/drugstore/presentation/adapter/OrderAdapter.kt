@@ -4,14 +4,11 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.drugstore.R
 import com.example.drugstore.data.models.Order
-import com.example.drugstore.data.models.OrderHistory
 import com.example.drugstore.databinding.ItemOrderBinding
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
-import java.util.*
 
 class OrderAdapter() : RecyclerView.Adapter<OrderAdapter.OrderViewHolder>() {
     var onItemClick: ((Order) -> Unit)? = null

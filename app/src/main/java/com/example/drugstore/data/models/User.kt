@@ -6,8 +6,8 @@ import kotlin.collections.ArrayList
 data class User(
     var UserID:String = "",
     var UserName:String = "",
-    var Password:String = "",
-    var Name:String = "",
+//    var Password:String = "",
+//    var Name:String = "",
     // 0: other
     // 1: female
     // 2: male

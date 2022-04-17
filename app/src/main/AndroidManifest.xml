@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:name=".presentation.BaseApplication"
@@ -17,8 +19,8 @@
         android:theme="@style/Theme.DrugStore">
         <activity
             android:name=".presentation.order.OrderStatusActivity"
-            android:theme="@style/Theme.DrugStore.NoActionBar"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.DrugStore.NoActionBar" />
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
 
@@ -47,7 +49,7 @@
         <activity
             android:name=".presentation.order.ChatActivity"
             android:exported="false"
-            android:theme="@style/Theme.DrugStore.NoActionBar"/>
+            android:theme="@style/Theme.DrugStore.NoActionBar" />
         <activity
             android:name=".presentation.auth.ConfirmOTPActivity"
             android:exported="false"
@@ -59,8 +61,8 @@
         <activity
             android:name=".presentation.home.HomeActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustPan"
-            android:theme="@style/Theme.DrugStore.NoActionBar" />
+            android:theme="@style/Theme.DrugStore.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".presentation.auth.SignInActivity"
             android:exported="false"

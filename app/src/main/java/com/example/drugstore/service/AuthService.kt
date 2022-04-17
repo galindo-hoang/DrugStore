@@ -1,7 +1,6 @@
 package com.example.drugstore.service
 
 import android.util.Log
-import com.example.drugstore.data.firebase.FirebaseClass
 import com.example.drugstore.data.models.User
 import com.example.drugstore.data.repository.AuthRepo
 import com.example.drugstore.data.repository.UserRepo
@@ -10,8 +9,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
-import dagger.hilt.android.qualifiers.ActivityContext
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.delay
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -30,7 +27,7 @@ class AuthService @Inject constructor(
         val userCheck = userRepo.fetchUserByID(user.uid)
 
         if (userCheck == null) {
-            userRepo.registerUser(
+            userRepo.connectUser(
                 User(
                     UserID = user.uid,
                     UserName = user.email.toString()
@@ -43,7 +40,7 @@ class AuthService @Inject constructor(
         val userCheck = userRepo.fetchUserByID(user.uid)
 
         if (userCheck == null) {
-            userRepo.registerUser(
+            userRepo.connectUser(
                 User(
                     UserID = user.uid,
                     UserName = user.phoneNumber.toString(),
@@ -83,4 +80,8 @@ class AuthService @Inject constructor(
     }
 
     fun isAuth() = authRepo.getCurrentUserId() != null
+
+    suspend fun findUserByID(user: FirebaseUser)= userRepo.fetchUserByID(user.uid)
+
+    suspend fun updateUser(ID:String, dataUser: HashMap<String,Any>) = userRepo.updateUser(ID,dataUser)
 }
