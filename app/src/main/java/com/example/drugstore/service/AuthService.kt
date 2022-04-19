@@ -20,7 +20,7 @@ class AuthService @Inject constructor(
     private val userRepo: UserRepo,
     private val authRepo: AuthRepo
 ) {
-    suspend fun connectUserByGoogle(user: FirebaseUser) {
+    suspend fun connectUserByGoogle(user: FirebaseUser): Boolean {
         delay(3000);
         Log.d("suspend", "in suspend")
 
@@ -33,10 +33,12 @@ class AuthService @Inject constructor(
                     UserName = user.email.toString()
                 )
             )
+            return true
         }
+        return false
     }
 
-    suspend fun connectUserByPhone(user: FirebaseUser) {
+    suspend fun connectUserByPhone(user: FirebaseUser): Boolean {
         val userCheck = userRepo.fetchUserByID(user.uid)
 
         if (userCheck == null) {
@@ -47,7 +49,9 @@ class AuthService @Inject constructor(
                     PhoneNumber = user.phoneNumber.toString()
                 )
             )
+            return true
         }
+        return false
     }
 
     suspend fun signOut() {
@@ -81,7 +85,8 @@ class AuthService @Inject constructor(
 
     fun isAuth() = authRepo.getCurrentUserId() != null
 
-    suspend fun findUserByID(user: FirebaseUser)= userRepo.fetchUserByID(user.uid)
+    suspend fun findUserByID(user: FirebaseUser) = userRepo.fetchUserByID(user.uid)
 
-    suspend fun updateUser(ID:String, dataUser: HashMap<String,Any>) = userRepo.updateUser(ID,dataUser)
+    suspend fun updateUser(ID: String, dataUser: HashMap<String, Any>) =
+        userRepo.updateUser(ID, dataUser)
 }

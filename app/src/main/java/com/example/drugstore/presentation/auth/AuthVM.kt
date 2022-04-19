@@ -23,23 +23,26 @@ class AuthVM @Inject constructor(
 ) : ViewModel() {
     fun postPhoneSignIn(user: FirebaseUser, context: BaseActivity) {
         viewModelScope.launch {
-            authService.connectUserByPhone(user)
-            postConnect(context);
+            val isNewUser = authService.connectUserByPhone(user)
+            postConnect(context, isNewUser)
         }
     }
 
     fun postGoogleSignIn(user: FirebaseUser, context: BaseActivity) {
         viewModelScope.launch {
-            authService.connectUserByGoogle(user)
+            val isNewUser = authService.connectUserByGoogle(user)
             Log.d("suspend", "out suspend")
-            postConnect(context)
+            postConnect(context, isNewUser)
         }
     }
 
-    private suspend fun postConnect(context: BaseActivity) {
+    private suspend fun postConnect(context: BaseActivity, isNewUser: Boolean) {
         withContext(Dispatchers.Main) {
-            Log.d("suspend", "in suspend")
-            context.startActivity(Intent(context, HomeActivity::class.java))
+            val intent = Intent(context, HomeActivity::class.java)
+            intent.putExtra("isNewUser", isNewUser)
+            context.startActivity(
+                intent
+            )
             context.finish()
         }
     }

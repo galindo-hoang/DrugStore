@@ -15,6 +15,7 @@ import com.example.drugstore.presentation.BaseActivity
 import com.example.drugstore.presentation.notify.NotificationFragment
 import com.example.drugstore.presentation.order.OrderFragment
 import com.example.drugstore.presentation.user.ProfileFragment
+import com.example.drugstore.presentation.user.UpdateProfileFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -25,7 +26,12 @@ class HomeActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        replaceFragment(HomeFragment())
+        val isNewUser = intent.getBooleanExtra("isNewUser", false)
+        if (isNewUser) {
+            replaceFragment(UpdateProfileFragment())
+        } else {
+            replaceFragment(HomeFragment())
+        }
         binding.btnNavView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navBtnHome -> {
