@@ -56,7 +56,6 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginVertical="12dp"
                 android:layout_marginEnd="8dp"
-                android:text="21/01/2021"
                 android:textAppearance="@style/content_text"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/imageViewStartDatePicker"
@@ -112,7 +111,6 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginVertical="12dp"
                 android:layout_marginEnd="8dp"
-                android:text="21/01/2021"
                 android:textAppearance="@style/content_text"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/imageViewEndDatePicker"
@@ -136,6 +134,61 @@
             app:layout_constraintBottom_toBottomOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/layoutEndDate">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginVertical="12dp"
+            android:layout_marginStart="20dp"
+            android:text="@string/Time"
+            android:textAppearance="@style/title_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/btnTimePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <TextView
+                android:id="@+id/textViewContentTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginVertical="12dp"
+                android:layout_marginEnd="8dp"
+                android:textAppearance="@style/content_text"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/imageViewTimePicker"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imageViewTimePicker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/date_picker_button"
+                android:src="@drawable/ic_time"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray_color"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <TextView
         android:id="@+id/textViewMedicine"
         android:layout_width="wrap_content"
@@ -146,14 +199,13 @@
         android:text="@string/medicine"
         android:textAppearance="@style/title_text"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layoutEndDate" />
+        app:layout_constraintTop_toBottomOf="@id/layoutTime" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewMedicines"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textViewMedicine" />
 
@@ -163,7 +215,7 @@
         android:layout_margin="24dp"
         android:contentDescription="@string/add_button"
         android:src="@drawable/ic_add_circle"
-        app:layout_constraintBottom_toBottomOf="@id/recyclerViewMedicines"
         app:layout_constraintEnd_toEndOf="@id/recyclerViewMedicines"
+        app:layout_constraintTop_toBottomOf="@id/recyclerViewMedicines"
         app:tint="@color/turquoise" />
 </androidx.constraintlayout.widget.ConstraintLayout>

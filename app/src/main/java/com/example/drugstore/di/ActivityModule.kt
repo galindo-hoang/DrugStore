@@ -32,4 +32,5 @@ object ActivityModule {
         authRepo: AuthRepo
     ): AuthService =
         AuthService(context, userRepo, authRepo)
+
 }

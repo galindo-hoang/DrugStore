@@ -1,60 +1,93 @@
 package com.example.drugstore.presentation.user
 
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.drugstore.R
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContract
+import androidx.activity.result.contract.ActivityResultContracts
+import com.example.drugstore.databinding.FragmentNewPrescriptionBinding
+import com.example.drugstore.presentation.utils.DatePickerDialogFactory
+import com.example.drugstore.presentation.utils.TimePickerDialogFactory
+import com.example.drugstore.presentation.utils.toTwoDigitString
+import dagger.hilt.android.AndroidEntryPoint
+import java.text.SimpleDateFormat
+import java.util.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [NewPrescriptionFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+@AndroidEntryPoint
 class NewPrescriptionFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private var _binding: FragmentNewPrescriptionBinding? = null
+    private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var addDrugLauncher: ActivityResultLauncher<Intent>
+    private lateinit var startDateCalendar: DatePickerDialog
+    private lateinit var endDateCalendar: DatePickerDialog
+    private lateinit var timePicker: TimePickerDialog
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_new_prescription, container, false)
+    ): View {
+        _binding = FragmentNewPrescriptionBinding.inflate(
+            inflater,
+            container,
+            false
+        )
+        val view = binding.root
+        initResource();
+        bindComponents()
+
+        return view;
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment NewPrescriptionFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            NewPrescriptionFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    @SuppressLint("SetTextI18n")
+    private fun initResource() {
+        addDrugLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+                if (result.resultCode == Activity.RESULT_OK) {
+
                 }
             }
+
+        startDateCalendar = DatePickerDialogFactory.create(requireContext()) {
+            binding.textViewContentStartDate.text = SimpleDateFormat(
+                "dd-MM-yyyy",
+                Locale.getDefault()
+            ).format(DatePickerDialogFactory.cal.time)
+
+        }
+        endDateCalendar = DatePickerDialogFactory.create(requireContext()) {
+            binding.textViewContentEndDate.text = SimpleDateFormat(
+                "dd-MM-yyyy",
+                Locale.getDefault()
+            ).format(DatePickerDialogFactory.cal.time)
+        }
+        timePicker = TimePickerDialogFactory.create(requireContext()) {
+            binding.textViewContentTime.text =
+                TimePickerDialogFactory.lastHour.toTwoDigitString() +
+                        ":${TimePickerDialogFactory.lastMinute.toTwoDigitString()}"
+        }
+    }
+
+    private fun bindComponents() {
+        binding.run {
+            btnStartDatePicker.setOnClickListener {
+                startDateCalendar.show()
+            }
+            btnEndDatePicker.setOnClickListener {
+                endDateCalendar.show()
+            }
+            btnTimePicker.setOnClickListener {
+                timePicker.show()
+            }
+        }
     }
 }

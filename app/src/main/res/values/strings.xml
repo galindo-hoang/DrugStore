@@ -33,7 +33,6 @@
 
     <string name="order">Order</string>
     <string name="ordersummary">Order Summary</string>
-    <string name="drug">Drug</string>
     <string name="drug_preview">Drug preview</string>
     <string name="reminder">Reminder</string>
     <string name="remind_to_take_medicine">Remind to take medicine</string>
@@ -44,4 +43,5 @@
     <string name="end_date">End Date</string>
     <string name="medicine">Medicine</string>
     <string name="add_button">Add Button</string>
+    <string name="Time">Time</string>
 </resources>

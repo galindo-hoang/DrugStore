@@ -2,8 +2,8 @@ package com.example.drugstore.data.repository
 
 import android.app.Application
 import androidx.lifecycle.LiveData
-import com.example.drugstore.data.local.CartProductDao
-import com.example.drugstore.data.local.CartProductDatabase
+import com.example.drugstore.data.local.dao.CartProductDao
+import com.example.drugstore.data.local.database.CartProductDatabase
 import com.example.drugstore.data.models.CartProduct
 
 class CartRepo(application: Application) {
