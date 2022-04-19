@@ -35,7 +35,7 @@ class NewsFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
-        if(requireArguments().containsKey(Constants.OBJECT_ARTICLE)){
+        if(arguments?.containsKey(Constants.OBJECT_ARTICLE) == true){
             article = arguments?.getParcelable(Constants.OBJECT_ARTICLE)
         }
     }

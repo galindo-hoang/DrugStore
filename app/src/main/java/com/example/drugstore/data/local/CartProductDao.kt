@@ -1,9 +1,7 @@
 package com.example.drugstore.data.local
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import com.example.drugstore.data.models.CartProduct
@@ -27,4 +25,7 @@ interface CartProductDao {
 
     @Query("delete from cart where cart.ProID=:id")
     suspend fun deleteProduct(id: Int)
+
+    @Query("DELETE FROM cart")
+    suspend fun deleteAll()
 }

@@ -85,7 +85,7 @@ class OrderFragment : Fragment() {
     }
     private fun setUpViewPager(viewPage: ViewPager?) {
         val adapter: SectionPageAdapter = SectionPageAdapter(childFragmentManager)
-        adapter.addFragment(OrderAlreadyFragment(),"Already")
+        adapter.addFragment(OrderHistoryFragment(),"History")
         adapter.addFragment(OrderOngoingFragment(),"Ongoing")
         viewPage?.adapter=adapter
     }

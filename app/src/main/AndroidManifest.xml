@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:name=".presentation.BaseApplication"
@@ -15,7 +17,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DrugStore">
-
+        <activity
+            android:name=".presentation.order.OrderStatusActivity"
+            android:exported="false"
+            android:theme="@style/Theme.DrugStore.NoActionBar" />
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
 
@@ -44,22 +49,20 @@
         <activity
             android:name=".presentation.order.ChatActivity"
             android:exported="false"
-            android:theme="@style/Theme.DrugStore.NoActionBar"
-            android:windowSoftInputMode="adjustResize" />
+            android:theme="@style/Theme.DrugStore.NoActionBar" />
         <activity
             android:name=".presentation.auth.ConfirmOTPActivity"
             android:exported="false"
-            android:theme="@style/Theme.DrugStore.NoActionBar"
-            android:windowSoftInputMode="adjustResize" />
+            android:theme="@style/Theme.DrugStore.NoActionBar" />
         <activity
             android:name=".presentation.auth.InputPhoneActivity"
             android:exported="false"
-            android:theme="@style/Theme.DrugStore.NoActionBar"
-            android:windowSoftInputMode="adjustResize" />
+            android:theme="@style/Theme.DrugStore.NoActionBar" />
         <activity
             android:name=".presentation.home.HomeActivity"
             android:exported="false"
-            android:theme="@style/Theme.DrugStore.NoActionBar" />
+            android:theme="@style/Theme.DrugStore.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".presentation.auth.SignInActivity"
             android:exported="false"
@@ -71,10 +74,10 @@
         <activity
             android:name=".presentation.auth.SplashActivity"
             android:exported="true"
-            android:theme="@style/Theme.DrugStore.NoActionBar"
-            android:windowSoftInputMode="adjustPan">
+            android:theme="@style/Theme.DrugStore.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

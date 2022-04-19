@@ -40,4 +40,6 @@ class CartService (private val application: Application) {
         }
     }
 
+    suspend fun deleteAll() = CartRepo(application).deleteAll()
+
 }

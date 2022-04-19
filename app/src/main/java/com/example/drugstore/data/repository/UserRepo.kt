@@ -4,8 +4,10 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.drugstore.data.firebase.FirebaseClass
 import com.example.drugstore.data.models.User
+import com.example.drugstore.utils.Result
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
@@ -18,7 +20,7 @@ class UserRepo @Inject constructor() {
 
     suspend fun fetchUserByID(Id: String): User? = withContext(Dispatchers.IO) {
         try {
-            val document = collection.document().get().await()
+            val document = collection.document(Id).get().await()
             document.toObject(User::class.java)
         } catch (e: Exception) {
             Log.e("fetchUserByID", "addOnCanceledListener")
@@ -26,32 +28,23 @@ class UserRepo @Inject constructor() {
         }
     }
 
-    fun registerUser(user: User): Boolean {
+    fun connectUser(user: User): Boolean {
         var result = false
         collection
             .document(user.UserID)
-            .set(user)
+            .set(user, SetOptions.merge())
             .addOnSuccessListener {
                 result = true
             }
         return result
     }
 
-    fun retrieveUser(id: String): MutableLiveData<User> {
-        val result: MutableLiveData<User> = MutableLiveData()
-
-        collection
-            .document(id)
-            .get()
-            .addOnSuccessListener {
-                result.postValue(it.toObject(User::class.java))
-            }
-            .addOnCanceledListener {
-                result.postValue(null)
-            }
-
-        return result
+    suspend fun updateUser(ID:String, dataUser: HashMap<String,Any>): Result<String> = withContext(Dispatchers.IO){
+        try {
+            collection.document(ID).update(dataUser).await()
+            Result.Success("Update Profile Success")
+        }catch (e:Exception){
+            Result.Error("cant update profile","cant update profile")
+        }
     }
-
-    //    fun getUserByID()
 }

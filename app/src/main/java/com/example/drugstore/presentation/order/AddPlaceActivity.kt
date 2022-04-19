@@ -1,26 +1,26 @@
 package com.example.drugstore.presentation.order
 
 import android.Manifest
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
 import android.location.LocationManager
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
 import android.net.Uri
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Looper
 import android.provider.Settings
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import com.example.drugstore.databinding.ActivityAddPlaceBinding
+import com.example.drugstore.presentation.home.AddressVM
 import com.example.drugstore.utils.Constants
 import com.example.drugstore.utils.Constants.isNetworkAvailable
 import com.google.android.gms.location.*
@@ -28,17 +28,28 @@ import com.google.android.gms.maps.model.LatLng
 import java.util.*
 
 class AddPlaceActivity : AppCompatActivity() {
+    private var profile: Boolean = false
     private var latLong: LatLng? = null
     private lateinit var mLocationRequest: LocationRequest
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var binding: ActivityAddPlaceBinding
-    private lateinit var viewModel: MapVM
+    private lateinit var mapVM: MapVM
+    private lateinit var addressVM:AddressVM
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddPlaceBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        viewModel = ViewModelProvider(this).get()
-        viewModel.selectedItem.observe(this) {
+        addressVM = ViewModelProvider(this,AddressVM.AddressVMFactory(application))[AddressVM::class.java]
+
+
+        profile = intent.getBooleanExtra(Constants.ADDRESS,false)
+        if(profile){
+            binding.tvPhoneNumber.visibility = View.GONE
+            binding.tvTitle.visibility = View.GONE
+        }
+
+        mapVM = ViewModelProvider(this).get()
+        mapVM.selectedItem.observe(this) {
             convertLatLongToAddress(it)
         }
 
@@ -51,7 +62,27 @@ class AddPlaceActivity : AppCompatActivity() {
         }
 
         binding.btnConfirm.setOnClickListener {
-            Log.e("----", viewModel.selectedItem.value.toString())
+            if(profile){
+                val callback = Intent()
+                callback.putExtra(Constants.ADDRESS,binding.tvCurrentLocation.text.toString())
+                setResult(Activity.RESULT_OK,callback)
+                finish()
+            }
+            else insertAddress()
+        }
+    }
+
+    private fun insertAddress() {
+        val title = binding.tvTitle.text.toString()
+        val phoneNumber = binding.tvPhoneNumber.text.toString()
+        if(title != "" && phoneNumber != ""){
+            addressVM.insertAddress(title,
+                mapVM.selectedItem.value?.longitude ?: 0.0,
+                mapVM.selectedItem.value?.latitude ?: 0.0,
+                binding.tvCurrentLocation.text.toString(),phoneNumber)
+            finish()
+        }else{
+            Toast.makeText(this,"Please input place holder",Toast.LENGTH_SHORT).show()
         }
     }
 

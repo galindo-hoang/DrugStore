@@ -13,21 +13,6 @@ import javax.inject.Singleton
 class FirebaseClass @Inject constructor(
     private var googleSignInClient: GoogleSignInClient
 ) {
-
-    fun setGoogleSignIn(context: Context, clientID: String) {
-        googleSignInClient = GoogleSignIn.getClient(
-            context,
-            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(clientID)
-                .requestEmail()
-                .build()
-        )
-    }
-
-    fun getGoogleSignInClient(): GoogleSignInClient {
-        return googleSignInClient
-    }
-
     companion object {
 
         fun getFirebaseAuth(): FirebaseAuth {

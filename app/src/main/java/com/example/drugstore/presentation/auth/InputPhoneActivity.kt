@@ -53,7 +53,6 @@ class InputPhoneActivity : BaseActivity() {
             onBackPressed()
         }
     }
-
     private fun onCodeSent(
         verificationId: String,
         token: PhoneAuthProvider.ForceResendingToken

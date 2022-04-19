@@ -32,7 +32,7 @@ class AddressAdapter :RecyclerView.Adapter<AddressAdapter.AddressViewHolder>() {
     override fun onBindViewHolder(holder: AddressViewHolder, position: Int) {
         val model = list[position]
         holder.binding.tvAddress.text = model.address
-        holder.binding.tvPhoneNumber.text = model.PhoneNumber
+        holder.binding.tvPhoneNumber.text = model.phoneNumber
         holder.binding.tvTitle.text = model.title
         holder.binding.rb.isChecked = (model.check && (selectedPosition == position || selectedPosition == -1))
         holder.binding.rb.setOnCheckedChangeListener { _, b ->
