@@ -10,6 +10,6 @@ data class Prescription(
     var prescriptionId: String? = null,
     val startDate: Date? = null,
     val endDate: Date? = null,
-    val time: String? = null,
+    val time: Map<String, Int>? = null,
     val prescriptionDetails: List<PrescriptionDetail>? = null,
 )

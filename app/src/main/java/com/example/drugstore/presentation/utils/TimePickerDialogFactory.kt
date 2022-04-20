@@ -9,8 +9,13 @@ import java.util.*
 
 class TimePickerDialogFactory private constructor() {
     companion object {
-        var lastHour = 0;
-        var lastMinute = 0;
+        var lastHour = 0
+        var lastMinute = 0
+
+        fun setPreviousTime(time: Pair<Int, Int>) {
+            lastHour = time.first
+            lastMinute = time.second
+        }
 
         fun create(
             context: Context,
@@ -28,5 +33,7 @@ class TimePickerDialogFactory private constructor() {
                 true
             )
         }
+
+        fun getTime() = Pair(lastHour, lastMinute)
     }
 }

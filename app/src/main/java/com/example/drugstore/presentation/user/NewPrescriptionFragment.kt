@@ -21,6 +21,7 @@ import com.example.drugstore.presentation.utils.toTwoDigitString
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class NewPrescriptionFragment : Fragment() {
@@ -32,6 +33,9 @@ class NewPrescriptionFragment : Fragment() {
     private lateinit var endDateCalendar: DatePickerDialog
     private lateinit var timePicker: TimePickerDialog
 
+    @Inject
+    lateinit var prescriptionVM: PrescriptionVM;
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -42,13 +46,34 @@ class NewPrescriptionFragment : Fragment() {
             false
         )
         val view = binding.root
-        initResource();
+        observeData()
+        initResource()
         bindComponents()
 
         return view;
     }
 
     @SuppressLint("SetTextI18n")
+    private fun observeData() {
+        prescriptionVM.startDate.observe(viewLifecycleOwner) { startDate ->
+            binding.textViewContentStartDate.text = SimpleDateFormat(
+                "dd-MM-yyyy",
+                Locale.getDefault()
+            ).format(startDate)
+        }
+        prescriptionVM.endDate.observe(viewLifecycleOwner) { endDate ->
+            binding.textViewContentStartDate.text = SimpleDateFormat(
+                "dd-MM-yyyy",
+                Locale.getDefault()
+            ).format(endDate)
+        }
+        prescriptionVM.time.observe(viewLifecycleOwner) { time ->
+            binding.textViewContentTime.text =
+                time.first.toTwoDigitString() +
+                        ":${time.second.toTwoDigitString()}"
+        }
+    }
+
     private fun initResource() {
         addDrugLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
@@ -58,34 +83,28 @@ class NewPrescriptionFragment : Fragment() {
             }
 
         startDateCalendar = DatePickerDialogFactory.create(requireContext()) {
-            binding.textViewContentStartDate.text = SimpleDateFormat(
-                "dd-MM-yyyy",
-                Locale.getDefault()
-            ).format(DatePickerDialogFactory.cal.time)
-
+            prescriptionVM.updateStartDate(DatePickerDialogFactory.getDate())
         }
         endDateCalendar = DatePickerDialogFactory.create(requireContext()) {
-            binding.textViewContentEndDate.text = SimpleDateFormat(
-                "dd-MM-yyyy",
-                Locale.getDefault()
-            ).format(DatePickerDialogFactory.cal.time)
+            prescriptionVM.updateEndDate(DatePickerDialogFactory.getDate())
         }
         timePicker = TimePickerDialogFactory.create(requireContext()) {
-            binding.textViewContentTime.text =
-                TimePickerDialogFactory.lastHour.toTwoDigitString() +
-                        ":${TimePickerDialogFactory.lastMinute.toTwoDigitString()}"
+            prescriptionVM.updateTime(TimePickerDialogFactory.getTime())
         }
     }
 
     private fun bindComponents() {
         binding.run {
             btnStartDatePicker.setOnClickListener {
+                DatePickerDialogFactory.setPreviousDate(prescriptionVM.startDate.value!!)
                 startDateCalendar.show()
             }
             btnEndDatePicker.setOnClickListener {
+                DatePickerDialogFactory.setPreviousDate(prescriptionVM.endDate.value!!)
                 endDateCalendar.show()
             }
             btnTimePicker.setOnClickListener {
+                TimePickerDialogFactory.setPreviousTime(prescriptionVM.time.value!!)
                 timePicker.show()
             }
         }

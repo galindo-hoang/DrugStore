@@ -17,7 +17,10 @@ class PrescriptionMapper @Inject constructor(
         Prescription(
             startDate = prescriptionDto.startDate,
             endDate = prescriptionDto.endDate,
-            time = prescriptionDto.time,
+            time = mapOf(
+                "hours" to prescriptionDto.hours,
+                "minutes" to prescriptionDto.minutes
+            ),
             prescriptionDetails = prescriptionDetailDto.map { item ->
                 prescriptionDetailMapper.toEntity(item)
             }

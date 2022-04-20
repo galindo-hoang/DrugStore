@@ -51,8 +51,9 @@ class UpdateProfileFragment : Fragment() {
                 SimpleDateFormat(
                     "dd-MM-yyyy",
                     Locale.getDefault()
-                ).format(DatePickerDialogFactory.cal.time)
-            dataUser[Constants.BIRTH_DATE] = DatePickerDialogFactory.cal.time
+                ).format(DatePickerDialogFactory.getDate())
+            DatePickerDialogFactory.setPreviousDate(DatePickerDialogFactory.getDate())
+            dataUser[Constants.BIRTH_DATE] = DatePickerDialogFactory.getDate()
         }
         genderList = resources.getStringArray(R.array.gender).toList()
     }
@@ -83,7 +84,7 @@ class UpdateProfileFragment : Fragment() {
                 binding.tvBirth.text =
                     SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(it.Birthday)
                 binding.tvAddress.text = it.Address
-
+                DatePickerDialogFactory.setPreviousDate(it.Birthday)
 
                 if (it.PhoneNumber.isNotEmpty()) {
                     binding.etPhoneNumber.setText(it.PhoneNumber)
