@@ -210,6 +210,7 @@
         app:layout_constraintTop_toBottomOf="@id/textViewMedicine" />
 
     <ImageView
+        android:id="@+id/btnAddMedicine"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_margin="24dp"
@@ -218,4 +219,21 @@
         app:layout_constraintEnd_toEndOf="@id/recyclerViewMedicines"
         app:layout_constraintTop_toBottomOf="@id/recyclerViewMedicines"
         app:tint="@color/turquoise" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnSave"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="24dp"
+        android:background="@drawable/solid_blue_button"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="@string/save_prescription"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnAddMedicine" />
 </androidx.constraintlayout.widget.ConstraintLayout>

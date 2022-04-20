@@ -65,7 +65,7 @@ class HomeActivity : BaseActivity() {
         }
     }
 
-    private fun replaceFragment(fragment: Fragment) {
+    fun replaceFragment(fragment: Fragment) {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(binding.fragmentBottomNav.id, fragment)
         fragmentTransaction.commit()

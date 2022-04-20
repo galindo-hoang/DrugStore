@@ -2,14 +2,16 @@ package com.example.drugstore.data.local.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.drugstore.data.local.dto.PrescriptionDto
+import com.example.drugstore.data.models.Prescription
 import java.util.*
 
 @Dao
 interface PrescriptionDao {
-    @Insert
-    suspend fun insertProduct(prescriptionDTO: PrescriptionDto)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertProduct(prescriptionDTO: PrescriptionDto): Long
 
     @Query(
         "UPDATE prescription SET startDate = :startDate," +
@@ -20,5 +22,8 @@ interface PrescriptionDao {
         endDate: Date,
         minutes: Int,
         hours: Int
-    )
+    ): Int
+
+    @Query("SELECT * FROM prescription")
+    suspend fun getPrescription(): List<PrescriptionDto>
 }

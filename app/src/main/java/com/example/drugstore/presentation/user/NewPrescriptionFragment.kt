@@ -15,6 +15,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import com.example.drugstore.databinding.FragmentNewPrescriptionBinding
+import com.example.drugstore.presentation.home.HomeActivity
 import com.example.drugstore.presentation.utils.DatePickerDialogFactory
 import com.example.drugstore.presentation.utils.TimePickerDialogFactory
 import com.example.drugstore.presentation.utils.toTwoDigitString
@@ -28,13 +29,12 @@ class NewPrescriptionFragment : Fragment() {
     private var _binding: FragmentNewPrescriptionBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var addDrugLauncher: ActivityResultLauncher<Intent>
     private lateinit var startDateCalendar: DatePickerDialog
     private lateinit var endDateCalendar: DatePickerDialog
     private lateinit var timePicker: TimePickerDialog
 
     @Inject
-    lateinit var prescriptionVM: PrescriptionVM;
+    lateinit var prescriptionVM: PrescriptionVM
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,12 +61,14 @@ class NewPrescriptionFragment : Fragment() {
                 Locale.getDefault()
             ).format(startDate)
         }
+
         prescriptionVM.endDate.observe(viewLifecycleOwner) { endDate ->
-            binding.textViewContentStartDate.text = SimpleDateFormat(
+            binding.textViewContentEndDate.text = SimpleDateFormat(
                 "dd-MM-yyyy",
                 Locale.getDefault()
             ).format(endDate)
         }
+
         prescriptionVM.time.observe(viewLifecycleOwner) { time ->
             binding.textViewContentTime.text =
                 time.first.toTwoDigitString() +
@@ -75,13 +77,6 @@ class NewPrescriptionFragment : Fragment() {
     }
 
     private fun initResource() {
-        addDrugLauncher =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-                if (result.resultCode == Activity.RESULT_OK) {
-
-                }
-            }
-
         startDateCalendar = DatePickerDialogFactory.create(requireContext()) {
             prescriptionVM.updateStartDate(DatePickerDialogFactory.getDate())
         }
@@ -107,6 +102,23 @@ class NewPrescriptionFragment : Fragment() {
                 TimePickerDialogFactory.setPreviousTime(prescriptionVM.time.value!!)
                 timePicker.show()
             }
+            btnAddMedicine.setOnClickListener {
+                val homeActivity = activity as HomeActivity
+                homeActivity.replaceFragment(RemindDrugFragment())
+            }
+            btnSave.setOnClickListener {
+                prescriptionVM.savePrescription()
+            }
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        prescriptionVM.getPrescription()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        prescriptionVM.updatePrescription()
     }
 }

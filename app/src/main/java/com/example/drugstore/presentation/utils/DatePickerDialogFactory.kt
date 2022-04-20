@@ -2,6 +2,7 @@ package com.example.drugstore.presentation.utils
 
 import android.app.DatePickerDialog
 import android.content.Context
+import android.util.Log
 import com.example.drugstore.utils.Constants
 import java.text.SimpleDateFormat
 import java.time.Year
@@ -10,9 +11,6 @@ import java.util.*
 class DatePickerDialogFactory private constructor() {
     companion object {
         private var calendar = Calendar.getInstance();
-        val selectedYear = calendar.get(Calendar.YEAR)
-        val selectedMonth = calendar.get(Calendar.MONTH)
-        val selectedDay = calendar.get(Calendar.DAY_OF_MONTH)
 
         fun setPreviousDate(date: Date) {
             calendar.time = date
@@ -30,9 +28,11 @@ class DatePickerDialogFactory private constructor() {
                     calendar.set(Calendar.DAY_OF_MONTH, day)
                     onDateSelected()
                 },
-                selectedYear,
-                selectedMonth,
-                selectedDay
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(
+                    Calendar.DAY_OF_MONTH
+                )
             )
         }
 
