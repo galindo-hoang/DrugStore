@@ -1,13 +1,9 @@
-package com.example.drugstore.presentation.user
+package com.example.drugstore.presentation.user.reminder
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import com.example.drugstore.R
 import com.example.drugstore.databinding.ActivityPrescriptionBinding
-import com.example.drugstore.databinding.FragmentRemindDrugBinding
 import com.example.drugstore.presentation.BaseActivity
-import com.example.drugstore.presentation.home.HomeFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -19,13 +15,20 @@ class PrescriptionActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivityPrescriptionBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        replaceFragment(NewPrescriptionFragment())
+        if (intent.getBooleanExtra(REMINDER_FRAGMENT, false)) {
+            replaceFragment(ReminderFragment())
+        } else {
+            replaceFragment(NewPrescriptionFragment())
+        }
     }
 
     fun replaceFragment(fragment: Fragment) {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(binding.fragmentLayout.id, fragment)
         fragmentTransaction.commit()
+    }
+
+    companion object {
+        const val REMINDER_FRAGMENT = "RemindFragment"
     }
 }

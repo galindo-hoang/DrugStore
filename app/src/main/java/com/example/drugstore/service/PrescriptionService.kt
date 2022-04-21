@@ -1,11 +1,11 @@
 package com.example.drugstore.service
 
-import android.util.Log
 import com.example.drugstore.data.local.dao.PrescriptionDao
 import com.example.drugstore.data.local.dao.PrescriptionDetailDao
 import com.example.drugstore.data.local.dto.PrescriptionDetailDto
 import com.example.drugstore.data.local.dto.PrescriptionDto
 import com.example.drugstore.data.mapper.PrescriptionMapper
+import com.example.drugstore.data.models.Prescription
 import com.example.drugstore.data.models.Product
 import com.example.drugstore.data.repository.PrescriptionRepo
 import com.example.drugstore.data.repository.ProductRepo
@@ -22,7 +22,7 @@ class PrescriptionService @Inject constructor(
     private val prescriptionDetailDao: PrescriptionDetailDao,
     private val prescriptionMapper: PrescriptionMapper
 ) {
-    suspend fun getPrescription(): Result<PrescriptionDto> {
+    suspend fun getPrescriptionDto(): Result<PrescriptionDto> {
         val prescription = prescriptionDao.getPrescription()
 
         return if (prescription.isEmpty()) {
@@ -141,5 +141,39 @@ class PrescriptionService @Inject constructor(
         } else {
             Result.Error("Failed to delete product")
         }
+    }
+
+    suspend fun savePrescription(): Result<String> {
+        val prescriptionDto = getPrescriptionDto()
+        val prescriptionDetails = prescriptionDto.data?.prescriptionDetails
+
+        if (prescriptionDetails == null || prescriptionDetails.isEmpty()) {
+            return Result.Error("No products added")
+        }
+
+        val prescription = prescriptionMapper.toEntity(prescriptionDto.data)
+
+        return try {
+            val prescriptionId = prescriptionRepo.insertPrescription(prescription)
+
+            Result.Success(prescriptionId)
+        } catch (e: Exception) {
+            Result.Error("Failed to save prescription")
+        }
+    }
+
+    suspend fun getPrescription(id: String): Result<Prescription> {
+        return try {
+            val prescription = prescriptionRepo.getPrescription(id)
+
+            Result.Success(prescription)
+        } catch (e: Exception) {
+            Result.Error("Failed to get prescription")
+        }
+    }
+
+    suspend fun clearLocal() {
+        prescriptionDao.deleteAll()
+        prescriptionDetailDao.deleteAll()
     }
 }

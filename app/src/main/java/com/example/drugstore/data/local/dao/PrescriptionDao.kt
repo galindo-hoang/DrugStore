@@ -1,9 +1,6 @@
 package com.example.drugstore.data.local.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.example.drugstore.data.local.dto.PrescriptionDto
 import com.example.drugstore.data.models.Prescription
 import java.util.*
@@ -26,4 +23,7 @@ interface PrescriptionDao {
 
     @Query("SELECT * FROM prescription")
     suspend fun getPrescription(): List<PrescriptionDto>
+
+    @Query("DELETE FROM prescription")
+    fun deleteAll()
 }

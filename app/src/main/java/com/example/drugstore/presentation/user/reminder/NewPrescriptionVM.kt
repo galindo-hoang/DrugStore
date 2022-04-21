@@ -1,4 +1,4 @@
-package com.example.drugstore.presentation.user
+package com.example.drugstore.presentation.user.reminder
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.drugstore.data.local.dto.PrescriptionDetailDto
 import com.example.drugstore.service.PrescriptionService
-import com.example.drugstore.utils.Status
 import dagger.hilt.android.qualifiers.ActivityContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -18,7 +17,7 @@ import java.util.Date
 import javax.inject.Inject
 import com.example.drugstore.utils.Result
 
-class PrescriptionVM @Inject constructor(
+class NewPrescriptionVM @Inject constructor(
     @SuppressLint("StaticFieldLeak") @ActivityContext private val context: Context,
     private val prescriptionService: PrescriptionService
 ) : ViewModel() {
@@ -56,7 +55,7 @@ class PrescriptionVM @Inject constructor(
 
     fun getPrescription() {
         viewModelScope.launch(Dispatchers.IO) {
-            prescriptionService.getPrescription().run {
+            prescriptionService.getPrescriptionDto().run {
                 if (this is Result.Success) {
                     _startDate.postValue(data!!.startDate)
                     _endDate.postValue(data.endDate)
@@ -145,7 +144,17 @@ class PrescriptionVM @Inject constructor(
         }
     }
 
-    fun savePrescription() {
-        TODO("Not yet implemented")
+    fun savePrescription(onSaveSuccess: (String) -> Unit) {
+        viewModelScope.launch(Dispatchers.IO) {
+            prescriptionService.savePrescription()
+                .run {
+                    if (this is Result.Success) {
+                        onSaveSuccess(data!!)
+                        prescriptionService.clearLocal()
+                    } else if (this is Result.Error) {
+                        showError(message)
+                    }
+                }
+        }
     }
 }

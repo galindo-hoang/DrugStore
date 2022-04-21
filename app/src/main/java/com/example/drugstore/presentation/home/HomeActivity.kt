@@ -3,20 +3,14 @@ package com.example.drugstore.presentation.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
-import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.example.drugstore.R
 import com.example.drugstore.databinding.ActivityHomeBinding
 import com.example.drugstore.presentation.BaseActivity
 import com.example.drugstore.presentation.notify.NotificationFragment
 import com.example.drugstore.presentation.order.OrderFragment
-import com.example.drugstore.presentation.user.NewPrescriptionFragment
-import com.example.drugstore.presentation.user.PrescriptionActivity
+import com.example.drugstore.presentation.user.reminder.PrescriptionActivity
 import com.example.drugstore.presentation.user.ProfileFragment
 import com.example.drugstore.presentation.user.UpdateProfileFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,9 +23,12 @@ class HomeActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val isNewUser = intent.getBooleanExtra("isNewUser", false)
+        val isNewUser = intent.getBooleanExtra(IS_NEW_USER, false)
+        val isProfile = intent.getBooleanExtra(IS_PROFILE, false)
         if (isNewUser) {
             replaceFragment(UpdateProfileFragment())
+        } else if (isProfile) {
+            replaceFragment(ProfileFragment())
         } else {
             replaceFragment(HomeFragment())
         }
@@ -76,5 +73,10 @@ class HomeActivity : BaseActivity() {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(binding.fragmentBottomNav.id, fragment)
         fragmentTransaction.commit()
+    }
+
+    companion object {
+        const val IS_NEW_USER = "isNewUser"
+        const val IS_PROFILE = "profile"
     }
 }

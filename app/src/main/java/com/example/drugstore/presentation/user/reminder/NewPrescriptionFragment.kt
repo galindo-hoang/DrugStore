@@ -1,23 +1,15 @@
-package com.example.drugstore.presentation.user
+package com.example.drugstore.presentation.user.reminder
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContract
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.drugstore.data.models.Prescription
 import com.example.drugstore.databinding.FragmentNewPrescriptionBinding
 import com.example.drugstore.presentation.adapter.NewPrescriptionAdapter
 import com.example.drugstore.presentation.home.HomeActivity
@@ -40,7 +32,7 @@ class NewPrescriptionFragment : Fragment() {
     private lateinit var newPrescriptionAdapter: NewPrescriptionAdapter
 
     @Inject
-    lateinit var prescriptionVM: PrescriptionVM
+    lateinit var prescriptionVM: NewPrescriptionVM
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -123,7 +115,7 @@ class NewPrescriptionFragment : Fragment() {
                 prescriptionActivity.replaceFragment(RemindDrugFragment())
             }
             btnSave.setOnClickListener {
-                prescriptionVM.savePrescription()
+                prescriptionVM.savePrescription(::onSavePrescriptionSuccess)
             }
             btnBack.setOnClickListener {
                 val intent = Intent(requireContext(), HomeActivity::class.java)
@@ -135,6 +127,11 @@ class NewPrescriptionFragment : Fragment() {
                 layoutManager = LinearLayoutManager(requireContext())
             }
         }
+    }
+
+    private fun onSavePrescriptionSuccess(id: String) {
+        val activity = activity as PrescriptionActivity
+        activity.replaceFragment(ReminderDetailFragment.newInstance(id))
     }
 
     override fun onStart() {

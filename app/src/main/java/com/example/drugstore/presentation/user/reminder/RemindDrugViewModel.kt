@@ -1,8 +1,6 @@
-package com.example.drugstore.presentation.user
+package com.example.drugstore.presentation.user.reminder
 
-import android.app.Activity
 import android.content.Context
-import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
