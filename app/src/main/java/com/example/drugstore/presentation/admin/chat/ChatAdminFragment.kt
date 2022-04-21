@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.drugstore.R
 import com.example.drugstore.databinding.FragmentChatAdminBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ChatAdminFragment : Fragment() {
     private lateinit var binding:FragmentChatAdminBinding
 

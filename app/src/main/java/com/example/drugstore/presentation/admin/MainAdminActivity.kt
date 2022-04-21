@@ -1,17 +1,15 @@
 package com.example.drugstore.presentation.admin
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.MenuItem
 import androidx.viewpager.widget.ViewPager
 import com.example.drugstore.R
 import com.example.drugstore.databinding.ActivityMainAdminBinding
+import com.example.drugstore.presentation.BaseActivity
 import com.example.drugstore.presentation.adapter.AdminViewPagerAdapter
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainAdminActivity : AppCompatActivity() {
+class MainAdminActivity : BaseActivity() {
     private lateinit var binding: ActivityMainAdminBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,10 +1,14 @@
 package com.example.drugstore.presentation.home
 
+import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.example.drugstore.data.models.Product
+import com.example.drugstore.presentation.BaseActivity
+import com.example.drugstore.presentation.admin.home.AddProductActivity
 import com.example.drugstore.service.ProductService
 import com.example.drugstore.service.StorageService
 import com.example.drugstore.utils.Constants
@@ -55,38 +59,42 @@ class ProductVM @Inject constructor(
         }
     }
 
-    fun addProduct(product: Product) = liveData(Dispatchers.IO){
-        var count:Int? = null
-        val a = viewModelScope.launch {
-            when(val countResult = productService.countProduct()){
-                is Result.Success -> count = countResult.data
+    fun updateProduct(dataUpdate: HashMap<String,Any>,ID: String,addProductActivity: AddProductActivity) {
+        viewModelScope.launch {
+            if(dataUpdate.containsKey(Constants.PRODUCT_URL_IMAGE)) {
+                dataUpdate[Constants.PRODUCT_URL_IMAGE] = storageService.uploadImageProductToStorage("product",
+                    dataUpdate[Constants.PRODUCT_URL_IMAGE] as String,ID).toString()
             }
-        }
-        a.join()
-        if(count == null) emit(false)
-        else{
-            product.ProID = count as Int
-            if(product.ProImage != "") storageService.uploadImageProductToStorage("product",product.ProImage,count.toString())
-            when(val result = productService.addProduct(product)){
-                is Result.Success -> emit(result.data)
-                else -> {
-                    Log.e("ViewModel--Product",result.message.toString())
-                    emit(result.data)
-                }
+            when(productService.updateProduct(ID,dataUpdate)){
+                is Result.Success -> addProductActivity.finish()
+                else -> Toast.makeText(addProductActivity,"cant add product",Toast.LENGTH_SHORT).show()
             }
+            addProductActivity.hideProgressDialog()
         }
     }
 
-    fun updateProduct(dataUpdate: HashMap<String,Any>,ID: String) = liveData(Dispatchers.IO){
-        if(dataUpdate.containsKey(Constants.PRODUCT_URL_IMAGE)) storageService.uploadImageProductToStorage("product",
-            dataUpdate[Constants.PRODUCT_URL_IMAGE] as String,ID)
-        when(val result = productService.updateProduct(ID,dataUpdate)){
-            is Result.Success -> emit(result.data)
-            else -> {
-                Log.e("ViewModel--Product",result.message.toString())
-                emit(result.data)
+    fun addProduct(product: Product,addProductActivity: AddProductActivity) {
+        viewModelScope.launch {
+            val count: Int? = productService.countProduct().data
+            if (product.ProImage != "") {
+                product.ProImage =
+                    storageService.uploadImageProductToStorage(
+                        "product",
+                        product.ProImage,
+                        count.toString()
+                    ).data.toString()
             }
+            if (count == null) Toast.makeText(addProductActivity,"cant add product",Toast.LENGTH_SHORT).show()
+            else {
+                product.ProID = count
+                when (productService.addProduct(product)) {
+                    is Result.Success -> addProductActivity.finish()
+                    else -> Toast.makeText(addProductActivity,"cant add product",Toast.LENGTH_SHORT).show()
+                }
+            }
+            addProductActivity.hideProgressDialog()
         }
+
     }
 
 

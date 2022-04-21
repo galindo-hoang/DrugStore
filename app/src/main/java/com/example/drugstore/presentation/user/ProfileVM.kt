@@ -31,6 +31,7 @@ class ProfileVM @Inject constructor(
             withContext(Dispatchers.Main) {
                 context.startActivity(Intent(context, SplashActivity::class.java))
             }
+            context.finishAffinity()
         }
     }
 
