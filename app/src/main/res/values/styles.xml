@@ -18,6 +18,11 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="quantity_label_text">
+        <item name="android:textSize">@dimen/quantity_text_size</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
     <dimen name="title_text_size">16dp</dimen>
     <dimen name="content_text_size">16sp</dimen>
     <dimen name="quantity_text_size">24sp</dimen>

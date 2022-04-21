@@ -1,6 +1,7 @@
 package com.example.drugstore.data.local.dto
 
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import java.util.*
 
@@ -12,4 +13,7 @@ data class PrescriptionDto(
     var endDate: Date = Date(),
     var minutes: Int = 0,
     var hours: Int = 0,
+
+    @Ignore
+    var prescriptionDetails: List<PrescriptionDetailDto> = emptyList()
 )

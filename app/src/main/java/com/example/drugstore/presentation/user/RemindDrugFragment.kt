@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import com.example.drugstore.R
 import com.example.drugstore.databinding.FragmentRemindDrugBinding
 import com.example.drugstore.presentation.adapter.ProductAdapter
@@ -31,23 +32,13 @@ class RemindDrugFragment : Fragment() {
         val view = binding.root
         observeViewModel()
         bindComponents()
-        onScrollChanged(view)
         return view
-    }
-
-    private fun onScrollChanged(view: View) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            view.setOnScrollChangeListener { _, i, i2, i3, i4 ->
-                Log.d("HAGLAS", "onScrollChanged")
-            }
-        }
     }
 
     private fun observeViewModel() {
         productAdapter = ProductAdapter().apply {
             onItemClick = { product ->
-                remindDrugVM.addProduct(product)
-                back()
+                remindDrugVM.addProduct(product, ::back)
             }
         }
 
@@ -61,13 +52,37 @@ class RemindDrugFragment : Fragment() {
             btnBack.setOnClickListener {
                 back()
             }
-            rvMedicines.adapter = productAdapter
+            rvMedicines.apply {
+                adapter = productAdapter
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                        override fun onScrolled(
+                            recyclerView: RecyclerView,
+                            dx: Int,
+                            dy: Int
+                        ) {
+                            recyclerView.run {
+                                val offset = computeVerticalScrollOffset()
+                                val height = computeVerticalScrollRange()
+                                val thumbSize = computeVerticalScrollExtent()
+                                val load = offset + 2 * thumbSize >= height
+                                if (load) {
+                                    remindDrugVM.getProducts()
+                                }
+                            }
+                        }
+                    })
+
+                }
+            }
         }
     }
 
+
     private fun back() {
-        val homeActivity = activity as HomeActivity
-        homeActivity.replaceFragment(NewPrescriptionFragment())
+        val prescriptionActivity = activity as PrescriptionActivity
+        prescriptionActivity.replaceFragment(NewPrescriptionFragment())
     }
 
     override fun onStart() {

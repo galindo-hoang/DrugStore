@@ -20,6 +20,7 @@ class ProductService @Inject constructor(
 
     suspend fun addProduct(product: Product) = productRepo.addProduct(product)
     suspend fun updateProduct(id: String, dataUpdate: HashMap<String, Any>) = productRepo.updateProduct(id,dataUpdate)
+
     suspend fun fetchPaginateProducts(
         pageSize: Long,
         firstFetch: Boolean = true

@@ -1,6 +1,7 @@
 package com.example.drugstore.presentation.home
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -15,6 +16,7 @@ import com.example.drugstore.presentation.BaseActivity
 import com.example.drugstore.presentation.notify.NotificationFragment
 import com.example.drugstore.presentation.order.OrderFragment
 import com.example.drugstore.presentation.user.NewPrescriptionFragment
+import com.example.drugstore.presentation.user.PrescriptionActivity
 import com.example.drugstore.presentation.user.ProfileFragment
 import com.example.drugstore.presentation.user.UpdateProfileFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -60,7 +62,12 @@ class HomeActivity : BaseActivity() {
             }
 
             navBtnNewPrescription.setOnClickListener {
-                replaceFragment(NewPrescriptionFragment())
+                val intent = Intent(
+                    this@HomeActivity,
+                    PrescriptionActivity::class.java
+                )
+                startActivity(intent)
+                finish()
             }
         }
     }

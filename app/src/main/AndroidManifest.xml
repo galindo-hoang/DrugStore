@@ -18,6 +18,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DrugStore">
         <activity
+            android:name=".presentation.user.PrescriptionActivity"
+            android:exported="false"
+            android:theme="@style/Theme.DrugStore.NoActionBar" />
+        <activity
             android:name=".presentation.admin.MainAdminActivity"
             android:exported="false" />
         <activity

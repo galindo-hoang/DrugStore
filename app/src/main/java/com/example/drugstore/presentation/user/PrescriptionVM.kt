@@ -31,7 +31,8 @@ class PrescriptionVM @Inject constructor(
     val startDate: LiveData<Date> get() = _startDate
     val endDate: LiveData<Date> get() = _endDate
     val time: LiveData<Pair<Int, Int>> get() = _time
-    val prescriptionDetails: LiveData<List<PrescriptionDetailDto>> get() = _prescriptionDetails
+    val prescriptionDetails: LiveData<List<PrescriptionDetailDto>>
+        get() = _prescriptionDetails
 
     fun updateTime(time: Pair<Int, Int>) {
         _time.value = time
@@ -60,6 +61,7 @@ class PrescriptionVM @Inject constructor(
                     _startDate.postValue(data!!.startDate)
                     _endDate.postValue(data.endDate)
                     _time.postValue(Pair(data.hours, data.minutes))
+                    _prescriptionDetails.postValue(data.prescriptionDetails)
                 } else if (status == Status.ERROR) {
                     showError(message)
                 }
@@ -90,6 +92,41 @@ class PrescriptionVM @Inject constructor(
                     }
                 }
         }
+    }
+
+    fun increaseQuantity(prescriptionDetailDto: PrescriptionDetailDto) {
+        viewModelScope.launch(Dispatchers.IO) {
+            prescriptionService.increaseQuantity(
+                prescriptionDetailDto
+            )
+                .run {
+                    if (status == Status.SUCCESS) {
+                        val data = _prescriptionDetails.value!!
+                        prescriptionDetailDto.quantity += 1
+                        _prescriptionDetails.postValue(data)
+                    } else if (status == Status.ERROR) {
+                        Log.d("HAGL", "Error: ${message.toString()}")
+                    }
+                }
+        }
+    }
+
+    fun decreaseQuantity(prescriptionDetailDto: PrescriptionDetailDto) {
+        viewModelScope.launch(Dispatchers.IO) {
+            prescriptionService.decreaseQuantity(
+                prescriptionDetailDto
+            )
+                .run {
+                    if (status == Status.SUCCESS) {
+                        val data = _prescriptionDetails.value!!
+                        prescriptionDetailDto.quantity -= 1
+                        _prescriptionDetails.postValue(data)
+                    } else if (status == Status.ERROR) {
+                        Log.d("HAGL", "Error: ${message.toString()}")
+                    }
+                }
+        }
+
     }
 
     fun savePrescription() {

@@ -14,7 +14,10 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.drugstore.data.models.Prescription
 import com.example.drugstore.databinding.FragmentNewPrescriptionBinding
+import com.example.drugstore.presentation.adapter.NewPrescriptionAdapter
 import com.example.drugstore.presentation.home.HomeActivity
 import com.example.drugstore.presentation.utils.DatePickerDialogFactory
 import com.example.drugstore.presentation.utils.TimePickerDialogFactory
@@ -32,6 +35,7 @@ class NewPrescriptionFragment : Fragment() {
     private lateinit var startDateCalendar: DatePickerDialog
     private lateinit var endDateCalendar: DatePickerDialog
     private lateinit var timePicker: TimePickerDialog
+    private lateinit var newPrescriptionAdapter: NewPrescriptionAdapter
 
     @Inject
     lateinit var prescriptionVM: PrescriptionVM
@@ -74,6 +78,15 @@ class NewPrescriptionFragment : Fragment() {
                 time.first.toTwoDigitString() +
                         ":${time.second.toTwoDigitString()}"
         }
+
+        newPrescriptionAdapter = NewPrescriptionAdapter().apply {
+            onIncreaseClick = { prescriptionVM.increaseQuantity(it) }
+            onDecreaseClick = { prescriptionVM.decreaseQuantity(it) }
+        }
+
+        prescriptionVM.prescriptionDetails.observe(viewLifecycleOwner) {
+            newPrescriptionAdapter.setList(it)
+        }
     }
 
     private fun initResource() {
@@ -103,11 +116,20 @@ class NewPrescriptionFragment : Fragment() {
                 timePicker.show()
             }
             btnAddMedicine.setOnClickListener {
-                val homeActivity = activity as HomeActivity
-                homeActivity.replaceFragment(RemindDrugFragment())
+                val prescriptionActivity = activity as PrescriptionActivity
+                prescriptionActivity.replaceFragment(RemindDrugFragment())
             }
             btnSave.setOnClickListener {
                 prescriptionVM.savePrescription()
+            }
+            btnBack.setOnClickListener {
+                val intent = Intent(requireContext(), HomeActivity::class.java)
+                startActivity(intent)
+                requireActivity().finish()
+            }
+            rvMedicines.apply {
+                adapter = newPrescriptionAdapter
+                layoutManager = LinearLayoutManager(requireContext())
             }
         }
     }
