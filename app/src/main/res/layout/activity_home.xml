@@ -5,16 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".presentation.home.HomeActivity">
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
         android:fitsSystemWindows="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
         <FrameLayout
             android:id="@+id/fragmentBottomNav"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
     </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.bottomappbar.BottomAppBar
@@ -23,29 +25,30 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:background="@color/white"
-        app:fabCradleRoundedCornerRadius="30dp"
         app:contentInsetEnd="0dp"
         app:contentInsetStart="0dp"
         app:fabCradleMargin="10dp"
+        app:fabCradleRoundedCornerRadius="30dp"
         app:hideOnScroll="true">
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/btnNavView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:menu="@menu/bottom_menu"
             android:background="@drawable/background_transparent"
-            app:labelVisibilityMode="labeled"
             app:itemIconTint="@color/bottom_item_status"
-            app:itemTextColor="@color/bottom_item_status"/>
+            app:itemTextColor="@color/bottom_item_status"
+            app:labelVisibilityMode="labeled"
+            app:menu="@menu/bottom_menu" />
     </com.google.android.material.bottomappbar.BottomAppBar>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/navBtnNewPrescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_camera_24"
-        app:maxImageSize="50dp"
         android:backgroundTint="@color/white"
+        android:src="@drawable/ic_camera_24"
+        app:layout_anchor="@id/btnAppBar"
         app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
-        app:layout_anchor="@id/btnAppBar"/>
+        app:maxImageSize="50dp" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

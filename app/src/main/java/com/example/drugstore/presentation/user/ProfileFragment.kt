@@ -1,5 +1,6 @@
 package com.example.drugstore.presentation.user
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -28,7 +29,6 @@ class ProfileFragment : Fragment() {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         val view = binding.root
 
-
         setData()
         bindComponents()
         return view
@@ -43,8 +43,8 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    private fun setData(){
-        profileVM.getUserByID().observe(viewLifecycleOwner){
+    private fun setData() {
+        profileVM.getUserByID().observe(viewLifecycleOwner) {
             if (it != null) {
                 binding.tvName.text = it.UserName
                 Glide.with(binding.root)
@@ -55,7 +55,7 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    private fun setUpTransactionFragment(fragment: Fragment){
+    private fun setUpTransactionFragment(fragment: Fragment) {
         val fragmentTransaction = parentFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.fragmentBottomNav, fragment)
         fragmentTransaction.addToBackStack(fragment.tag)

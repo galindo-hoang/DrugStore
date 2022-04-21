@@ -5,6 +5,8 @@ import com.example.drugstore.data.repository.ProductRepo
 import java.util.HashMap
 import javax.inject.Inject
 import javax.inject.Singleton
+import android.util.Log
+import com.example.drugstore.utils.Response
 
 @Singleton
 class ProductService @Inject constructor(
@@ -18,4 +20,16 @@ class ProductService @Inject constructor(
 
     suspend fun addProduct(product: Product) = productRepo.addProduct(product)
     suspend fun updateProduct(id: String, dataUpdate: HashMap<String, Any>) = productRepo.updateProduct(id,dataUpdate)
+    suspend fun fetchPaginateProducts(
+        pageSize: Long,
+        firstFetch: Boolean = true
+    ): Response<List<Product>> {
+        return try {
+            val result = ProductRepo().fetchPaginateProducts(pageSize, firstFetch)
+            Response.success(result)
+        } catch (e: Exception) {
+            Log.d("HAGL", e.message.toString())
+            Response.error(null, "Fail to fetch products")
+        }
+    }
 }

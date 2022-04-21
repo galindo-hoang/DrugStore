@@ -1,8 +1,8 @@
 package com.example.drugstore.data.repository
 
 import android.app.Application
-import com.example.drugstore.data.local.AddressDao
-import com.example.drugstore.data.local.AddressDatabase
+import com.example.drugstore.data.local.dao.AddressDao
+import com.example.drugstore.data.local.database.AddressDatabase
 import com.example.drugstore.data.models.Address
 
 class AddressRepo(application: Application) {

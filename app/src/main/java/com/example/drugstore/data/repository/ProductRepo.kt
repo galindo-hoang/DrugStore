@@ -6,6 +6,7 @@ import com.example.drugstore.data.models.Product
 import com.example.drugstore.utils.Constants
 import com.example.drugstore.utils.Result
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
@@ -16,6 +17,7 @@ import javax.inject.Singleton
 @Singleton
 class ProductRepo @Inject constructor() {
     private val collection = FirebaseFirestore.getInstance().collection("product")
+    private val lastQuerySnapshot: QuerySnapshot? = null
 
     suspend fun fetchAllProducts(): Result<List<Product>> = withContext(Dispatchers.IO){
         try {
@@ -84,5 +86,17 @@ class ProductRepo @Inject constructor() {
         }catch (e: Exception){
             Result.Error(e.message.toString(),false)
         }
+    }
+    suspend fun fetchPaginateProducts(pageSize: Long, firstFetch: Boolean = true)
+            : List<Product> {
+        val query = collection.orderBy("ProName").limit(pageSize)
+        val snapshot = if (firstFetch) {
+            query.get().await()
+        } else if (lastQuerySnapshot != null) {
+            query.startAfter(lastQuerySnapshot!!).get().await()
+        } else
+            throw IllegalStateException("lastQuerySnapshot is null")
+
+        return (snapshot.toObjects(Product::class.java));
     }
 }

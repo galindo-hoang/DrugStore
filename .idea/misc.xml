@@ -155,6 +155,26 @@
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/project/DrugStore/app/src/main/res/menu/bottom_menu.xml" value="0.22592592592592592" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/project/DrugStore/app/src/main/res/menu/chat_menu.xml" value="0.33" />
         <entry key="..\:/Users/huy/AppData/Local/Android/Sdk/platforms/android-32/data/res/layout/simple_spinner_dropdown_item.xml" value="0.3115942028985507" />
+        <entry key="app/src/main/res/drawable/ic_arrow_left_24.xml" value="0.1185" />
+        <entry key="app/src/main/res/layout/activity_confirm_otp.xml" value="0.2755208333333333" />
+        <entry key="app/src/main/res/layout/activity_home.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.35333333333333333" />
+        <entry key="app/src/main/res/layout/activity_order.xml" value="0.20520833333333333" />
+        <entry key="app/src/main/res/layout/activity_order_status.xml" value="0.20520833333333333" />
+        <entry key="app/src/main/res/layout/activity_order_summary.xml" value="0.2640625" />
+        <entry key="app/src/main/res/layout/activity_sign_in.xml" value="0.203125" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.16944444444444445" />
+        <entry key="app/src/main/res/layout/fragment_new_prescription.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_order.xml" value="0.20520833333333333" />
+        <entry key="app/src/main/res/layout/fragment_order_history.xml" value="0.20520833333333333" />
+        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_remind_drug.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_reminder.xml" value="0.16944444444444445" />
+        <entry key="app/src/main/res/layout/fragment_reminder_detail.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/fragment_update_profile.xml" value="0.21614583333333334" />
+        <entry key="app/src/main/res/layout/item_drug.xml" value="0.18981481481481483" />
+        <entry key="app/src/main/res/layout/item_product.xml" value="0.18981481481481483" />
+        <entry key="app/src/main/res/menu/bottom_menu.xml" value="0.35333333333333333" />
       </map>
     </option>
   </component>

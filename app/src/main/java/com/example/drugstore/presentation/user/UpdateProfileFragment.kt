@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide
 import com.example.drugstore.R
 import com.example.drugstore.databinding.FragmentUpdateProfileBinding
 import com.example.drugstore.presentation.order.AddPlaceActivity
+import com.example.drugstore.presentation.utils.DatePickerDialogFactory
 import com.example.drugstore.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.IOException
@@ -26,29 +27,29 @@ class UpdateProfileFragment : Fragment() {
     private lateinit var genderList: List<String>
     private lateinit var loadAddress: ActivityResultLauncher<Intent>
 
-    private val cal = Calendar.getInstance()
     private lateinit var calendar: DatePickerDialog
     private lateinit var loadImageFromGallery: ActivityResultLauncher<Intent>
     private lateinit var binding: FragmentUpdateProfileBinding
-    private val dataUser = hashMapOf<String,Any>()
+    private val dataUser = hashMapOf<String, Any>()
 
-    @Inject lateinit var profileVM: ProfileVM
-    @Inject lateinit var storageVM: StorageVM
+    @Inject
+    lateinit var profileVM: ProfileVM
+
+    @Inject
+    lateinit var storageVM: StorageVM
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        calendar = DatePickerDialog(
-            requireContext(),
-            { _, year, month, day ->
-                cal.set(Calendar.YEAR, year)
-                cal.set(Calendar.MONTH, month)
-                cal.set(Calendar.DAY_OF_MONTH, day)
-                binding.tvBirth.text = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(cal.time)
-                dataUser[Constants.BIRTH_DATE] = cal.time
-            },
-            cal.get(Calendar.YEAR),
-            cal.get(Calendar.MONTH),
-            cal.get(Calendar.DAY_OF_MONTH))
+
+        calendar = DatePickerDialogFactory.create(requireContext()) {
+            binding.tvBirth.text =
+                SimpleDateFormat(
+                    "dd-MM-yyyy",
+                    Locale.getDefault()
+                ).format(DatePickerDialogFactory.getDate())
+            DatePickerDialogFactory.setPreviousDate(DatePickerDialogFactory.getDate())
+            dataUser[Constants.BIRTH_DATE] = DatePickerDialogFactory.getDate()
+        }
         genderList = resources.getStringArray(R.array.gender).toList()
     }
 
@@ -56,26 +57,31 @@ class UpdateProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentUpdateProfileBinding.inflate(inflater,container,false)
+        binding = FragmentUpdateProfileBinding.inflate(inflater, container, false)
         // Inflate the layout for this fragment
         setupLoadDataFromOtherActivity()
 
         context?.let {
-            ArrayAdapter.createFromResource(it,R.array.gender,android.R.layout.simple_spinner_item).also { adapter ->
+            ArrayAdapter.createFromResource(
+                it,
+                R.array.gender,
+                android.R.layout.simple_spinner_item
+            ).also { adapter ->
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 binding.spinner.adapter = adapter
             }
         }
         onBindComponents()
-        profileVM.getUserByID().observe(viewLifecycleOwner){
+        profileVM.getUserByID().observe(viewLifecycleOwner) {
             if (it != null) {
                 binding.etName.setText(it.UserName)
                 binding.tvName.text = it.UserName
-                binding.tvBirth.text = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(it.Birthday)
+                binding.tvBirth.text =
+                    SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(it.Birthday)
                 binding.tvAddress.text = it.Address
+                DatePickerDialogFactory.setPreviousDate(it.Birthday)
 
-
-                if(it.PhoneNumber.isNotEmpty()){
+                if (it.PhoneNumber.isNotEmpty()) {
                     binding.etPhoneNumber.setText(it.PhoneNumber)
                     binding.etPhoneNumber.keyListener = null
                 }
@@ -89,17 +95,17 @@ class UpdateProfileFragment : Fragment() {
         return binding.root
     }
 
-    private fun onBindComponents(){
+    private fun onBindComponents() {
         binding.ivCircle.setOnClickListener {
-            if(context?.let { it1 -> Constants.checkPermissionRead(it1) } == true){
+            if (context?.let { it1 -> Constants.checkPermissionRead(it1) } == true) {
                 loadImage()
-            }else{
+            } else {
                 showDialogPermission()
             }
         }
         binding.tvAddress.setOnClickListener {
-            val intent = Intent(context,AddPlaceActivity::class.java)
-            intent.putExtra(Constants.ADDRESS,true)
+            val intent = Intent(context, AddPlaceActivity::class.java)
+            intent.putExtra(Constants.ADDRESS, true)
             loadAddress.launch(intent)
         }
 
@@ -108,15 +114,15 @@ class UpdateProfileFragment : Fragment() {
         }
 
         binding.btnUpdate.setOnClickListener {
-            if(binding.etName.text.isEmpty()){
-                Toast.makeText(context,"Please fill name",Toast.LENGTH_SHORT).show()
-            }else dataUser[Constants.USER_NAME] = binding.etName.text.toString()
+            if (binding.etName.text.isEmpty()) {
+                Toast.makeText(context, "Please fill name", Toast.LENGTH_SHORT).show()
+            } else dataUser[Constants.USER_NAME] = binding.etName.text.toString()
 
-            if(binding.etPhoneNumber.text.length in 9..12){
+            if (binding.etPhoneNumber.text.length in 9..12) {
                 dataUser[Constants.PHONE_NUMBER] = binding.etPhoneNumber.text.toString()
-            }else Toast.makeText(context,"phone number invalid",Toast.LENGTH_SHORT).show()
+            } else Toast.makeText(context, "phone number invalid", Toast.LENGTH_SHORT).show()
 
-            dataUser[Constants.GENDER] = when(binding.spinner.selectedItem.toString()){
+            dataUser[Constants.GENDER] = when (binding.spinner.selectedItem.toString()) {
                 "Others" -> 0
                 "Female" -> 1
                 "Male" -> 2
@@ -137,17 +143,18 @@ class UpdateProfileFragment : Fragment() {
                             ).show()
                         }
                     }
-            }else{
+            } else {
                 context?.let { it1 -> profileVM.updateUser(dataUser, it1) }
             }
         }
     }
 
 
-    private fun showDialogPermission(){
+    private fun showDialogPermission() {
         AlertDialog.Builder(context)
             .setMessage("It Looks like you have turned off permissions required for this feature. It can be enabled under Application Settings")
-            .setPositiveButton("GO TO SETTINGS"
+            .setPositiveButton(
+                "GO TO SETTINGS"
             ) { _, _ ->
                 try {
                     val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
@@ -165,40 +172,48 @@ class UpdateProfileFragment : Fragment() {
 
 
     private fun loadImage() {
-        loadImageFromGallery.launch(Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI))
+        loadImageFromGallery.launch(
+            Intent(
+                Intent.ACTION_PICK,
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+            )
+        )
     }
 
 
     private fun setupLoadDataFromOtherActivity() {
-        loadImageFromGallery = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                val data: Intent? = result.data
-                if (data != null) {
-                    try {
-                        dataUser[Constants.USER_URL_IMAGE] = data.data.toString()
-                        Glide
-                            .with(this)
-                            .load(data.data)
-                            .centerCrop()
-                            .placeholder(R.drawable.ic_launcher_foreground)
-                            .into(binding.ivCircle)
-                    } catch (e: IOException) {
-                        e.printStackTrace()
-                        Toast.makeText(
-                            context,
-                            "Failed to load image from camera",
-                            Toast.LENGTH_SHORT
-                        ).show()
+        loadImageFromGallery =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK) {
+                    val data: Intent? = result.data
+                    if (data != null) {
+                        try {
+                            dataUser[Constants.USER_URL_IMAGE] = data.data.toString()
+                            Glide
+                                .with(this)
+                                .load(data.data)
+                                .centerCrop()
+                                .placeholder(R.drawable.ic_launcher_foreground)
+                                .into(binding.ivCircle)
+                        } catch (e: IOException) {
+                            e.printStackTrace()
+                            Toast.makeText(
+                                context,
+                                "Failed to load image from camera",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     }
                 }
-            }
-        }
 
-        loadAddress = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                result.data?.getStringExtra(Constants.ADDRESS)?.let { dataUser[Constants.ADDRESS] = it }
-                binding.tvAddress.text = dataUser[Constants.ADDRESS].toString()
+                loadAddress =
+                    registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+                        if (result.resultCode == Activity.RESULT_OK) {
+                            result.data?.getStringExtra(Constants.ADDRESS)
+                                ?.let { dataUser[Constants.ADDRESS] = it }
+                            binding.tvAddress.text = dataUser[Constants.ADDRESS].toString()
+                        }
+                    }
             }
-        }
     }
 }
