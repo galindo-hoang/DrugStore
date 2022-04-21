@@ -1,7 +1,6 @@
-package com.example.drugstore.presentation.user
+package com.example.drugstore.presentation.user.reminder
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
@@ -10,11 +9,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContract
-import androidx.activity.result.contract.ActivityResultContracts
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.drugstore.databinding.FragmentNewPrescriptionBinding
+import com.example.drugstore.presentation.adapter.NewPrescriptionAdapter
 import com.example.drugstore.presentation.home.HomeActivity
 import com.example.drugstore.presentation.utils.DatePickerDialogFactory
 import com.example.drugstore.presentation.utils.TimePickerDialogFactory
@@ -32,9 +29,10 @@ class NewPrescriptionFragment : Fragment() {
     private lateinit var startDateCalendar: DatePickerDialog
     private lateinit var endDateCalendar: DatePickerDialog
     private lateinit var timePicker: TimePickerDialog
+    private lateinit var newPrescriptionAdapter: NewPrescriptionAdapter
 
     @Inject
-    lateinit var prescriptionVM: PrescriptionVM
+    lateinit var prescriptionVM: NewPrescriptionVM
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -74,6 +72,16 @@ class NewPrescriptionFragment : Fragment() {
                 time.first.toTwoDigitString() +
                         ":${time.second.toTwoDigitString()}"
         }
+
+        newPrescriptionAdapter = NewPrescriptionAdapter().apply {
+            onIncreaseClick = { prescriptionVM.increaseQuantity(it) }
+            onDecreaseClick = { prescriptionVM.decreaseQuantity(it) }
+            onDeleteClick = { prescriptionVM.deletePrescription(it) }
+        }
+
+        prescriptionVM.prescriptionDetails.observe(viewLifecycleOwner) {
+            newPrescriptionAdapter.setList(it)
+        }
     }
 
     private fun initResource() {
@@ -103,13 +111,27 @@ class NewPrescriptionFragment : Fragment() {
                 timePicker.show()
             }
             btnAddMedicine.setOnClickListener {
-                val homeActivity = activity as HomeActivity
-                homeActivity.replaceFragment(RemindDrugFragment())
+                val prescriptionActivity = activity as PrescriptionActivity
+                prescriptionActivity.replaceFragment(RemindDrugFragment())
             }
             btnSave.setOnClickListener {
-                prescriptionVM.savePrescription()
+                prescriptionVM.savePrescription(::onSavePrescriptionSuccess)
+            }
+            btnBack.setOnClickListener {
+                val intent = Intent(requireContext(), HomeActivity::class.java)
+                startActivity(intent)
+                requireActivity().finish()
+            }
+            rvMedicines.apply {
+                adapter = newPrescriptionAdapter
+                layoutManager = LinearLayoutManager(requireContext())
             }
         }
+    }
+
+    private fun onSavePrescriptionSuccess(id: String) {
+        val activity = activity as PrescriptionActivity
+        activity.replaceFragment(ReminderDetailFragment.newInstance(id))
     }
 
     override fun onStart() {

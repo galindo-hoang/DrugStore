@@ -1,5 +1,6 @@
 package com.example.drugstore.presentation.user
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.example.drugstore.R
 import com.example.drugstore.databinding.FragmentProfileBinding
 import com.example.drugstore.presentation.BaseActivity
+import com.example.drugstore.presentation.user.reminder.PrescriptionActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -39,6 +41,12 @@ class ProfileFragment : Fragment() {
         }
         binding.cvUpdateProfile.setOnClickListener {
             setUpTransactionFragment(UpdateProfileFragment())
+        }
+        binding.btnReminder.setOnClickListener {
+            val intent = Intent(activity, PrescriptionActivity::class.java)
+            intent.putExtra(PrescriptionActivity.REMINDER_FRAGMENT, true)
+            startActivity(intent)
+            requireActivity().finish()
         }
     }
 

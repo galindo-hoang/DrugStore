@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.example.drugstore.R
 import com.example.drugstore.data.firebase.FirebaseClass
 import com.example.drugstore.data.local.dao.PrescriptionDao
+import com.example.drugstore.data.local.dao.PrescriptionDetailDao
 import com.example.drugstore.data.local.database.MedicineDatabase
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -53,4 +54,8 @@ object ApplicationModule {
     @Provides
     fun providePrescriptionDao(medicineDatabase: MedicineDatabase): PrescriptionDao =
         medicineDatabase.prescriptionDao()
+
+    @Provides
+    fun providePrescriptionDetailDao(medicineDatabase: MedicineDatabase): PrescriptionDetailDao =
+        medicineDatabase.prescriptionDetailDao()
 }

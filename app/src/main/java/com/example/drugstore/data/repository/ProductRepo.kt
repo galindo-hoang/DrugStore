@@ -1,7 +1,6 @@
 package com.example.drugstore.data.repository
 
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
 import com.example.drugstore.data.models.Product
 import com.example.drugstore.utils.Constants
 import com.example.drugstore.utils.Result
@@ -17,86 +16,113 @@ import javax.inject.Singleton
 @Singleton
 class ProductRepo @Inject constructor() {
     private val collection = FirebaseFirestore.getInstance().collection("product")
-    private val lastQuerySnapshot: QuerySnapshot? = null
 
-    suspend fun fetchAllProducts(): Result<List<Product>> = withContext(Dispatchers.IO){
-        try {
-            val result:MutableList<Product> = mutableListOf()
-            val document = collection.get().await()
-            for(i in document){
-                result.add(i.toObject(Product::class.java))
-            }
-            Result.Success(result)
-        }catch (e:Exception){
-            Result.Error(e.message.toString(),null)
-        }
-    }
-
-
-    suspend fun fetchAllProductsWithCategory(catID: Int):Result<List<Product>> = withContext(Dispatchers.IO){
-        try {
-            val result:MutableList<Product> = mutableListOf()
-            val document = collection.whereEqualTo(Constants.CAT_ID,catID).get().await()
-            for(i in document){
-                result.add(i.toObject(Product::class.java))
-            }
-            Result.Success(result)
-        }catch (e:Exception){
-            Result.Error(e.message.toString(),null)
-        }
-    }
-
-    suspend fun fetchProductsWithSearch(search: String): Result<List<Product>> = withContext(Dispatchers.IO) {
+    suspend fun fetchAllProducts(): Result<List<Product>> = withContext(Dispatchers.IO) {
         try {
             val result: MutableList<Product> = mutableListOf()
-            val documents = collection.get().await()
-            for (i in documents) {
-                if (i.getString(Constants.PRODUCT_NAME)?.lowercase()?.contains(search) == true) {
-                    result.add(i.toObject(Product::class.java))
-                }
+            val document = collection.get().await()
+            for (i in document) {
+                result.add(i.toObject(Product::class.java))
             }
             Result.Success(result)
-        } catch (e:Exception){
+        } catch (e: Exception) {
             Result.Error(e.message.toString(), null)
         }
     }
 
-    suspend fun countProducts(): Result<Int> = withContext(Dispatchers.IO){
+
+    suspend fun fetchAllProductsWithCategory(catID: Int): Result<List<Product>> =
+        withContext(Dispatchers.IO) {
+            try {
+                val result: MutableList<Product> = mutableListOf()
+                val document = collection.whereEqualTo(Constants.CAT_ID, catID).get().await()
+                for (i in document) {
+                    result.add(i.toObject(Product::class.java))
+                }
+                Result.Success(result)
+            } catch (e: Exception) {
+                Result.Error(e.message.toString(), null)
+            }
+        }
+
+    suspend fun fetchProductsWithSearch(search: String): Result<List<Product>> =
+        withContext(Dispatchers.IO) {
+            try {
+                val result: MutableList<Product> = mutableListOf()
+                val documents = collection.get().await()
+                for (i in documents) {
+                    if (i.getString(Constants.PRODUCT_NAME)?.lowercase()
+                            ?.contains(search) == true
+                    ) {
+                        result.add(i.toObject(Product::class.java))
+                    }
+                }
+                Result.Success(result)
+            } catch (e: Exception) {
+                Result.Error(e.message.toString(), null)
+            }
+        }
+
+    suspend fun countProducts(): Result<Int> = withContext(Dispatchers.IO) {
         try {
             val document = collection.get().await()
             Result.Success(document.size())
-        }catch (e:Exception){
+        } catch (e: Exception) {
             Result.Error(e.message.toString(), null)
         }
     }
 
-    suspend fun addProduct(product: Product): Result<Boolean> = withContext(Dispatchers.IO){
+    suspend fun addProduct(product: Product): Result<Boolean> = withContext(Dispatchers.IO) {
         try {
             collection.document(product.ProID.toString()).set(product).await()
             Result.Success(true)
-        }catch (e:Exception) {
-            Result.Error(e.message.toString(),false)
+        } catch (e: Exception) {
+            Result.Error(e.message.toString(), false)
         }
     }
 
-    suspend fun updateProduct(id: String, dataUpdate: HashMap<String, Any>): Result<Boolean> = withContext(Dispatchers.IO) {
-        try {
-            collection.document(id).update(dataUpdate).await()
-            Result.Success(true)
-        }catch (e: Exception){
-            Result.Error(e.message.toString(),false)
+    suspend fun updateProduct(id: String, dataUpdate: HashMap<String, Any>): Result<Boolean> =
+        withContext(Dispatchers.IO) {
+            try {
+                collection.document(id).update(dataUpdate).await()
+                Result.Success(true)
+            } catch (e: Exception) {
+                Result.Error(e.message.toString(), false)
+            }
         }
-    }
+
     suspend fun fetchPaginateProducts(pageSize: Long, firstFetch: Boolean = true)
             : List<Product> {
-        val query = collection.orderBy("ProName").limit(pageSize)
-        val snapshot = if (firstFetch) {
-            query.get().await()
-        } else if (lastQuerySnapshot != null) {
-            query.startAfter(lastQuerySnapshot!!).get().await()
-        } else
-            throw IllegalStateException("lastQuerySnapshot is null")
+        val query = collection.orderBy("proName").limit(pageSize)
+        val snapshot: QuerySnapshot = when {
+            firstFetch -> {
+                query.get().await()
+            }
+            lastQueryProductName != null -> {
+                query.startAfter(lastQueryProductName)
+                    .get().await()
+            }
+            else -> throw IllegalStateException("lastQuerySnapshot is null")
+        }
+
+        lastQueryProductName = if (snapshot.size() == 0) {
+            null
+        } else {
+            val documentSnapshot = snapshot.documents[snapshot.size() - 1]
+            documentSnapshot.toObject(Product::class.java)?.ProName
+        }
 
         return (snapshot.toObjects(Product::class.java));
+    }
+
+    suspend fun fetchProduct(productId: Int?): Product? {
+        val query = collection.document(productId.toString())
+        val snapshot = query.get().await()
+
+        return snapshot.toObject(Product::class.java)
+    }
+
+    companion object {
+        private var lastQueryProductName: String? = null
     }
 }

@@ -12,7 +12,6 @@ class PrescriptionMapper @Inject constructor(
 ) {
     fun toEntity(
         prescriptionDto: PrescriptionDto,
-        prescriptionDetailDto: List<PrescriptionDetailDto>
     ): Prescription =
         Prescription(
             startDate = prescriptionDto.startDate,
@@ -21,7 +20,7 @@ class PrescriptionMapper @Inject constructor(
                 "hours" to prescriptionDto.hours,
                 "minutes" to prescriptionDto.minutes
             ),
-            prescriptionDetails = prescriptionDetailDto.map { item ->
+            prescriptionDetails = prescriptionDto.prescriptionDetails.map { item ->
                 prescriptionDetailMapper.toEntity(item)
             }
         )

@@ -14,12 +14,15 @@ class ProductService @Inject constructor(
 ) {
     suspend fun fetchAllProducts() = productRepo.fetchAllProducts()
     suspend fun fetchProductsByCategory(id: Int) = productRepo.fetchAllProductsWithCategory(id)
-    suspend fun fetchProductsWithSearch(search: String) = productRepo.fetchProductsWithSearch(search)
+    suspend fun fetchProductsWithSearch(search: String) =
+        productRepo.fetchProductsWithSearch(search)
 
     suspend fun countProduct() = productRepo.countProducts()
 
     suspend fun addProduct(product: Product) = productRepo.addProduct(product)
-    suspend fun updateProduct(id: String, dataUpdate: HashMap<String, Any>) = productRepo.updateProduct(id,dataUpdate)
+    suspend fun updateProduct(id: String, dataUpdate: HashMap<String, Any>) =
+        productRepo.updateProduct(id, dataUpdate)
+
     suspend fun fetchPaginateProducts(
         pageSize: Long,
         firstFetch: Boolean = true
