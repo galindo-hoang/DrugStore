@@ -10,11 +10,83 @@ import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
+import java.util.HashMap
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class ProductRepo {
+@Singleton
+class ProductRepo @Inject constructor() {
     private val collection = FirebaseFirestore.getInstance().collection("product")
     private val lastQuerySnapshot: QuerySnapshot? = null
 
+    suspend fun fetchAllProducts(): Result<List<Product>> = withContext(Dispatchers.IO){
+        try {
+            val result:MutableList<Product> = mutableListOf()
+            val document = collection.get().await()
+            for(i in document){
+                result.add(i.toObject(Product::class.java))
+            }
+            Result.Success(result)
+        }catch (e:Exception){
+            Result.Error(e.message.toString(),null)
+        }
+    }
+
+
+    suspend fun fetchAllProductsWithCategory(catID: Int):Result<List<Product>> = withContext(Dispatchers.IO){
+        try {
+            val result:MutableList<Product> = mutableListOf()
+            val document = collection.whereEqualTo(Constants.CAT_ID,catID).get().await()
+            for(i in document){
+                result.add(i.toObject(Product::class.java))
+            }
+            Result.Success(result)
+        }catch (e:Exception){
+            Result.Error(e.message.toString(),null)
+        }
+    }
+
+    suspend fun fetchProductsWithSearch(search: String): Result<List<Product>> = withContext(Dispatchers.IO) {
+        try {
+            val result: MutableList<Product> = mutableListOf()
+            val documents = collection.get().await()
+            for (i in documents) {
+                if (i.getString(Constants.PRODUCT_NAME)?.lowercase()?.contains(search) == true) {
+                    result.add(i.toObject(Product::class.java))
+                }
+            }
+            Result.Success(result)
+        } catch (e:Exception){
+            Result.Error(e.message.toString(), null)
+        }
+    }
+
+    suspend fun countProducts(): Result<Int> = withContext(Dispatchers.IO){
+        try {
+            val document = collection.get().await()
+            Result.Success(document.size())
+        }catch (e:Exception){
+            Result.Error(e.message.toString(), null)
+        }
+    }
+
+    suspend fun addProduct(product: Product): Result<Boolean> = withContext(Dispatchers.IO){
+        try {
+            collection.document(product.ProID.toString()).set(product).await()
+            Result.Success(true)
+        }catch (e:Exception) {
+            Result.Error(e.message.toString(),false)
+        }
+    }
+
+    suspend fun updateProduct(id: String, dataUpdate: HashMap<String, Any>): Result<Boolean> = withContext(Dispatchers.IO) {
+        try {
+            collection.document(id).update(dataUpdate).await()
+            Result.Success(true)
+        }catch (e: Exception){
+            Result.Error(e.message.toString(),false)
+        }
+    }
     suspend fun fetchPaginateProducts(pageSize: Long, firstFetch: Boolean = true)
             : List<Product> {
         val query = collection.orderBy("ProName").limit(pageSize)
@@ -27,52 +99,4 @@ class ProductRepo {
 
         return (snapshot.toObjects(Product::class.java));
     }
-
-    fun fetchAllProducts(): MutableLiveData<List<Product>> {
-        val result: MutableLiveData<List<Product>> = MutableLiveData()
-        collection
-            .get()
-            .addOnSuccessListener {
-                val value = mutableListOf<Product>()
-                for (i in it.documents) {
-                    i.toObject(Product::class.java)?.let { it1 -> value.add(it1) }
-                }
-                result.postValue(value)
-            }
-            .addOnFailureListener {
-                Log.e("---", "fetchAllProducts fail")
-            }
-        return result
-    }
-
-    fun fetchAllProductsWithCategory(catID: Int): MutableLiveData<List<Product>> {
-        val result: MutableLiveData<List<Product>> = MutableLiveData()
-        collection
-            .whereEqualTo(Constants.CAT_ID, catID)
-            .get()
-            .addOnSuccessListener {
-                val value = mutableListOf<Product>()
-                for (i in it.documents) {
-                    i.toObject(Product::class.java)?.let { it1 -> value.add(it1) }
-                }
-                result.postValue(value)
-            }
-            .addOnFailureListener {
-                Log.e("---", "fetchAllProductsWithCategory fail")
-            }
-        return result
-    }
-
-    suspend fun fetchProductsWithSearch(search: String): Result<List<Product>> =
-        withContext(Dispatchers.IO) {
-            val result: MutableList<Product> = mutableListOf()
-            val documents = collection.get().await()
-            for (i in documents) {
-                if (i.getString(Constants.PRODUCT_NAME)?.lowercase()?.contains(search) == true) {
-                    result.add(i.toObject(Product::class.java))
-                }
-            }
-            if (result.size == 0) Result.Error("Cant get data", null)
-            else Result.Success(result)
-        }
 }

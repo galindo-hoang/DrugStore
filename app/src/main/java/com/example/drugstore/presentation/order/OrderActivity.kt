@@ -20,15 +20,19 @@ import com.example.drugstore.presentation.adapter.AddressAdapter
 import com.example.drugstore.presentation.home.AddressVM
 import com.example.drugstore.presentation.home.CartVM
 import com.example.drugstore.utils.Constants
+import dagger.hilt.android.AndroidEntryPoint
 import java.text.DecimalFormat
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class OrderActivity : AppCompatActivity() {
     private var sum:Int = 0
     private var listProduct: ArrayList<CartProduct> = ArrayList()
     private var addressVM: AddressVM? = null
     private var currentAddress: Address? = null
     private var cartProductVM: CartVM? = null
-    private val orderVM: OrderVM by viewModels()
+    @Inject
+    lateinit var orderVM: OrderVM
     private lateinit var binding:ActivityOrderBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

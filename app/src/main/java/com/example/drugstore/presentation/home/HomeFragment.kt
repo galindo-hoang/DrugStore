@@ -20,36 +20,24 @@ import com.example.drugstore.data.models.Category
 import com.example.drugstore.data.models.Product
 import com.example.drugstore.presentation.adapter.NewsTopicAdapter
 import com.example.drugstore.utils.Constants
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-//import androidx.lifecycle.ViewModelProviders
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [HomeFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-    private val categoryVM: CategoryVM by activityViewModels()
-    private val productVM: ProductVM by activityViewModels()
+    @Inject
+    lateinit var categoryVM: CategoryVM
+
+    @Inject
+    lateinit var productVM: ProductVM
+
     private val newsVM: NewsVM by activityViewModels()
     private var cartVM: CartVM? = null
     private val searchAdapter = ProductAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
         cartVM = ViewModelProvider(this,CartVM.CartProductVMFactory(requireActivity().application))[CartVM::class.java]
     }
 
@@ -102,7 +90,9 @@ class HomeFragment : Fragment() {
 
         val productTrendingAdapter = ProductAdapter()
         productVM.getAllListProducts().observe(viewLifecycleOwner){
-            productTrendingAdapter.setList(it.subList(0,10))
+            if (it != null) {
+                productTrendingAdapter.setList(it.subList(0,10))
+            }
         }
         productTrendingAdapter.onItemClick = {product -> transitProductDetail(product) }
         binding.rvTopTrending.adapter = productTrendingAdapter
@@ -114,7 +104,9 @@ class HomeFragment : Fragment() {
 
         val productSupplementAdapter = ProductAdapter()
         productVM.getAllListProducts().observe(viewLifecycleOwner){
-            productSupplementAdapter.setList(it.subList(it.size/2,it.size/2 + 6))
+            if (it != null) {
+                productSupplementAdapter.setList(it.subList(it.size/2,it.size/2 + 6))
+            }
         }
         productSupplementAdapter.onItemClick = {product -> transitProductDetail(product) }
         binding.rvSupplement.adapter = productSupplementAdapter
@@ -126,7 +118,9 @@ class HomeFragment : Fragment() {
 
         val adapterCate = CategoryAdapter()
         categoryVM.getAllCategories().observe(viewLifecycleOwner){
-            adapterCate.setList(it.subList(0,4))
+            if (it != null) {
+                adapterCate.setList(it.subList(0,4))
+            }
         }
         adapterCate.onItemClick = {category -> setUpTransitToDrugByCategoryFragment(category) }
         binding.rvCategory.adapter = adapterCate
@@ -198,25 +192,5 @@ class HomeFragment : Fragment() {
         parentFMTransition.replace(R.id.fragmentBottomNav,fragment)
         parentFMTransition.addToBackStack("")
         parentFMTransition.commit()
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HomeFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HomeFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
 }

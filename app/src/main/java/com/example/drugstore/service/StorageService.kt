@@ -11,6 +11,8 @@ class StorageService @Inject constructor(
     private val authRepo: AuthRepo,
     private val storageRepo: StorageRepo
 ) {
-    suspend fun uploadImageToStorage(uri: String) =
-        authRepo.getCurrentUserId()?.let { storageRepo.uploadImageToStorage(uri, it) }
+    suspend fun uploadImageToStorage(path:String, uri: String) =
+        authRepo.getCurrentUserId()?.let { storageRepo.uploadImageToStorage(path,uri, it) }
+
+    suspend fun uploadImageProductToStorage(path:String, uri: String,id: String) = storageRepo.uploadImageToStorage(path,uri, id)
 }

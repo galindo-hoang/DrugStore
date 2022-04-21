@@ -43,6 +43,7 @@
     <string name="end_date">End Date</string>
     <string name="medicine">Medicine</string>
     <string name="add_button">Add Button</string>
+    <string name="bottom_nav_chat">Message</string>
     <string name="Time">Time</string>
     <string name="save_prescription">Save Prescription</string>
 </resources>

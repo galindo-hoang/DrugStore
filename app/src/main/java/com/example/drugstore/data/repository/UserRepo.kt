@@ -1,11 +1,8 @@
 package com.example.drugstore.data.repository
 
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
-import com.example.drugstore.data.firebase.FirebaseClass
 import com.example.drugstore.data.models.User
 import com.example.drugstore.utils.Result
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import kotlinx.coroutines.Dispatchers

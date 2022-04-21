@@ -16,8 +16,7 @@ class IngredientAdapter(private val ingredient: List<Ingredient>) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val context = parent.context
         val inflater = LayoutInflater.from(context)
-        var view:View?=null
-        view = inflater.inflate(R.layout.item_ingredient, parent, false)
+        var view: View? = inflater.inflate(R.layout.item_ingredient, parent, false)
         return ViewHolder(view!!)
     }
 

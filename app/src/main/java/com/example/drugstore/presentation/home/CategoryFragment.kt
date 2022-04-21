@@ -12,30 +12,18 @@ import com.example.drugstore.presentation.adapter.CategoryAdapter
 import com.example.drugstore.databinding.FragmentCategoryBinding
 import com.example.drugstore.data.models.Category
 import com.example.drugstore.utils.Constants
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [CategoryFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+@AndroidEntryPoint
 class CategoryFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
     private lateinit var binding: FragmentCategoryBinding
-    private val categoryVM:CategoryVM by activityViewModels()
+    @Inject
+    lateinit var categoryVM:CategoryVM
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
@@ -47,7 +35,9 @@ class CategoryFragment : Fragment() {
 
         val adapter = CategoryAdapter()
         categoryVM.getAllCategories().observe(viewLifecycleOwner){
-            adapter.setList(it)
+            if (it != null) {
+                adapter.setList(it)
+            }
         }
         adapter.onItemClick = { category -> setUpDrugByCategoryFragment(category) }
         binding.rvCategory.adapter = adapter
@@ -74,23 +64,4 @@ class CategoryFragment : Fragment() {
 
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CategoryFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            CategoryFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
 }

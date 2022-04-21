@@ -5,7 +5,6 @@ import android.content.*
 import android.net.Uri
 import android.os.Bundle
 import android.provider.*
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.*
 import android.widget.*
@@ -18,10 +17,6 @@ import com.example.drugstore.presentation.order.AddPlaceActivity
 import com.example.drugstore.presentation.utils.DatePickerDialogFactory
 import com.example.drugstore.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -134,11 +129,11 @@ class UpdateProfileFragment : Fragment() {
                 else -> 0
             }
 
-            if (dataUser.containsKey(Constants.URL_IMAGE)) {
-                storageVM.uploadImageToStorage(dataUser[Constants.URL_IMAGE].toString())
+            if(dataUser.containsKey(Constants.USER_URL_IMAGE)){
+                storageVM.uploadImageToStorage("profile",dataUser[Constants.USER_URL_IMAGE].toString())
                     .observe(viewLifecycleOwner) {
                         if (it != null) {
-                            dataUser[Constants.URL_IMAGE] = it
+                            dataUser[Constants.USER_URL_IMAGE] = it
                             context?.let { it1 -> profileVM.updateUser(dataUser, it1) }
                         } else {
                             Toast.makeText(
@@ -193,7 +188,7 @@ class UpdateProfileFragment : Fragment() {
                     val data: Intent? = result.data
                     if (data != null) {
                         try {
-                            dataUser[Constants.URL_IMAGE] = data.data.toString()
+                            dataUser[Constants.USER_URL_IMAGE] = data.data.toString()
                             Glide
                                 .with(this)
                                 .load(data.data)
@@ -210,15 +205,15 @@ class UpdateProfileFragment : Fragment() {
                         }
                     }
                 }
-            }
 
-        loadAddress =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-                if (result.resultCode == Activity.RESULT_OK) {
-                    result.data?.getStringExtra(Constants.ADDRESS)
-                        ?.let { dataUser[Constants.ADDRESS] = it }
-                    binding.tvAddress.text = dataUser[Constants.ADDRESS].toString()
-                }
+                loadAddress =
+                    registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+                        if (result.resultCode == Activity.RESULT_OK) {
+                            result.data?.getStringExtra(Constants.ADDRESS)
+                                ?.let { dataUser[Constants.ADDRESS] = it }
+                            binding.tvAddress.text = dataUser[Constants.ADDRESS].toString()
+                        }
+                    }
             }
     }
 }

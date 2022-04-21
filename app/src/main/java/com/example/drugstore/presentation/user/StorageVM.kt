@@ -13,14 +13,27 @@ import javax.inject.Inject
 class StorageVM @Inject constructor(
     private val storageService: StorageService
 ): ViewModel() {
-    fun uploadImageToStorage(uri: String) = liveData(Dispatchers.IO){
-        when(val result = storageService.uploadImageToStorage(uri)){
+    fun uploadImageToStorage(path: String, uri: String) = liveData(Dispatchers.IO){
+        when(val result = storageService.uploadImageToStorage(path, uri)){
             is Result.Success -> {
                 result.data?.let { Log.e("=======", it) }
                 emit(result.data)
             }
             else -> {
                 result?.message?.let { Log.e("ViewModel--Storage", it) }
+                emit(null)
+            }
+        }
+    }
+
+    fun uploadImageToStorageProduct(path: String, uri: String,id:String) = liveData(Dispatchers.IO){
+        when(val result = storageService.uploadImageProductToStorage(path, uri,id)){
+            is Result.Success -> {
+                result.data?.let { Log.e("=======", it) }
+                emit(result.data)
+            }
+            else -> {
+                result.message?.let { Log.e("ViewModel--Storage", it) }
                 emit(null)
             }
         }
