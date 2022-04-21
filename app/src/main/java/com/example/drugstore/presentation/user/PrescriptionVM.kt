@@ -10,13 +10,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.drugstore.data.local.dto.PrescriptionDetailDto
 import com.example.drugstore.service.PrescriptionService
-import com.example.drugstore.utils.Response
 import com.example.drugstore.utils.Status
 import dagger.hilt.android.qualifiers.ActivityContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.util.*
+import java.util.Date
 import javax.inject.Inject
+import com.example.drugstore.utils.Result
 
 class PrescriptionVM @Inject constructor(
     @SuppressLint("StaticFieldLeak") @ActivityContext private val context: Context,
@@ -25,13 +25,13 @@ class PrescriptionVM @Inject constructor(
     private val _startDate: MutableLiveData<Date> = MutableLiveData(Date())
     private val _endDate: MutableLiveData<Date> = MutableLiveData(Date())
     private val _time: MutableLiveData<Pair<Int, Int>> = MutableLiveData(Pair(0, 0))
-    private val _prescriptionDetails: MutableLiveData<List<PrescriptionDetailDto>> =
+    private val _prescriptionDetails: MutableLiveData<MutableList<PrescriptionDetailDto>> =
         MutableLiveData()
 
     val startDate: LiveData<Date> get() = _startDate
     val endDate: LiveData<Date> get() = _endDate
     val time: LiveData<Pair<Int, Int>> get() = _time
-    val prescriptionDetails: LiveData<List<PrescriptionDetailDto>>
+    val prescriptionDetails: LiveData<MutableList<PrescriptionDetailDto>>
         get() = _prescriptionDetails
 
     fun updateTime(time: Pair<Int, Int>) {
@@ -57,12 +57,12 @@ class PrescriptionVM @Inject constructor(
     fun getPrescription() {
         viewModelScope.launch(Dispatchers.IO) {
             prescriptionService.getPrescription().run {
-                if (status == Status.SUCCESS) {
+                if (this is Result.Success) {
                     _startDate.postValue(data!!.startDate)
                     _endDate.postValue(data.endDate)
                     _time.postValue(Pair(data.hours, data.minutes))
-                    _prescriptionDetails.postValue(data.prescriptionDetails)
-                } else if (status == Status.ERROR) {
+                    _prescriptionDetails.postValue(data.prescriptionDetails.toMutableList())
+                } else if (this is Result.Error) {
                     showError(message)
                 }
             }
@@ -87,7 +87,7 @@ class PrescriptionVM @Inject constructor(
                 _time.value
             )
                 .run {
-                    if (status == Status.ERROR) {
+                    if (this is Result.Error) {
                         Log.d("HAGL", "Error: ${message.toString()}")
                     }
                 }
@@ -100,11 +100,11 @@ class PrescriptionVM @Inject constructor(
                 prescriptionDetailDto
             )
                 .run {
-                    if (status == Status.SUCCESS) {
+                    if (this is Result.Success) {
                         val data = _prescriptionDetails.value!!
                         prescriptionDetailDto.quantity += 1
                         _prescriptionDetails.postValue(data)
-                    } else if (status == Status.ERROR) {
+                    } else if (this is Result.Error) {
                         Log.d("HAGL", "Error: ${message.toString()}")
                     }
                 }
@@ -117,16 +117,32 @@ class PrescriptionVM @Inject constructor(
                 prescriptionDetailDto
             )
                 .run {
-                    if (status == Status.SUCCESS) {
+                    if (this is Result.Success) {
                         val data = _prescriptionDetails.value!!
                         prescriptionDetailDto.quantity -= 1
                         _prescriptionDetails.postValue(data)
-                    } else if (status == Status.ERROR) {
+                    } else if (this is Result.Error) {
                         Log.d("HAGL", "Error: ${message.toString()}")
                     }
                 }
         }
+    }
 
+    fun deletePrescription(prescriptionDetailDto: PrescriptionDetailDto) {
+        viewModelScope.launch(Dispatchers.IO) {
+            prescriptionService.deletePrescriptionDetailDto(
+                prescriptionDetailDto
+            )
+                .run {
+                    if (this is Result.Success) {
+                        val data = _prescriptionDetails.value!!
+                        data.remove(prescriptionDetailDto)
+                        _prescriptionDetails.postValue(data)
+                    } else if (this is Result.Error) {
+                        Log.d("HAGL", "Error: ${message.toString()}")
+                    }
+                }
+        }
     }
 
     fun savePrescription() {

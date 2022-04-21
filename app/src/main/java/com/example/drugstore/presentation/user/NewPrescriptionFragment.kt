@@ -6,6 +6,8 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -82,6 +84,7 @@ class NewPrescriptionFragment : Fragment() {
         newPrescriptionAdapter = NewPrescriptionAdapter().apply {
             onIncreaseClick = { prescriptionVM.increaseQuantity(it) }
             onDecreaseClick = { prescriptionVM.decreaseQuantity(it) }
+            onDeleteClick = { prescriptionVM.deletePrescription(it) }
         }
 
         prescriptionVM.prescriptionDetails.observe(viewLifecycleOwner) {

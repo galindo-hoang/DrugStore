@@ -19,7 +19,7 @@ interface PrescriptionDetailDao {
     suspend fun updateQuantityProduct(quantity: Int, productId: Int): Int
 
     @Query("delete from prescription_detail where prescription_detail.productId=:productId")
-    suspend fun deleteProduct(productId: Int)
+    suspend fun deleteProduct(productId: Int): Int
 
     @Query("DELETE FROM prescription_detail")
     suspend fun deleteAll()

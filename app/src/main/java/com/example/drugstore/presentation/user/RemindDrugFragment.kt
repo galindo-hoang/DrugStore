@@ -2,6 +2,8 @@ package com.example.drugstore.presentation.user
 
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -76,6 +78,21 @@ class RemindDrugFragment : Fragment() {
 
                 }
             }
+            etSearch.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+                override fun afterTextChanged(p0: Editable?) {
+                    if (!p0.isNullOrEmpty()) {
+                        if (p0.toString().trim().length >= 3) {
+                            val search = p0.toString().trim().lowercase()
+                            remindDrugVM.searchProduct(search)
+                        }
+                    } else
+                        remindDrugVM.searchProduct("")
+                }
+            })
         }
     }
 

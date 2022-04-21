@@ -2,6 +2,7 @@ package com.example.drugstore.presentation.user
 
 import android.app.Activity
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,9 +11,11 @@ import androidx.lifecycle.viewModelScope
 import com.example.drugstore.data.models.Product
 import com.example.drugstore.service.PrescriptionService
 import com.example.drugstore.service.ProductService
+import com.example.drugstore.utils.Result
 import com.example.drugstore.utils.Status
 import dagger.hilt.android.qualifiers.ActivityContext
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -22,27 +25,66 @@ class RemindDrugViewModel @Inject constructor(
     private val productService: ProductService,
     private val prescriptionService: PrescriptionService
 ) : ViewModel() {
-    private var medicines = listOf<Product>()
+    private var medicines = mutableListOf<Product>()
     private val _shownMedicines = MutableLiveData<List<Product>>()
     private val pageSize = 12L
     private var firstFetch = true
+    var isFetching = false
 
     val shownMedicines: LiveData<List<Product>>
         get() = _shownMedicines
 
 
     fun getProducts() {
-        viewModelScope.launch(Dispatchers.IO) {
-            productService.fetchPaginateProducts(pageSize, firstFetch).run {
-                if (status == Status.SUCCESS) {
-                    medicines = medicines + data!!
-                    _shownMedicines.postValue(medicines)
+        if (searchJob == null && !isFetching) {
+            isFetching = true
+            viewModelScope.launch(Dispatchers.IO) {
+                productService.fetchPaginateProducts(pageSize, firstFetch).run {
+                    if (status == Status.SUCCESS) {
+                        medicines.addAll(data!!)
+                        _shownMedicines.postValue(medicines)
+                    }
                 }
+                firstFetch = false
+                isFetching = false
             }
-            firstFetch = false
         }
     }
 
+    fun addProduct(product: Product, back: () -> Unit) {
+        viewModelScope.launch(Dispatchers.IO) {
+            prescriptionService.addProduct(product).run {
+                if (this is Result.Success) {
+                    withContext(Dispatchers.Main) {
+                        back()
+                    }
+                } else if (this is Result.Error) {
+                    showError(message)
+                }
+            }
+        }
+    }
+
+    private var searchJob: Job? = null
+
+    fun searchProduct(search: String) {
+        searchJob?.cancel()
+        searchJob = null
+
+        if (search.isEmpty()) {
+            _shownMedicines.postValue(medicines)
+        } else {
+            searchJob = viewModelScope.launch(Dispatchers.IO) {
+                productService.fetchProductsWithSearch(search).run {
+                    if (this is Result.Success) {
+                        _shownMedicines.postValue(data!!)
+                    } else {
+                        showError(message)
+                    }
+                }
+            }
+        }
+    }
 
     private fun showError(message: String?) {
         viewModelScope.launch(Dispatchers.Main) {
@@ -54,17 +96,4 @@ class RemindDrugViewModel @Inject constructor(
         }
     }
 
-    fun addProduct(product: Product, back: () -> Unit) {
-        viewModelScope.launch(Dispatchers.IO) {
-            prescriptionService.addProduct(product).run {
-                if (status == Status.SUCCESS) {
-                    withContext(Dispatchers.Main) {
-                        back()
-                    }
-                } else if (status == Status.ERROR) {
-                    showError(message)
-                }
-            }
-        }
-    }
 }

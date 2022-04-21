@@ -14,7 +14,8 @@ import java.text.DecimalFormat
 
 class NewPrescriptionAdapter(
     var onIncreaseClick: ((PrescriptionDetailDto) -> Unit)? = null,
-    var onDecreaseClick: ((PrescriptionDetailDto) -> Unit)? = null
+    var onDecreaseClick: ((PrescriptionDetailDto) -> Unit)? = null,
+    var onDeleteClick: ((PrescriptionDetailDto) -> Unit)? = null
 ) : RecyclerView.Adapter<NewPrescriptionAdapter.NewPrescriptionViewHolder>() {
     class NewPrescriptionViewHolder(item: ItemNewPrescriptionDetailBinding) :
         RecyclerView.ViewHolder(item.root) {
@@ -47,6 +48,7 @@ class NewPrescriptionAdapter(
             textViewDrugQuantity.text = model.quantity.toString()
             btnIncrease.setOnClickListener { onIncreaseClick?.invoke(model) }
             btnDecrease.setOnClickListener { onDecreaseClick?.invoke(model) }
+            btnDelete.setOnClickListener { onDeleteClick?.invoke(model) }
         }
 
         model.product?.run {
