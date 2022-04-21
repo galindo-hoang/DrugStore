@@ -5,6 +5,7 @@ import android.content.*
 import android.net.Uri
 import android.os.Bundle
 import android.provider.*
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.*
 import android.widget.*
@@ -72,7 +73,7 @@ class UpdateProfileFragment : Fragment() {
             }
         }
         onBindComponents()
-        profileVM.getUserByID().observe(viewLifecycleOwner) {
+        profileVM.getCurrentUser().observe(viewLifecycleOwner) {
             if (it != null) {
                 binding.etName.setText(it.UserName)
                 binding.tvName.text = it.UserName
@@ -118,7 +119,7 @@ class UpdateProfileFragment : Fragment() {
                 Toast.makeText(context, "Please fill name", Toast.LENGTH_SHORT).show()
             } else dataUser[Constants.USER_NAME] = binding.etName.text.toString()
 
-            if (binding.etPhoneNumber.text.length in 9..12) {
+            if (binding.etPhoneNumber.text.length in 9..12 || binding.etPhoneNumber.text.isEmpty()) {
                 dataUser[Constants.PHONE_NUMBER] = binding.etPhoneNumber.text.toString()
             } else Toast.makeText(context, "phone number invalid", Toast.LENGTH_SHORT).show()
 
@@ -128,24 +129,7 @@ class UpdateProfileFragment : Fragment() {
                 "Male" -> 2
                 else -> 0
             }
-
-            if(dataUser.containsKey(Constants.USER_URL_IMAGE)){
-                storageVM.uploadImageToStorage("profile",dataUser[Constants.USER_URL_IMAGE].toString())
-                    .observe(viewLifecycleOwner) {
-                        if (it != null) {
-                            dataUser[Constants.USER_URL_IMAGE] = it
-                            context?.let { it1 -> profileVM.updateUser(dataUser, it1) }
-                        } else {
-                            Toast.makeText(
-                                context,
-                                "Cant storage image",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                    }
-            } else {
-                context?.let { it1 -> profileVM.updateUser(dataUser, it1) }
-            }
+            context?.let { it1 -> profileVM.updateUser(dataUser,parentFragmentManager, it1) }
         }
     }
 
@@ -206,14 +190,15 @@ class UpdateProfileFragment : Fragment() {
                     }
                 }
 
-                loadAddress =
-                    registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-                        if (result.resultCode == Activity.RESULT_OK) {
-                            result.data?.getStringExtra(Constants.ADDRESS)
-                                ?.let { dataUser[Constants.ADDRESS] = it }
-                            binding.tvAddress.text = dataUser[Constants.ADDRESS].toString()
-                        }
-                    }
+            }
+
+        loadAddress =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+                if (result.resultCode == Activity.RESULT_OK) {
+                    result.data?.getStringExtra(Constants.ADDRESS)
+                        ?.let { dataUser[Constants.ADDRESS] = it }
+                    binding.tvAddress.text = dataUser[Constants.ADDRESS].toString()
+                }
             }
     }
 }
