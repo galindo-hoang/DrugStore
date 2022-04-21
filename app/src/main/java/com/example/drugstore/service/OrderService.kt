@@ -2,9 +2,15 @@ package com.example.drugstore.service
 
 import com.example.drugstore.data.models.Order
 import com.example.drugstore.data.repository.OrderRepo
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class OrderService {
-    suspend fun insertOrder(order: Order) = OrderRepo().insertOrder(order)
-    suspend fun fetchOrderByID(ID:String) = OrderRepo().fetchOrderByID(ID)
-    suspend fun fetchOrderByUser(ID: String,status:Boolean) = OrderRepo().fetchOrderByUser(ID,status)
+@Singleton
+class OrderService @Inject constructor(
+    private val orderRepo: OrderRepo
+) {
+    suspend fun insertOrder(order: Order) = orderRepo.insertOrder(order)
+    suspend fun fetchOrderByID(orderID:String) = orderRepo.fetchOrderByID(orderID)
+    suspend fun fetchOrderByUser(ID: String,status:Boolean) = orderRepo.fetchOrderByUser(ID,status)
+    suspend fun fetchAllOrder() = orderRepo.fetchAllOrder()
 }

@@ -13,14 +13,21 @@ import com.example.drugstore.data.models.User
 
 object Constants {
 
+
+    const val PRODUCT_URL_IMAGE: String = "proImage"
+    const val DESCRIPTION: String = "description"
+    const val PRODUCT_QUANTITY: String = "quantity"
+    const val PRODUCT_PRICE: String = "price"
+    const val PRODUCT_NAME: String = "proName"
+
+
     const val BIRTH_DATE: String = "birthday"
     const val USER_NAME:String = "userName"
     const val ADDRESS: String = "address"
-    const val URL_IMAGE: String = "userImage"
+    const val USER_URL_IMAGE: String = "userImage"
     const val GENDER:String = "gender"
 
 
-    const val PRODUCT_NAME: String = "proName"
     const val DATE_ORDER: String = "dateOrder"
     const val STATUS: String = "status"
     const val PRODUCT_ID: String = "proID"

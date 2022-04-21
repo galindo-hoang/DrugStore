@@ -11,11 +11,14 @@ import com.example.drugstore.databinding.ActivityOrderStatusBinding
 import com.example.drugstore.presentation.adapter.OrderProductAdapter
 import com.example.drugstore.presentation.home.HomeActivity
 import com.example.drugstore.utils.Constants
-
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
+@AndroidEntryPoint
 class OrderStatusActivity : AppCompatActivity() {
     private lateinit var binding: ActivityOrderStatusBinding
     private var orderID:String? = null
-    private val orderVM: OrderVM by viewModels()
+    @Inject
+    lateinit var orderVM: OrderVM
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityOrderStatusBinding.inflate(layoutInflater)
@@ -30,29 +33,30 @@ class OrderStatusActivity : AppCompatActivity() {
 
         val orderProductAdapter = OrderProductAdapter()
 
-        orderID?.let { orderVM.setOrderByID(it) }
-        orderVM.getOrderByID().observe(this){
-            if (it != null) {
-                binding.tvPhoneNumber.text = it.Address.phoneNumber
-                binding.tvAddress.text = it.Address.address
-                binding.tvOrderID.text = it.OrderID
-                binding.tvPayment.text = when(it.PaymentID){
-                    0 -> "Tiền mặt"
-                    1 -> "Visa"
-                    2 -> "Paypal"
-                    else -> "Apple Pay"
-                }
-                var sumPrice = 0
-                it.ProductList.forEach { i ->
-                    sumPrice += i.Price*i.Quantity
-                }
+        orderID?.let { ID ->
+            orderVM.setOrderByID(ID).observe(this){
+                if (it != null) {
+                    binding.tvPhoneNumber.text = it.Address.phoneNumber
+                    binding.tvAddress.text = it.Address.address
+                    binding.tvOrderID.text = it.OrderID
+                    binding.tvPayment.text = when(it.PaymentID){
+                        0 -> "Tiền mặt"
+                        1 -> "Visa"
+                        2 -> "Paypal"
+                        else -> "Apple Pay"
+                    }
+                    var sumPrice = 0
+                    it.ProductList.forEach { i ->
+                        sumPrice += i.Price*i.Quantity
+                    }
 
-                binding.tvOrderStatus.text = when(it.Status){
-                    true -> "Giao thành công"
-                    else -> "Đang vận chuyển"
+                    binding.tvOrderStatus.text = when(it.Status){
+                        true -> "Giao thành công"
+                        else -> "Đang vận chuyển"
+                    }
+                    binding.tvSumPrice.text = "${sumPrice.toString()} VND"
+                    orderProductAdapter.setItems(it.ProductList)
                 }
-                binding.tvSumPrice.text = "${sumPrice.toString()} VND"
-                orderProductAdapter.setItems(it.ProductList)
             }
         }
 

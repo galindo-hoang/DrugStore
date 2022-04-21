@@ -18,6 +18,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DrugStore">
         <activity
+            android:name=".presentation.admin.MainAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.admin.home.AddProductActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.order.OrderStatusActivity"
             android:exported="false"
             android:theme="@style/Theme.DrugStore.NoActionBar" />

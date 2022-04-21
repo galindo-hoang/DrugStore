@@ -5,29 +5,41 @@ import androidx.lifecycle.*
 import com.example.drugstore.data.models.Order
 import com.example.drugstore.service.OrderService
 import com.example.drugstore.utils.Result
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class OrderVM: ViewModel() {
-    companion object{
-        val result:MutableLiveData<Order?> = MutableLiveData()
-    }
-    fun setOrderByID(ID:String) = viewModelScope.launch {
-        when(val resource = OrderService().fetchOrderByID(ID)){
+class OrderVM @Inject constructor(
+    private val orderService: OrderService,
+    private val firebaseAuth: FirebaseAuth
+): ViewModel() {
+    fun setOrderByID(ID:String) = liveData(Dispatchers.IO) {
+        when(val result = orderService.fetchOrderByID(ID)){
             is Result.Success ->{
-                result.postValue(resource.data)
+                emit(result.data)
             }
             else -> {
-                Log.e("ViewModel--Order","cant get data")
-                result.postValue(null)
+                result.message?.let { Log.e("ViewModel--Order", it) }
+                emit(result.data)
             }
         }
     }
 
-    fun getOrderByID() = result
+    fun getAllOrder() = liveData(Dispatchers.IO){
+        when(val result = orderService.fetchAllOrder()){
+            is Result.Success -> emit(result.data)
+            else -> {
+                emit(null)
+                Log.e("ViewModel--Order","get non-success")
+            }
+        }
+    }
 
-    fun getOrderByUser(ID:String,status: Boolean) = liveData(Dispatchers.IO){
-        when(val result = OrderService().fetchOrderByUser(ID,status)){
+
+    fun getOrderByUser(status: Boolean) = liveData(Dispatchers.IO){
+        when(val result =
+            firebaseAuth.currentUser?.let { orderService.fetchOrderByUser(it.uid,status) }){
             is Result.Success -> emit(result.data)
             else -> {
                 emit(null)
@@ -37,7 +49,7 @@ class OrderVM: ViewModel() {
     }
 
     fun insertOrder(order: Order) = liveData(Dispatchers.IO) {
-        when(val result = OrderService().insertOrder(order)){
+        when(val result = orderService.insertOrder(order)){
             is Result.Success -> {
                 Log.e("ViewModel--Order","Post success")
                 emit(result.data.toString())

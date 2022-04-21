@@ -21,8 +21,8 @@ data class Nutrition(
     override fun describeContents(): Int = 0
 
     override fun writeToParcel(p0: Parcel?, p1: Int) = with(p0) {
-        p0!!.writeString(NutritionName)
-        p0.writeInt(NutritionID)
+        p0!!.writeInt(NutritionID)
+        p0.writeString(NutritionName)
         p0.writeString(Unit)
     }
 
