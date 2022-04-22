@@ -1,5 +1,6 @@
 package com.example.drugstore.presentation.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,12 +8,20 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.drugstore.R
 import com.example.drugstore.data.models.Ingredient
+import com.example.drugstore.data.models.PrescriptionDetail
 
-class IngredientAdapter(private val ingredient: List<Ingredient>) :
+class IngredientAdapter(private var ingredient: List<Ingredient> = listOf()) :
     RecyclerView.Adapter<IngredientAdapter.ViewHolder>() {
     inner class ViewHolder(listItemView: View) : RecyclerView.ViewHolder(listItemView) {
-        val imgIngredient=listItemView.findViewById<ImageView>(R.id.imgIngredient)
+        val imgIngredient = listItemView.findViewById<ImageView>(R.id.imgIngredient)
     }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun setList(list: List<Ingredient>) {
+        ingredient = list
+        notifyDataSetChanged()
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val context = parent.context
         val inflater = LayoutInflater.from(context)

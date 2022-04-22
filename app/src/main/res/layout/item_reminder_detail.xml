@@ -12,7 +12,6 @@
         android:adjustViewBounds="true"
         android:contentDescription="@string/drug_preview"
         android:scaleType="centerCrop"
-        android:src="@drawable/drug"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

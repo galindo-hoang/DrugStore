@@ -9,5 +9,5 @@ data class Prescription(
     val startDate: Date? = null,
     val endDate: Date? = null,
     val time: Map<String, Int>? = null,
-    val prescriptionDetails: List<PrescriptionDetail>? = null,
+    var prescriptionDetails: List<PrescriptionDetail>? = null,
 )

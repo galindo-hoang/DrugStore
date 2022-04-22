@@ -7,15 +7,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.drugstore.databinding.FragmentReminderDetailBinding
+import com.example.drugstore.presentation.adapter.ReminderDetailAdapter
 import com.example.drugstore.presentation.utils.toTwoDigitString
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ReminderDetailFragment : Fragment() {
+class ReminderDetailFragment private constructor() : Fragment() {
     private var _binding: FragmentReminderDetailBinding? = null
     private val binding get() = _binding!!
+    private lateinit var reminderDetailAdapter: ReminderDetailAdapter
     var prescriptionId = ""
 
     @Inject
@@ -41,11 +43,13 @@ class ReminderDetailFragment : Fragment() {
             btnBack.setOnClickListener {
                 back()
             }
+            rvMedicines.adapter = reminderDetailAdapter
         }
     }
 
     private fun back() {
-        TODO("Not yet implemented")
+        val prescriptionActivity = activity as PrescriptionActivity
+        prescriptionActivity.replaceFragment(ReminderFragment())
     }
 
     @SuppressLint("SimpleDateFormat", "SetTextI18n")
@@ -61,6 +65,21 @@ class ReminderDetailFragment : Fragment() {
                 binding.tvTime.text =
                     time.first.toTwoDigitString() +
                             ":${time.second.toTwoDigitString()}"
+            }
+            reminderDetailAdapter = ReminderDetailAdapter().apply {
+                onItemClick = {
+                    val prescriptionActivity = activity as PrescriptionActivity
+                    prescriptionActivity.replaceFragment(
+                        MedicineDetailFragment.newInstance(
+                            it.productId!!,
+                            prescriptionId
+                        )
+                    )
+                }
+            }
+
+            prescriptionDetails.observe(viewLifecycleOwner) { prescriptionDetails ->
+                reminderDetailAdapter.setList(prescriptionDetails)
             }
         }
     }
