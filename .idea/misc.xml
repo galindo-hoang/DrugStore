@@ -48,7 +48,7 @@
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/activity_add_place.xml" value="0.25" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/activity_add_product.xml" value="0.33" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/activity_bb.xml" value="0.15729166666666666" />
-        <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/activity_chat.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/activity_chat.xml" value="0.22" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/activity_coroutine.xml" value="0.25" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/activity_home.xml" value="0.2296195652173913" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/activity_home_admin.xml" value="0.22" />
@@ -96,6 +96,7 @@
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/item_order_admin.xml" value="0.38625954198473283" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/item_product.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/item_product_order.xml" value="0.33" />
+        <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/item_receive.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/item_topic.xml" value="0.22" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/menu/admin_home_menu.xml" value="0.1890625" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/menu/bottom_menu.xml" value="0.33" />

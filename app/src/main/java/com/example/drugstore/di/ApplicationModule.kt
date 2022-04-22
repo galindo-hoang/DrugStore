@@ -11,6 +11,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -38,6 +39,9 @@ object ApplicationModule {
 
     @Provides
     fun provideFirebaseAuth(): FirebaseAuth = FirebaseAuth.getInstance()
+
+    @Provides
+    fun provideFirebaseDatabase(): FirebaseDatabase = FirebaseDatabase.getInstance("https://drugstore-bda06-default-rtdb.asia-southeast1.firebasedatabase.app/")
 
     @Provides
     fun provideFirebaseClass(googleSignInClient: GoogleSignInClient): FirebaseClass =

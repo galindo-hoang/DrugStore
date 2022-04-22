@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.order.ChatActivity">
+    tools:context=".presentation.chat.ChatActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/tb"
@@ -72,7 +72,7 @@
                     android:id="@+id/etMess"
                     app:hintEnabled="false"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="48dp"
                     android:hint="Message"
                     android:drawableEnd="@drawable/ic_smile_24"
                     android:paddingVertical="10dp"
@@ -80,7 +80,7 @@
             </com.google.android.material.textfield.TextInputLayout>
         </androidx.cardview.widget.CardView>
         <ImageView
-            android:id="@+id/ivSend"
+            android:id="@+id/btnSend"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:src="@drawable/ic_send_24"/>
