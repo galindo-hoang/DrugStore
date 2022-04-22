@@ -2,6 +2,8 @@ package com.example.drugstore.presentation.admin.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -38,6 +40,29 @@ class HomeAdminFragment : Fragment() {
         binding.rvSearch.adapter = productAdapter
         binding.rvSearch.layoutManager = GridLayoutManager(context,2,GridLayoutManager.VERTICAL,false)
 
+        binding.etSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun afterTextChanged(p0: Editable?) {
+                if (!p0.isNullOrEmpty() && p0.toString().trim().length >= 3) {
+                    val search = p0.toString().trim().lowercase()
+                    productVM.getProductsWithSearch(search).observe(viewLifecycleOwner) {
+                        if (it != null) {
+                            productAdapter.setList(it)
+                        }
+                    }
+                } else {
+                    productVM.getAllListProducts().observe(viewLifecycleOwner){
+                        if (it != null) {
+                            (binding.rvSearch.adapter as ProductAdapter).setList(it)
+                        }
+                    }
+                }
+            }
+        })
+
         binding.fab.setOnClickListener {
             startActivity(Intent(context,AddProductActivity::class.java))
         }
@@ -47,7 +72,6 @@ class HomeAdminFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-
         productVM.getAllListProducts().observe(viewLifecycleOwner){
             if (it != null) {
                 (binding.rvSearch.adapter as ProductAdapter).setList(it)

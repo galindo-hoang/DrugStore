@@ -30,6 +30,10 @@ class CartFragment : Fragment() {
     ): View {
         binding = FragmentCartBinding.inflate(inflater,container,false)
 
+        binding.tb.setNavigationOnClickListener {
+            parentFragmentManager.popBackStack()
+        }
+
         val cartAdapter = CartAdapter()
         cartVM!!.getCartProducts().observe(viewLifecycleOwner){
             cartAdapter.setList(it)
@@ -40,9 +44,19 @@ class CartFragment : Fragment() {
             binding.tvRawPrice.text = "${DecimalFormat("##,###").format(sum)}"
             binding.tvSumPrice.text = "${DecimalFormat("##,###").format(sum)}"
         }
+
+        cartAdapter.onMinusClick = {cartProduct ->
+            cartVM!!.decreaseQuantityProduct(cartProduct.Quantity,cartProduct.ProID)
+        }
+
+        cartAdapter.onAddClick = {cartProduct ->
+            cartVM!!.increaseQuantityProduct(cartProduct.Quantity,cartProduct.ProID)
+        }
+
         binding.rcViewCart.adapter = cartAdapter
         binding.rcViewCart.layoutManager = LinearLayoutManager(context)
         // Inflate the layout for this fragment
+
 
         binding.btnContinue.setOnClickListener {
             if(sum == 0) {

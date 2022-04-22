@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.example.drugstore.R
 import com.example.drugstore.databinding.ActivityHomeBinding
 import com.example.drugstore.presentation.BaseActivity
@@ -37,6 +38,7 @@ class HomeActivity : BaseActivity() {
                 when (item.itemId) {
                     R.id.navBtnHome -> {
                         replaceFragment(HomeFragment())
+
                     }
                     R.id.navBtnOrder -> {
                         replaceFragment(OrderFragment())
@@ -69,7 +71,8 @@ class HomeActivity : BaseActivity() {
         }
     }
 
-    fun replaceFragment(fragment: Fragment) {
+    private fun replaceFragment(fragment: Fragment) {
+        supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(binding.fragmentBottomNav.id, fragment)
         fragmentTransaction.commit()

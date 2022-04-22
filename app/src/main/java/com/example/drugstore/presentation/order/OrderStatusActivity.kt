@@ -3,12 +3,14 @@ package com.example.drugstore.presentation.order
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.drugstore.databinding.ActivityOrderStatusBinding
 import com.example.drugstore.presentation.adapter.OrderProductAdapter
 import com.example.drugstore.presentation.home.HomeActivity
 import com.example.drugstore.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
+import java.text.DecimalFormat
 import javax.inject.Inject
 @AndroidEntryPoint
 class OrderStatusActivity : AppCompatActivity() {
@@ -32,6 +34,7 @@ class OrderStatusActivity : AppCompatActivity() {
 
         orderID?.let { ID ->
             orderVM.setOrderByID(ID).observe(this){
+                Log.e("======",it.toString())
                 if (it != null) {
                     binding.tvPhoneNumber.text = it.Address.phoneNumber
                     binding.tvAddress.text = it.Address.address
@@ -51,7 +54,7 @@ class OrderStatusActivity : AppCompatActivity() {
                         true -> "Giao thành công"
                         else -> "Đang vận chuyển"
                     }
-                    binding.tvSumPrice.text = "${sumPrice.toString()} VND"
+                    binding.tvSumPrice.text = "${DecimalFormat("##,###").format(sumPrice)} VND"
                     orderProductAdapter.setItems(it.ProductList)
                 }
             }

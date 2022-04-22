@@ -48,17 +48,17 @@ class OrderActivity : AppCompatActivity() {
         }
         binding.rvAddress.adapter = addressAdapter
         binding.rvAddress.layoutManager = LinearLayoutManager(this)
-        binding.tvPrice.text = sum.toString()
 
 
         cartProductVM!!.getCartProducts().observe(this){
             listProduct.clear()
-            sum = 0
-            it.forEach { i ->
-                listProduct.add(i)
-                sum += i.Quantity*i.Price
-            }
-            binding.tvPrice.text = "${DecimalFormat("##,###").format(sum)}"
+            listProduct = it as ArrayList<CartProduct>
+//            sum = 0
+//            it.forEach { i ->
+//                listProduct.add(i)
+//                sum += i.Quantity*i.Price
+//            }
+//            binding.tvPrice.text = "${DecimalFormat("##,###").format(sum)}"
         }
 
         binding.btnOrder.setOnClickListener {

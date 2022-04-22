@@ -26,6 +26,7 @@
         <entry key="..\:/Nam3-hk2/App/DrugStore/DrugStore/app/src/main/res/layout/item_notification.xml" value="0.17074275362318841" />
         <entry key="..\:/Nam3-hk2/App/DrugStore/DrugStore/app/src/main/res/layout/item_order.xml" value="0.458128078817734" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/drawable-v24/button_rounded.xml" value="0.205" />
+        <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/drawable-v24/cart_blue_border_button.xml" value="0.193" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/drawable-v24/ic_pencil_24.xml" value="0.103" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/drawable-v24/rounded.xml" value="0.205" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/drawable-v24/toggle_seletor.xml" value="0.36" />
@@ -61,7 +62,7 @@
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/activity_splash.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/dialog_progress.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/fragment_add_places.xml" value="0.18802083333333333" />
-        <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/fragment_cart.xml" value="0.25" />
+        <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/fragment_cart.xml" value="0.33" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/fragment_category.xml" value="0.33" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/fragment_chat_admin.xml" value="0.23867753623188406" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/fragment_drug_by_category.xml" value="0.44044665012406947" />
