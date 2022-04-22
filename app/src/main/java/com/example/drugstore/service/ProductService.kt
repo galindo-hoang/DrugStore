@@ -6,11 +6,14 @@ import java.util.HashMap
 import javax.inject.Inject
 import javax.inject.Singleton
 import android.util.Log
+import com.example.drugstore.data.repository.CategoryRepo
 import com.example.drugstore.utils.Response
+import com.example.drugstore.utils.Result
 
 @Singleton
 class ProductService @Inject constructor(
-    private val productRepo: ProductRepo
+    private val productRepo: ProductRepo,
+    private val categoryRepo: CategoryRepo
 ) {
     suspend fun fetchAllProducts() = productRepo.fetchAllProducts()
     suspend fun fetchProductsByCategory(id: Int) = productRepo.fetchAllProductsWithCategory(id)
@@ -33,6 +36,30 @@ class ProductService @Inject constructor(
         } catch (e: Exception) {
             Log.d("HAGL", e.message.toString())
             Response.error(null, "Fail to fetch products")
+        }
+    }
+
+    suspend fun fetchProduct(
+        productId: Int,
+        includeAll: Boolean = false
+    ): Result<Product> {
+        return try {
+            val product = productRepo.fetchProduct(productId)
+
+            if (product == null) {
+                Result.Error("Product not found")
+            } else {
+                if (includeAll) {
+                    val category = categoryRepo.fetchCategory(product.CatID).data!!
+
+                    product.category = category
+                }
+
+                Result.Success(product)
+            }
+        } catch (e: Exception) {
+            Log.d("HAGL", e.message.toString())
+            Result.Error("Fail to fetch product")
         }
     }
 }

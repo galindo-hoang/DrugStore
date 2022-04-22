@@ -116,6 +116,10 @@ class ProductRepo @Inject constructor() {
     }
 
     suspend fun fetchProduct(productId: Int?): Product? {
+        return fetchProduct(productId.toString())
+    }
+
+    suspend fun fetchProduct(productId: String?): Product? {
         val query = collection.document(productId.toString())
         val snapshot = query.get().await()
 

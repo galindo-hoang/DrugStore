@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.user.reminder.MedicineDetailFragment">
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/profileTB"
+        android:layout_width="fill_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:gravity="center_horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.001">
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="16dp"
+            android:background="@color/white"
+            android:src="@drawable/ic_arrow_left_24" />
+
+        <TextView
+            android:id="@+id/tvProName"
+            android:layout_width="230dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="sans-serif-black"
+            android:gravity="center"
+            android:maxLines="2"
+            android:minLines="1"
+            android:text="Product"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:id="@+id/Linear_profile"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="12dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profileTB">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="11"
+            android:outlineSpotShadowColor="@color/black"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="10dp">
+
+            <ImageView
+                android:id="@+id/ivPro"
+                android:layout_width="fill_parent"
+                android:layout_height="100dp" />
+
+
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/consSectionInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:backgroundTint="@color/white"
+        android:orientation="horizontal"
+        android:outlineSpotShadowColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/llQuantity"
+        tools:targetApi="p">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/consDes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:orientation="vertical"
+            app:layout_constraintRight_toRightOf="@id/glMarginDes"
+            app:layout_constraintTop_toTopOf="@id/consSectionInfo">
+
+            <TextView
+                android:id="@+id/ttDes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:text="Description"
+                android:textColor="@color/secondary_text_color"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/consDes"
+                app:layout_constraintStart_toStartOf="@id/consDes"
+                app:layout_constraintTop_toTopOf="@id/consDes" />
+
+            <View
+                android:id="@+id/viewDes"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintEnd_toEndOf="@id/consDes"
+                app:layout_constraintStart_toStartOf="@id/consDes"
+                app:layout_constraintTop_toBottomOf="@id/ttDes" />
+
+            <TextView
+                android:id="@+id/tvDes"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:maxLines="5"
+                android:minLines="5"
+                android:paddingStart="10dp"
+                android:text="Our fried rice is made from the finest ingredients and veggies. single dish is made with fresh vegetables, rescued."
+                app:layout_constraintStart_toStartOf="@id/consDes"
+                app:layout_constraintTop_toBottomOf="@id/viewDes" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glMarginDes"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@id/consSectionInfo"
+            app:layout_constraintGuide_percent="0.5"
+            app:layout_constraintTop_toTopOf="@id/consSectionInfo" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/consNut"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@id/consSectionInfo"
+            app:layout_constraintStart_toStartOf="@id/glMarginDes"
+            app:layout_constraintTop_toTopOf="@id/consSectionInfo">
+
+
+            <TextView
+                android:id="@+id/ttNut"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nutritional Value"
+                android:textColor="@color/secondary_text_color"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@id/consNut"
+                app:layout_constraintStart_toStartOf="@id/consNut"
+                app:layout_constraintTop_toTopOf="@id/consNut" />
+
+            <View
+                android:id="@+id/divideNut"
+                android:layout_width="fill_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/divider_color"
+                app:layout_constraintEnd_toEndOf="@id/consNut"
+                app:layout_constraintStart_toStartOf="@id/consNut"
+                app:layout_constraintTop_toBottomOf="@id/ttNut" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcProductDetail"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:paddingHorizontal="10dp"
+                app:layout_constraintEnd_toEndOf="@id/consNut"
+                app:layout_constraintStart_toStartOf="@id/consNut"
+                app:layout_constraintTop_toBottomOf="@id/divideNut"
+                tools:listitem="@layout/item_nutrition" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/llQuantity"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Linear_profile">
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_weight="11"
+            android:orientation="horizontal">
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:backgroundTint="@color/white"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="10dp">
+
+
+                <TextView
+                    android:id="@+id/tvCatName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:text="COVID-19" />
+
+
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+    </LinearLayout>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvSectionIngredient"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_weight="11"
+        android:backgroundTint="@color/white"
+        android:orientation="vertical"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/consSectionInfo">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/consIngredient"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp">
+
+            <TextView
+                android:id="@+id/ttIngredients"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:text="Ingredients"
+                android:textSize="16sp"
+                android:textStyle="italic"
+                app:layout_constraintEnd_toEndOf="@id/consIngredient"
+                app:layout_constraintStart_toStartOf="@id/consIngredient"
+                app:layout_constraintTop_toTopOf="@id/consIngredient" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcvIngredient"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="@id/consIngredient"
+                app:layout_constraintStart_toStartOf="@id/consIngredient"
+                app:layout_constraintTop_toBottomOf="@id/ttIngredients"
+                tools:listitem="@layout/item_ingredient" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

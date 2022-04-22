@@ -5,8 +5,10 @@ import com.example.drugstore.data.local.dao.PrescriptionDetailDao
 import com.example.drugstore.data.local.dto.PrescriptionDetailDto
 import com.example.drugstore.data.local.dto.PrescriptionDto
 import com.example.drugstore.data.mapper.PrescriptionMapper
+import com.example.drugstore.data.models.Category
 import com.example.drugstore.data.models.Prescription
 import com.example.drugstore.data.models.Product
+import com.example.drugstore.data.repository.CategoryRepo
 import com.example.drugstore.data.repository.PrescriptionRepo
 import com.example.drugstore.data.repository.ProductRepo
 import com.example.drugstore.utils.Result
@@ -17,6 +19,7 @@ import javax.inject.Singleton
 @Singleton
 class PrescriptionService @Inject constructor(
     private val productRepo: ProductRepo,
+    private val categoryRepo: CategoryRepo,
     private val prescriptionRepo: PrescriptionRepo,
     private val prescriptionDao: PrescriptionDao,
     private val prescriptionDetailDao: PrescriptionDetailDao,
@@ -162,9 +165,17 @@ class PrescriptionService @Inject constructor(
         }
     }
 
-    suspend fun getPrescription(id: String): Result<Prescription> {
+    suspend fun getPrescription(id: String, includeAll: Boolean = false): Result<Prescription> {
         return try {
             val prescription = prescriptionRepo.getPrescription(id)
+            if (includeAll) {
+                prescription.prescriptionDetails =
+                    prescription.prescriptionDetails?.map { prescriptionDetail ->
+                        prescriptionDetail.product =
+                            productRepo.fetchProduct(prescriptionDetail.productId)
+                        prescriptionDetail
+                    }
+            }
 
             Result.Success(prescription)
         } catch (e: Exception) {

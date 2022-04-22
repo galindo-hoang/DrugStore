@@ -3,18 +3,23 @@ package com.example.drugstore.data.models
 import android.os.Parcel
 import android.os.Parcelable
 import com.google.android.gms.tasks.Task
+import com.google.firebase.firestore.Exclude
 
 data class Product(
-    var ProID:Int = 0,
-    var CatID:Int = 0,
-    var Price:Int = 0,
-    var Quantity:Int = 0,
-    var ProName:String = "",
-    var ProImage:String = "",
-    var Description:String = "",
-    var IngredientList:ArrayList<Ingredient> = arrayListOf(),
-    var NutritionList:ArrayList<Nutrition> = arrayListOf()
-):Parcelable {
+    var ProID: Int = 0,
+    var CatID: Int = 0,
+    var Price: Int = 0,
+    var Quantity: Int = 0,
+    var ProName: String = "",
+    var ProImage: String = "",
+    var Description: String = "",
+    var IngredientList: ArrayList<Ingredient> = arrayListOf(),
+    var NutritionList: ArrayList<Nutrition> = arrayListOf(),
+
+    @JvmField
+    @Exclude
+    var category: Category? = null,
+) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
         parcel.readInt(),

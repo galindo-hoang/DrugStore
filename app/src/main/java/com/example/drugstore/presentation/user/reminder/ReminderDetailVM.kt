@@ -36,7 +36,7 @@ class ReminderDetailVM @Inject constructor(
 
     fun getPrescription(id: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            prescriptionService.getPrescription(id)
+            prescriptionService.getPrescription(id, includeAll = true)
                 .run {
                     if (this is Result.Success) {
                         _startDate.postValue(data!!.startDate!!)
