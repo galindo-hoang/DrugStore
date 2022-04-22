@@ -49,7 +49,6 @@ class HomeAdminFragment : Fragment() {
         super.onStart()
 
         productVM.getAllListProducts().observe(viewLifecycleOwner){
-            Log.e("===============","eeeeeeeeee")
             if (it != null) {
                 (binding.rvSearch.adapter as ProductAdapter).setList(it)
             }

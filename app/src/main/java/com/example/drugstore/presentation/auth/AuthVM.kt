@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.drugstore.data.firebase.FirebaseClass
 import com.example.drugstore.presentation.BaseActivity
+import com.example.drugstore.presentation.admin.MainAdminActivity
+import com.example.drugstore.presentation.admin.home.HomeAdminFragment
 import com.example.drugstore.presentation.home.HomeActivity
 import com.example.drugstore.service.AuthService
 import com.google.firebase.FirebaseException
@@ -15,11 +17,11 @@ import com.google.firebase.auth.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class AuthVM @Inject constructor(
-    private val authService: AuthService
+    private val authService: AuthService,
+    private val firebaseAuth: FirebaseAuth
 ) : ViewModel() {
     fun postPhoneSignIn(user: FirebaseUser, context: BaseActivity) {
         viewModelScope.launch {
@@ -38,12 +40,15 @@ class AuthVM @Inject constructor(
 
     private suspend fun postConnect(context: BaseActivity, isNewUser: Boolean) {
         withContext(Dispatchers.Main) {
-            val intent = Intent(context, HomeActivity::class.java)
-            intent.putExtra("isNewUser", isNewUser)
-            context.startActivity(
-                intent
-            )
-            context.finish()
+            val user = firebaseAuth.currentUser?.let { authService.findUserByID(it) }
+            if(user?.Permission == 0){
+                val intent = Intent(context, HomeActivity::class.java)
+                intent.putExtra("isNewUser", isNewUser)
+                context.startActivity(intent)
+            }else{
+                context.startActivity(Intent(context,MainAdminActivity::class.java))
+            }
+            context.finishAffinity()
         }
     }
 

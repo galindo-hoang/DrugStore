@@ -3,10 +3,7 @@ package com.example.drugstore.presentation.order
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.activity.viewModels
-import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.drugstore.R
 import com.example.drugstore.databinding.ActivityOrderStatusBinding
 import com.example.drugstore.presentation.adapter.OrderProductAdapter
 import com.example.drugstore.presentation.home.HomeActivity

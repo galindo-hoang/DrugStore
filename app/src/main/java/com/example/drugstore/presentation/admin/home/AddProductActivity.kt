@@ -47,9 +47,12 @@ class AddProductActivity : BaseActivity() {
         if(intent.hasExtra(Constants.OBJECT_PRODUCT)){
             update = true
             binding.btnAdd.text = "Update"
+            binding.tvToolbar.text = "Update Product"
             product = intent.getParcelableExtra(Constants.OBJECT_PRODUCT)!!
             setUpLoadExtra()
-
+        }
+        binding.tb.setNavigationOnClickListener {
+            onBackPressed()
         }
 
         categoryVM.getAllCategories().observe(this){
@@ -102,24 +105,13 @@ class AddProductActivity : BaseActivity() {
                     dataProduct[Constants.PRODUCT_PRICE] = price.toInt()
                     dataProduct[Constants.PRODUCT_QUANTITY] = quantity.toInt()
                     dataProduct[Constants.DESCRIPTION] = binding.etDes.text.toString()
-                    productVM.updateProduct(dataProduct, product.ProID.toString()).observe(this){
-                        hideProgressDialog()
-                        if(it == false) Toast.makeText(this,"Cant update product",Toast.LENGTH_SHORT).show()
-                        else {
-                            finish()
-                        }
-                    }
+                    productVM.updateProduct(dataProduct, product.ProID.toString(),this)
                 }else{
                     product.ProName = name
                     product.Price = price.toInt()
                     product.Quantity = quantity.toInt()
                     product.Description =  binding.etDes.text.toString()
-                    productVM.addProduct(product).observe(this){
-                        hideProgressDialog()
-                        if(it == true){
-                            finish()
-                        }else Toast.makeText(this,"Cant add product",Toast.LENGTH_SHORT).show()
-                    }
+                    productVM.addProduct(product,this)
                 }
             }
         }

@@ -36,12 +36,12 @@ class UserRepo @Inject constructor() {
         return result
     }
 
-    suspend fun updateUser(ID:String, dataUser: HashMap<String,Any>): Result<String> = withContext(Dispatchers.IO){
+    suspend fun updateUser(ID:String, dataUser: HashMap<String,Any>): Result<Boolean> = withContext(Dispatchers.IO){
         try {
             collection.document(ID).update(dataUser).await()
-            Result.Success("Update Profile Success")
+            Result.Success(true)
         }catch (e:Exception){
-            Result.Error("cant update profile","cant update profile")
+            Result.Error(e.message.toString(),false)
         }
     }
 }

@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.example.drugstore.presentation.admin.chat.ChatAdminFragment
 import com.example.drugstore.presentation.admin.home.HomeAdminFragment
 import com.example.drugstore.presentation.admin.order.OrderAdminFragment
-import com.example.drugstore.presentation.admin.ProfileAdminFragment
+import com.example.drugstore.presentation.admin.profile.ProfileAdminFragment
 
 class AdminViewPagerAdapter(manager: FragmentManager): FragmentPagerAdapter(manager,
     BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT

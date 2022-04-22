@@ -1,6 +1,7 @@
-package com.example.drugstore.presentation.admin
+package com.example.drugstore.presentation.admin.profile
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,14 @@ class ProfileAdminFragment : Fragment() {
     ): View {
         binding = FragmentProfileAdminBinding.inflate(inflater,container,false)
         // Inflate the layout for this fragment
+        setUpTransactionFragment(ProfileSettingAdminFragment())
         return binding.root
+    }
+
+    private fun setUpTransactionFragment(fragment: Fragment) {
+        val fragmentTransaction = childFragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.flProfileAdmin, fragment)
+        fragmentTransaction.addToBackStack(fragment.tag)
+        fragmentTransaction.commit()
     }
 }
