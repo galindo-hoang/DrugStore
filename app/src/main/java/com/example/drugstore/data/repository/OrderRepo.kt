@@ -1,5 +1,6 @@
 package com.example.drugstore.data.repository
 
+import android.util.Log
 import com.example.drugstore.data.models.Order
 import com.example.drugstore.utils.Constants
 import com.example.drugstore.utils.Result
@@ -7,6 +8,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
+import java.util.HashMap
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -62,6 +64,16 @@ class OrderRepo @Inject constructor() {
             Result.Success(result)
         }catch (e:Exception){
             Result.Error(e.message.toString(),null)
+        }
+    }
+
+    suspend fun acceptOrder(orderID: String?, dataUpdate: HashMap<String, Any>): Boolean = withContext(Dispatchers.IO) {
+        try {
+            orderID?.let { collection.document(it).update(dataUpdate).await() }
+            true
+        }catch (e:Exception){
+            Log.e("Order==Repo",e.message.toString())
+            false
         }
     }
 }

@@ -18,6 +18,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DrugStore.NoActionBar">
         <activity
+            android:name=".presentation.admin.order.OrderStatusAdminActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.user.reminder.PrescriptionActivity"
             android:exported="false" />
         <activity
@@ -28,7 +31,7 @@
             android:exported="false" />
         <activity
             android:name=".presentation.order.OrderStatusActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
 
@@ -46,29 +49,29 @@
 
         <activity
             android:name=".presentation.order.AddPlaceActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".presentation.order.OrderActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".presentation.chat.ChatActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".presentation.auth.ConfirmOTPActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".presentation.auth.InputPhoneActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".presentation.home.HomeActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".presentation.auth.SignInActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".presentation.auth.MainActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".presentation.auth.SplashActivity"
             android:exported="true">
@@ -79,16 +82,22 @@
             </intent-filter>
         </activity>
 
-
-
 <!--        <service-->
 <!--            android:name=".Message"-->
 <!--            android:exported="false">-->
 <!--            <intent-filter>-->
-<!--                <action android:name="com.google.firebase.MESSAGING_EVENT"/>-->
+<!--                <action android:name="com.google.firebase.MESSAGING_EVENT" />-->
 <!--            </intent-filter>-->
 <!--        </service>-->
-
+<!--        <meta-data-->
+<!--            android:name="com.google.firebase.messaging.default_notification_channel_id"-->
+<!--            android:value="@string/default_notification_channel_id" />-->
+<!--        <meta-data-->
+<!--            android:name="com.google.firebase.messaging.default_notification_icon"-->
+<!--            android:resource="@drawable/ic_notifications_24" />-->
+<!--        <meta-data-->
+<!--            android:name="com.google.firebase.messaging.default_notification_color"-->
+<!--            android:resource="@color/colorAccent" />-->
     </application>
 
 </manifest>

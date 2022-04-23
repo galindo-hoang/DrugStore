@@ -18,6 +18,8 @@ class OrderProductAdapter: RecyclerView.Adapter<OrderProductAdapter.OrderProduct
         val binding = view
     }
 
+    val getChatList: List<CartProduct> get() = list
+
     @SuppressLint("NotifyDataSetChanged")
     fun setItems(list: List<CartProduct>){
         this.list = list

@@ -1,8 +1,6 @@
 package com.example.drugstore.data.models
 
 import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 data class Order(
     var OrderID: String = "",

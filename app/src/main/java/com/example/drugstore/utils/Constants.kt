@@ -1,19 +1,18 @@
 package com.example.drugstore.utils
 
 import android.Manifest
-import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
-import android.util.Log
 import androidx.core.app.ActivityCompat
-import com.example.drugstore.data.models.User
+import java.util.*
 
 object Constants {
 
-
+    const val PRODUCT_DATE_RECEIVE: String = "dateReceive"
+    const val PRODUCT_STATUS: String = "status"
     const val PRODUCT_URL_IMAGE: String = "proImage"
     const val DESCRIPTION: String = "description"
     const val PRODUCT_QUANTITY: String = "quantity"
@@ -71,5 +70,9 @@ object Constants {
 
     fun checkPermissionRead(context: Context):Boolean{
         return ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+    }
+
+    fun getNotificationId(): Int {
+        return Date().time.toInt()
     }
 }
