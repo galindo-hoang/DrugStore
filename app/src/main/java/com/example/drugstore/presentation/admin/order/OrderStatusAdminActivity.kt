@@ -55,11 +55,6 @@ class OrderStatusAdminActivity : AppCompatActivity() {
                     it.ProductList.forEach { i ->
                         sumPrice += i.Price*i.Quantity
                     }
-
-                    binding.tvOrderStatus.text = when(it.Status){
-                        true -> "Giao thành công"
-                        else -> "Đang vận chuyển"
-                    }
                     binding.tvSumPrice.text = "${DecimalFormat("##,###").format(sumPrice)} VND"
                     orderProductAdapter.setItems(it.ProductList)
                 }
@@ -69,8 +64,12 @@ class OrderStatusAdminActivity : AppCompatActivity() {
         binding.rvProduct.layoutManager = LinearLayoutManager(this)
         orderVM.getStatusOrder.observe(this){
             if(it) {
-                binding.llStatus.visibility = View.INVISIBLE
-                binding.tvOrderStatus.text = "Giao thành công"
+                binding.btnAccept.visibility = View.GONE
+                binding.dividerStatus.visibility = View.VISIBLE
+                binding.llDividerStatus.visibility = View.VISIBLE
+            }else{
+                binding.dividerStatus.visibility = View.GONE
+                binding.llDividerStatus.visibility = View.GONE
             }
         }
     }

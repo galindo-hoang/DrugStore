@@ -30,6 +30,7 @@ class OrderProductAdapter: RecyclerView.Adapter<OrderProductAdapter.OrderProduct
         return OrderProductViewHolder(ItemProductOrderBinding.inflate(LayoutInflater.from(parent.context),parent,false))
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: OrderProductViewHolder, position: Int) {
         val model = list[position]
         if(position == list.size - 1) holder.binding.glItem.visibility = View.INVISIBLE
