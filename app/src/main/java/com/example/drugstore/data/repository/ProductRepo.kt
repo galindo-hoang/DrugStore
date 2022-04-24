@@ -1,6 +1,5 @@
 package com.example.drugstore.data.repository
 
-import android.util.Log
 import com.example.drugstore.data.models.Product
 import com.example.drugstore.utils.Constants
 import com.example.drugstore.utils.Result
@@ -9,7 +8,6 @@ import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
-import java.util.HashMap
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -115,15 +113,13 @@ class ProductRepo @Inject constructor() {
         return (snapshot.toObjects(Product::class.java));
     }
 
-    suspend fun fetchProduct(productId: Int?): Product? {
-        return fetchProduct(productId.toString())
-    }
-
-    suspend fun fetchProduct(productId: String?): Product? {
-        val query = collection.document(productId.toString())
-        val snapshot = query.get().await()
-
-        return snapshot.toObject(Product::class.java)
+    suspend fun fetchProduct(productId: Int?): Product? = withContext(Dispatchers.IO) {
+        try {
+            val snapshot = collection.document(productId.toString()).get().await()
+            snapshot.toObject(Product::class.java)
+        }catch (e:Exception){
+            null
+        }
     }
 
     companion object {

@@ -1,16 +1,15 @@
 package com.example.drugstore
 
+import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.media.AudioAttributes
 import android.media.RingtoneManager
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import com.example.drugstore.presentation.BaseApplication
 import com.example.drugstore.presentation.auth.SplashActivity
 import com.example.drugstore.utils.Constants
 import com.google.firebase.messaging.FirebaseMessagingService
@@ -34,6 +33,7 @@ class Message: FirebaseMessagingService() {
     private fun sendRegistrationToServer(token: String){
     }
 
+    @SuppressLint("UnspecifiedImmutableFlag")
     private fun sendNotification(mess: String){
         val intent = Intent(this,SplashActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)

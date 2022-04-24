@@ -1,6 +1,7 @@
 package com.example.drugstore.service
 
 import android.util.Log
+import com.example.drugstore.data.models.Address
 import com.example.drugstore.data.models.User
 import com.example.drugstore.data.repository.AuthRepo
 import com.example.drugstore.data.repository.UserRepo
@@ -22,7 +23,7 @@ class AuthService @Inject constructor(
 ) {
     suspend fun connectUserByGoogle(user: FirebaseUser): Boolean {
         delay(3000);
-        Log.d("suspend", "in suspend")
+         Log.d("suspend", "in suspend")
 
         val userCheck = userRepo.fetchUserByID(user.uid)
 
@@ -85,8 +86,11 @@ class AuthService @Inject constructor(
 
     fun isAuth() = authRepo.getCurrentUserId() != null
 
-    suspend fun findUserByID(user: FirebaseUser) = userRepo.fetchUserByID(user.uid)
+    suspend fun findUserByID() = authRepo.getCurrentUserId()?.let { userRepo.fetchUserByID(it) }
 
-    suspend fun updateUser(ID: String, dataUser: HashMap<String, Any>) =
-        userRepo.updateUser(ID, dataUser)
+    suspend fun updateUser(dataUser: HashMap<String, Any>) =
+        authRepo.getCurrentUserId()?.let { userRepo.updateUser(it, dataUser) }
+
+    suspend fun addAddress(address: Address) =
+        authRepo.getCurrentUserId()?.let { userRepo.addAddress(address, it) }
 }

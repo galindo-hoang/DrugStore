@@ -1,23 +1,18 @@
 package com.example.drugstore.presentation.home
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
+import android.text.*
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.drugstore.R
+import com.example.drugstore.data.models.*
 import com.example.drugstore.databinding.FragmentDrugByCategoryBinding
-import com.example.drugstore.data.models.Category
-import com.example.drugstore.data.models.Product
 import com.example.drugstore.presentation.adapter.ProductAdapter
 import com.example.drugstore.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+
 @AndroidEntryPoint
 class DrugByCategoryFragment : Fragment() {
     private var listProduct: List<Product>? = null

@@ -2,23 +2,17 @@ package com.example.drugstore.presentation.admin.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
+import android.text.*
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.drugstore.R
 import com.example.drugstore.databinding.FragmentHomeAdminBinding
 import com.example.drugstore.presentation.adapter.ProductAdapter
 import com.example.drugstore.presentation.home.ProductVM
 import com.example.drugstore.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+
 @AndroidEntryPoint
 class HomeAdminFragment : Fragment() {
     private lateinit var binding:FragmentHomeAdminBinding

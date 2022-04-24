@@ -3,7 +3,6 @@ package com.example.drugstore.presentation.order
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.drugstore.databinding.ActivityOrderStatusBinding
@@ -37,7 +36,6 @@ class OrderStatusActivity : AppCompatActivity() {
 
         orderID?.let { ID ->
             orderVM.getOrderByID(ID).observe(this){
-                Log.e("======",it.toString())
                 if (it != null) {
                     binding.tvPhoneNumber.text = it.Address.phoneNumber
                     binding.tvAddress.text = it.Address.address

@@ -1,7 +1,6 @@
 package com.example.drugstore.presentation.adapter
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -42,7 +41,6 @@ class AddressAdapter :RecyclerView.Adapter<AddressAdapter.AddressViewHolder>() {
                 selectedPosition = holder.adapterPosition
                 list[holder.adapterPosition].check = true
                 notifyItemChanged(holder.adapterPosition)
-                Log.e("------",list.toString())
                 onClickRadioListener?.invoke(list[holder.adapterPosition])
 
             }

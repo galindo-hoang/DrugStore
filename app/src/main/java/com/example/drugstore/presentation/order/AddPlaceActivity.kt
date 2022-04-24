@@ -1,7 +1,6 @@
 package com.example.drugstore.presentation.order
 
 import android.Manifest
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -9,44 +8,40 @@ import android.location.Address
 import android.location.Geocoder
 import android.location.LocationManager
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
+import android.os.Build
 import android.os.Bundle
 import android.os.Looper
 import android.provider.Settings
-import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
+import com.example.drugstore.data.models.*
 import com.example.drugstore.databinding.ActivityAddPlaceBinding
-import com.example.drugstore.presentation.home.AddressVM
+import com.example.drugstore.presentation.BaseActivity
+import com.example.drugstore.presentation.user.ProfileVM
 import com.example.drugstore.utils.Constants
 import com.example.drugstore.utils.Constants.isNetworkAvailable
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.model.LatLng
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
+import javax.inject.Inject
 
-class AddPlaceActivity : AppCompatActivity() {
-    private var profile: Boolean = false
+@AndroidEntryPoint
+class AddPlaceActivity : BaseActivity() {
+//    private var profile: Boolean = false
     private var latLong: LatLng? = null
     private lateinit var mLocationRequest: LocationRequest
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var binding: ActivityAddPlaceBinding
     private lateinit var mapVM: MapVM
-    private lateinit var addressVM:AddressVM
+    @Inject lateinit var profileVM: ProfileVM
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddPlaceBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        addressVM = ViewModelProvider(this,AddressVM.AddressVMFactory(application))[AddressVM::class.java]
 
-
-        profile = intent.getBooleanExtra(Constants.ADDRESS,false)
-        if(profile){
-            binding.tvPhoneNumber.visibility = View.GONE
-            binding.tvTitle.visibility = View.GONE
-        }
 
         mapVM = ViewModelProvider(this).get()
         mapVM.selectedItem.observe(this) {
@@ -62,13 +57,7 @@ class AddPlaceActivity : AppCompatActivity() {
         }
 
         binding.btnConfirm.setOnClickListener {
-            if(profile){
-                val callback = Intent()
-                callback.putExtra(Constants.ADDRESS,binding.tvCurrentLocation.text.toString())
-                setResult(Activity.RESULT_OK,callback)
-                finish()
-            }
-            else insertAddress()
+            insertAddress()
         }
     }
 
@@ -76,11 +65,15 @@ class AddPlaceActivity : AppCompatActivity() {
         val title = binding.tvTitle.text.toString()
         val phoneNumber = binding.tvPhoneNumber.text.toString()
         if(title != "" && phoneNumber != ""){
-            addressVM.insertAddress(title,
-                mapVM.selectedItem.value?.longitude ?: 0.0,
-                mapVM.selectedItem.value?.latitude ?: 0.0,
-                binding.tvCurrentLocation.text.toString(),phoneNumber)
-            finish()
+            profileVM.addAddress(
+                Address(
+                    longitude = mapVM.selectedItem.value?.longitude ?: 0.0,
+                    latitude = mapVM.selectedItem.value?.latitude ?: 0.0,
+                    phoneNumber = phoneNumber,
+                    address = binding.tvCurrentLocation.text.toString(),
+                    title = title,
+                    false),
+                this)
         }else{
             Toast.makeText(this,"Please input place holder",Toast.LENGTH_SHORT).show()
         }
@@ -125,7 +118,9 @@ class AddPlaceActivity : AppCompatActivity() {
     private fun setUpCurrentRequestLocation() {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         mLocationRequest = LocationRequest.create()
-        mLocationRequest.priority = android.location.LocationRequest.QUALITY_HIGH_ACCURACY
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            mLocationRequest.priority = android.location.LocationRequest.QUALITY_HIGH_ACCURACY
+        }
         mLocationRequest.interval = 0
         mLocationRequest.fastestInterval = 0
         mLocationRequest.numUpdates = 1

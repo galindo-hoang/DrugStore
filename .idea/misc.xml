@@ -64,6 +64,7 @@
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/activity_remote.xml" value="0.17083333333333334" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/activity_sign_in.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/activity_splash.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/activity_update_profile.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/dialog_progress.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/fragment_add_places.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/fragment_cart.xml" value="0.33" />
@@ -72,6 +73,7 @@
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/fragment_drug_by_category.xml" value="0.44044665012406947" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/fragment_home.xml" value="0.25" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/fragment_home_admin.xml" value="0.22" />
+        <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/fragment_medicine_detail.xml" value="0.33" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/fragment_new_prescription.xml" value="0.18" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/fragment_news.xml" value="0.33" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/fragment_news2.xml" value="0.1" />

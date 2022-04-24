@@ -1,15 +1,14 @@
 package com.example.drugstore.presentation.admin.home
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.Settings
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -28,6 +27,7 @@ import com.example.drugstore.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.IOException
 import javax.inject.Inject
+
 @AndroidEntryPoint
 class AddProductActivity : BaseActivity() {
     private lateinit var loadImageFromGallery: ActivityResultLauncher<Intent>
@@ -40,6 +40,7 @@ class AddProductActivity : BaseActivity() {
     @Inject lateinit var productVM: ProductVM
     @Inject lateinit var storageVM: StorageVM
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddProductBinding.inflate(layoutInflater)

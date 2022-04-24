@@ -1,8 +1,11 @@
 package com.example.drugstore.data.repository
 
 import android.util.Log
+import com.example.drugstore.data.models.Address
 import com.example.drugstore.data.models.User
+import com.example.drugstore.utils.Constants
 import com.example.drugstore.utils.Result
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import kotlinx.coroutines.Dispatchers
@@ -20,7 +23,7 @@ class UserRepo @Inject constructor() {
             val document = collection.document(Id).get().await()
             document.toObject(User::class.java)
         } catch (e: Exception) {
-            Log.e("fetchUserByID", "addOnCanceledListener")
+            Log.e("Repository--User",e.message.toString())
             null
         }
     }
@@ -42,6 +45,16 @@ class UserRepo @Inject constructor() {
             Result.Success(true)
         }catch (e:Exception){
             Result.Error(e.message.toString(),false)
+        }
+    }
+
+    suspend fun addAddress(address: Address, currentUserId: String):Boolean = withContext(Dispatchers.IO) {
+        try {
+            collection.document(currentUserId).update(Constants.USER_ADDRESS,FieldValue.arrayUnion(address)).await()
+            true
+        }catch (e:Exception){
+            Log.e("Repository--User",e.message.toString())
+            false
         }
     }
 }

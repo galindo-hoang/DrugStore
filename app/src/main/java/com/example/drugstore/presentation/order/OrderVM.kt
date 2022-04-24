@@ -4,8 +4,7 @@ import android.util.Log
 import androidx.lifecycle.*
 import com.example.drugstore.data.models.Order
 import com.example.drugstore.service.OrderService
-import com.example.drugstore.utils.Constants
-import com.example.drugstore.utils.Result
+import com.example.drugstore.utils.*
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

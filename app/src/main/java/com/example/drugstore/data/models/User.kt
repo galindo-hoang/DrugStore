@@ -1,7 +1,6 @@
 package com.example.drugstore.data.models
 
 import java.util.*
-import kotlin.collections.ArrayList
 
 data class User(
     var UserID: String = "",
@@ -12,7 +11,7 @@ data class User(
     // 1: female
     // 2: male
     var Gender: Int = 0,
-    var Address: String = "",
+    var Address: List<Address> = listOf(),
     var Birthday: Date = Date(),
     var PhoneNumber: String = "",
     var UserImage: String = "",

@@ -18,6 +18,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DrugStore.NoActionBar">
         <activity
+            android:name=".presentation.user.UpdateProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.admin.order.OrderStatusAdminActivity"
             android:exported="false" />
         <activity
@@ -81,23 +84,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-<!--        <service-->
-<!--            android:name=".Message"-->
-<!--            android:exported="false">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="com.google.firebase.MESSAGING_EVENT" />-->
-<!--            </intent-filter>-->
-<!--        </service>-->
-<!--        <meta-data-->
-<!--            android:name="com.google.firebase.messaging.default_notification_channel_id"-->
-<!--            android:value="@string/default_notification_channel_id" />-->
-<!--        <meta-data-->
-<!--            android:name="com.google.firebase.messaging.default_notification_icon"-->
-<!--            android:resource="@drawable/ic_notifications_24" />-->
-<!--        <meta-data-->
-<!--            android:name="com.google.firebase.messaging.default_notification_color"-->
-<!--            android:resource="@color/colorAccent" />-->
     </application>
 
 </manifest>
