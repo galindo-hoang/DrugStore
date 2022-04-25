@@ -36,6 +36,7 @@ class ProductAdapter(
         )
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         val model = list[position]
         holder.binding.tvDes.text = model.ProName
@@ -48,7 +49,7 @@ class ProductAdapter(
             .placeholder(R.drawable.ic_launcher_foreground)
             .into(holder.binding.ivDrug)
 
-        holder.binding.ivDrug.setOnClickListener {
+        holder.binding.root.setOnClickListener {
             onItemClick!!.invoke(model)
         }
     }

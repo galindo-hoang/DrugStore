@@ -50,6 +50,7 @@
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/activity_add_place.xml" value="0.25" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/activity_add_product.xml" value="0.33" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/activity_bb.xml" value="0.15729166666666666" />
+        <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/activity_cart.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/activity_chat.xml" value="0.22" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/activity_coroutine.xml" value="0.25" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/activity_home.xml" value="0.2296195652173913" />
@@ -61,6 +62,7 @@
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/activity_order_status.xml" value="0.33" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/activity_order_status_admin.xml" value="0.33" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/activity_order_summary.xml" value="0.3663949275362319" />
+        <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/activity_product_detail.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/activity_remote.xml" value="0.17083333333333334" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/activity_sign_in.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/activity_splash.xml" value="0.18802083333333333" />
@@ -85,7 +87,7 @@
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/fragment_order_ongoing.xml" value="0.3663949275362319" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/fragment_order_prepare.xml" value="0.26132246376811596" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/fragment_order_status.xml" value="0.33" />
-        <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/fragment_product_detail.xml" value="0.5" />
+        <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/fragment_product_detail.xml" value="0.33" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/fragment_profile.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/fragment_profile_admin.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/fragment_profile_setting_admin.xml" value="0.36666666666666664" />
@@ -98,7 +100,7 @@
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/item_drug.xml" value="0.33" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/item_ingredient.xml" value="0.67" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/item_news.xml" value="0.4791666666666667" />
-        <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/item_nutrition.xml" value="0.25" />
+        <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/item_nutrition.xml" value="0.5" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/item_order.xml" value="0.3721881390593047" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/item_order_admin.xml" value="0.38625954198473283" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/layout/item_product.xml" value="0.36666666666666664" />

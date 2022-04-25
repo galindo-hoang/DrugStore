@@ -1,13 +1,12 @@
 package com.example.drugstore.presentation.home
 
-import android.content.Context
 import android.util.Log
 import android.widget.Toast
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.example.drugstore.data.models.Product
-import com.example.drugstore.presentation.BaseActivity
 import com.example.drugstore.presentation.admin.home.AddProductActivity
 import com.example.drugstore.service.ProductService
 import com.example.drugstore.service.StorageService
@@ -21,6 +20,9 @@ class ProductVM @Inject constructor(
     private val productService: ProductService,
     private val storageService: StorageService
 ) : ViewModel() {
+    private val _product: MutableLiveData<Product> = MutableLiveData()
+    val product: MutableLiveData<Product> get() = _product
+
     fun getAllListProducts() = liveData(Dispatchers.IO) {
         when(val result = productService.fetchAllProducts()){
             is Result.Success -> emit(result.data)
@@ -97,5 +99,10 @@ class ProductVM @Inject constructor(
 
     }
 
+    fun getProductByID(ID: Int){
+        viewModelScope.launch {
+            _product.postValue(productService.fetchProductByID(ID))
+        }
+    }
 
 }

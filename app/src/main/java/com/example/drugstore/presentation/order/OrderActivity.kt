@@ -7,7 +7,6 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.drugstore.data.firebase.FirebaseClass
 import com.example.drugstore.data.models.Address
@@ -28,8 +27,8 @@ class OrderActivity : BaseActivity() {
     private var sum:Int = 0
     private var listProduct: ArrayList<CartProduct> = ArrayList()
     private var currentAddress: Address? = null
-    private var cartProductVM: CartVM? = null
     private val addressAdapter = AddressAdapter()
+    @Inject lateinit var cartVM: CartVM
     @Inject lateinit var orderVM: OrderVM
     @Inject lateinit var profileVM: ProfileVM
 
@@ -38,7 +37,6 @@ class OrderActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityOrderBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        cartProductVM = ViewModelProvider(this,CartVM.CartProductVMFactory(application))[CartVM::class.java]
 
         setupLoadDataFromOtherActivities()
         onBindView()
@@ -65,7 +63,7 @@ class OrderActivity : BaseActivity() {
         binding.rvAddress.adapter = addressAdapter
         binding.rvAddress.layoutManager = LinearLayoutManager(this)
 
-        cartProductVM!!.getCartProducts().observe(this){
+        cartVM.getCartProducts().observe(this){
             listProduct.clear()
             listProduct = it as ArrayList<CartProduct>
         }
@@ -90,7 +88,7 @@ class OrderActivity : BaseActivity() {
             orderVM.insertOrder(order).observe(this){
                 intent.putExtra(Constants.ORDER_ID,it.toString())
                 startActivity(intent)
-                cartProductVM!!.deleteAll()
+                cartVM.deleteAll()
             }
         }
     }

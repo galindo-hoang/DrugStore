@@ -4,8 +4,10 @@ import android.content.Context
 import androidx.room.Room
 import com.example.drugstore.R
 import com.example.drugstore.data.firebase.FirebaseClass
+import com.example.drugstore.data.local.dao.CartProductDao
 import com.example.drugstore.data.local.dao.PrescriptionDao
 import com.example.drugstore.data.local.dao.PrescriptionDetailDao
+import com.example.drugstore.data.local.database.CartProductDatabase
 import com.example.drugstore.data.local.database.MedicineDatabase
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -17,8 +19,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.SupervisorJob
 import javax.inject.Singleton
 
 @Module
@@ -62,4 +62,17 @@ object ApplicationModule {
     @Provides
     fun providePrescriptionDetailDao(medicineDatabase: MedicineDatabase): PrescriptionDetailDao =
         medicineDatabase.prescriptionDetailDao()
+
+    @Provides
+    @Singleton
+    fun provideCartProductDatabase(@ApplicationContext context: Context): CartProductDatabase =
+        Room.databaseBuilder(
+            context,
+            CartProductDatabase::class.java,
+            "CartProductDatabase"
+        ).build()
+
+    @Provides
+    fun provideCartProductDao(cartProductDatabase: CartProductDatabase): CartProductDao =
+        cartProductDatabase.getCartProductDao()
 }
