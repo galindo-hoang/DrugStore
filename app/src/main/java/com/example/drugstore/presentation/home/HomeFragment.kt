@@ -1,24 +1,23 @@
 package com.example.drugstore.presentation.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.drugstore.R
-import com.example.drugstore.presentation.adapter.CategoryAdapter
-import com.example.drugstore.presentation.adapter.ProductAdapter
-import com.example.drugstore.databinding.FragmentHomeBinding
 import com.example.drugstore.data.models.Category
 import com.example.drugstore.data.models.Product
+import com.example.drugstore.databinding.FragmentHomeBinding
+import com.example.drugstore.presentation.adapter.CategoryAdapter
 import com.example.drugstore.presentation.adapter.NewsTopicAdapter
+import com.example.drugstore.presentation.adapter.ProductAdapter
 import com.example.drugstore.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -33,17 +32,11 @@ class HomeFragment : Fragment() {
     @Inject
     lateinit var productVM: ProductVM
 
-    private val newsVM: NewsVM by activityViewModels()
-    private var cartVM: CartVM? = null
-    private val searchAdapter = ProductAdapter()
+    @Inject
+    lateinit var cartVM: CartVM
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        cartVM = ViewModelProvider(
-            this,
-            CartVM.CartProductVMFactory(requireActivity().application)
-        )[CartVM::class.java]
-    }
+    private val newsVM: NewsVM by activityViewModels()
+    private val searchAdapter = ProductAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,7 +47,9 @@ class HomeFragment : Fragment() {
 
         binding.rvSearch.adapter = searchAdapter
         binding.rvSearch.layoutManager = GridLayoutManager(context, 2)
-        searchAdapter.onItemClick = { product -> transitProductDetail(product) }
+        searchAdapter.onItemClick = { product ->
+            startActivityProductDetail(product)
+        }
         binding.etSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
@@ -79,9 +74,9 @@ class HomeFragment : Fragment() {
 
 
         binding.btnCart.setOnClickListener {
-            transitCart()
+            startActivity(Intent(context,CartActivity::class.java))
         }
-        cartVM!!.getQuantityProducts().observe(viewLifecycleOwner) {
+        cartVM.getQuantityProducts().observe(viewLifecycleOwner) {
             if (it > 0) {
                 binding.tvQuantityProduct.visibility = View.VISIBLE
                 binding.tvQuantityProduct.text = it.toString()
@@ -96,7 +91,7 @@ class HomeFragment : Fragment() {
                 productTrendingAdapter.setList(it.subList(0, 10))
             }
         }
-        productTrendingAdapter.onItemClick = { product -> transitProductDetail(product) }
+        productTrendingAdapter.onItemClick = { product -> startActivityProductDetail(product) }
         binding.rvTopTrending.adapter = productTrendingAdapter
         binding.rvTopTrending.layoutManager = LinearLayoutManager(
             context,
@@ -110,7 +105,7 @@ class HomeFragment : Fragment() {
                 productSupplementAdapter.setList(it.subList(it.size / 2, it.size / 2 + 6))
             }
         }
-        productSupplementAdapter.onItemClick = { product -> transitProductDetail(product) }
+        productSupplementAdapter.onItemClick = { product -> startActivityProductDetail(product) }
         binding.rvSupplement.adapter = productSupplementAdapter
         binding.rvSupplement.layoutManager = LinearLayoutManager(
             context,
@@ -161,24 +156,11 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
-    private fun transitCart() {
-        val fragmentTransaction = parentFragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.fragmentBottomNav, CartFragment())
-        fragmentTransaction.addToBackStack("CartFragment")
-        fragmentTransaction.commit()
+    private fun startActivityProductDetail(product: Product) {
+        val intent = Intent(context,ProductDetailActivity::class.java)
+        intent.putExtra(Constants.PRODUCT_ID,product.ProID)
+        startActivity(intent)
     }
-
-    private fun transitProductDetail(product: Product) {
-        val fragmentTransaction = parentFragmentManager.beginTransaction()
-        val bundle = Bundle()
-        bundle.putParcelable(Constants.OBJECT_PRODUCT, product)
-        val fragment = ProductDetailFragment()
-        fragment.arguments = bundle
-        fragmentTransaction.replace(R.id.fragmentBottomNav, fragment)
-        fragmentTransaction.addToBackStack("DrugDetailCate")
-        fragmentTransaction.commit()
-    }
-
 
     private fun setUpTransitToDrugByCategoryFragment(category: Category) {
         val parentFM = parentFragmentManager

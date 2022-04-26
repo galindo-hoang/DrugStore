@@ -1,18 +1,15 @@
 package com.example.drugstore.data.repository
 
-import android.app.Application
 import androidx.lifecycle.LiveData
 import com.example.drugstore.data.local.dao.CartProductDao
-import com.example.drugstore.data.local.database.CartProductDatabase
 import com.example.drugstore.data.models.CartProduct
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class CartRepo(application: Application) {
-    private val cartProductDao: CartProductDao
-    private val cartProductDatabase: CartProductDatabase = CartProductDatabase.getInstance(application)
-
-    init {
-        cartProductDao = cartProductDatabase.getCartProductDao()
-    }
+@Singleton
+class CartRepo @Inject constructor(
+    private var cartProductDao: CartProductDao
+) {
 
     fun fetchAllProducts(): LiveData<List<CartProduct>>{
         return cartProductDao.fetchAllProducts()

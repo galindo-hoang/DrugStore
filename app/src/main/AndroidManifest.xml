@@ -16,23 +16,31 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.DrugStore">
+        android:theme="@style/Theme.DrugStore.NoActionBar">
+        <activity
+            android:name=".presentation.home.CartActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.home.ProductDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.user.UpdateProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.admin.order.OrderStatusAdminActivity"
+            android:exported="false" />
         <activity
             android:name=".presentation.user.reminder.PrescriptionActivity"
-            android:exported="false"
-            android:theme="@style/Theme.DrugStore.NoActionBar" />
+            android:exported="false" />
         <activity
             android:name=".presentation.admin.MainAdminActivity"
-            android:exported="false"
-            android:theme="@style/Theme.DrugStore.NoActionBar" />
+            android:exported="false" />
         <activity
             android:name=".presentation.admin.home.AddProductActivity"
-            android:exported="false"
-            android:theme="@style/Theme.DrugStore.NoActionBar" />
+            android:exported="false" />
         <activity
             android:name=".presentation.order.OrderStatusActivity"
-            android:exported="false"
-            android:theme="@style/Theme.DrugStore.NoActionBar" />
+            android:exported="false" />
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
 
@@ -50,43 +58,32 @@
 
         <activity
             android:name=".presentation.order.AddPlaceActivity"
-            android:exported="false"
-            android:theme="@style/Theme.DrugStore.NoActionBar" />
+            android:exported="false" />
         <activity
             android:name=".presentation.order.OrderActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.order.OrderSummary"
+            android:name=".presentation.chat.ChatActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.order.ChatActivity"
-            android:exported="false"
-            android:theme="@style/Theme.DrugStore.NoActionBar" />
-        <activity
             android:name=".presentation.auth.ConfirmOTPActivity"
-            android:exported="false"
-            android:theme="@style/Theme.DrugStore.NoActionBar" />
+            android:exported="false" />
         <activity
             android:name=".presentation.auth.InputPhoneActivity"
-            android:exported="false"
-            android:theme="@style/Theme.DrugStore.NoActionBar" />
+            android:exported="false" />
         <activity
             android:name=".presentation.home.HomeActivity"
             android:exported="false"
-            android:theme="@style/Theme.DrugStore.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".presentation.auth.SignInActivity"
-            android:exported="false"
-            android:theme="@style/Theme.DrugStore.NoActionBar" />
+            android:exported="false" />
         <activity
             android:name=".presentation.auth.MainActivity"
-            android:exported="false"
-            android:theme="@style/Theme.DrugStore.NoActionBar" />
+            android:exported="false" />
         <activity
             android:name=".presentation.auth.SplashActivity"
-            android:exported="true"
-            android:theme="@style/Theme.DrugStore.NoActionBar">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

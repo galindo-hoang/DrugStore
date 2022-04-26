@@ -1,27 +1,31 @@
 package com.example.drugstore.service
 
-import android.app.Application
 import androidx.lifecycle.LiveData
 import com.example.drugstore.data.models.CartProduct
 import com.example.drugstore.data.models.Product
 import com.example.drugstore.data.repository.CartRepo
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class CartService (private val application: Application) {
+@Singleton
+class CartService @Inject constructor(
+    private val cartRepo: CartRepo
+) {
     
     fun fetchAllProducts(): LiveData<List<CartProduct>> {
-        return CartRepo(application).fetchAllProducts()
+        return cartRepo.fetchAllProducts()
     }
 
     fun fetchProductById(id: Int): LiveData<CartProduct> {
-        return CartRepo(application).fetchProductById(id = id)
+        return cartRepo.fetchProductById(id = id)
     }
 
     fun getQuantityProducts(): LiveData<Int> {
-        return CartRepo(application).getQuantityProducts()
+        return cartRepo.getQuantityProducts()
     }
 
     suspend fun insertProduct(product: Product){
-        CartRepo(application).insertProduct(
+        cartRepo.insertProduct(
             CartProduct(
                 ProID = product.ProID,
                 ProName = product.ProName,
@@ -33,13 +37,13 @@ class CartService (private val application: Application) {
     }
 
     suspend fun updateQuantityProduct(quantity: Int,proId: Int, increase: Boolean){
-        if (increase) CartRepo(application).updateQuantityProduct(quantity + 1,proId)
+        if (increase) cartRepo.updateQuantityProduct(quantity + 1,proId)
         else{
-            if(quantity > 1) CartRepo(application).updateQuantityProduct(quantity - 1,proId)
-            else CartRepo(application).deleteProduct(proId)
+            if(quantity > 1) cartRepo.updateQuantityProduct(quantity - 1,proId)
+            else cartRepo.deleteProduct(proId)
         }
     }
 
-    suspend fun deleteAll() = CartRepo(application).deleteAll()
+    suspend fun deleteAll() = cartRepo.deleteAll()
 
 }

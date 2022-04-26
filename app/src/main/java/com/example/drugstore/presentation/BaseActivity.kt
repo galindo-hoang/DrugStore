@@ -8,7 +8,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
-import androidx.fragment.app.Fragment
 import com.example.drugstore.R
 import com.google.android.material.snackbar.Snackbar
 import java.util.concurrent.Executors
@@ -17,7 +16,7 @@ import javax.inject.Inject
 
 open class BaseActivity @Inject constructor() : AppCompatActivity() {
     private var doubleClickToExit = false
-    private lateinit var mProgessDialog: Dialog
+    private lateinit var mProgressDialog: Dialog
 
     fun hideSystemBars() {
         val windowInsetsController =
@@ -30,14 +29,14 @@ open class BaseActivity @Inject constructor() : AppCompatActivity() {
     }
 
     fun showProgressDialog(text: String) {
-        this.mProgessDialog = Dialog(this)
-        mProgessDialog.setContentView(R.layout.dialog_progress)
-        mProgessDialog.findViewById<TextView>(R.id.tvProgress).text = text
-        mProgessDialog.show()
+        this.mProgressDialog = Dialog(this)
+        mProgressDialog.setContentView(R.layout.dialog_progress)
+        mProgressDialog.findViewById<TextView>(R.id.tvProgress).text = text
+        mProgressDialog.show()
     }
 
     fun hideProgressDialog() {
-        mProgessDialog.dismiss()
+        mProgressDialog.dismiss()
     }
 
     fun doubleBackToExit() {

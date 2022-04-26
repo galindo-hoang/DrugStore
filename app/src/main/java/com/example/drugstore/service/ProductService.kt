@@ -1,14 +1,13 @@
 package com.example.drugstore.service
 
-import com.example.drugstore.data.models.Product
-import com.example.drugstore.data.repository.ProductRepo
-import java.util.HashMap
-import javax.inject.Inject
-import javax.inject.Singleton
 import android.util.Log
+import com.example.drugstore.data.models.Product
 import com.example.drugstore.data.repository.CategoryRepo
+import com.example.drugstore.data.repository.ProductRepo
 import com.example.drugstore.utils.Response
 import com.example.drugstore.utils.Result
+import javax.inject.Inject
+import javax.inject.Singleton
 
 @Singleton
 class ProductService @Inject constructor(
@@ -62,4 +61,6 @@ class ProductService @Inject constructor(
             Result.Error("Fail to fetch product")
         }
     }
+
+    suspend fun fetchProductByID(id: Int) = productRepo.fetchProduct(id)
 }

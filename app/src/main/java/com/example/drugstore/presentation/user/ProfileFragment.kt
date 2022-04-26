@@ -30,7 +30,6 @@ class ProfileFragment : Fragment() {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        setData()
         bindComponents()
         return view
     }
@@ -40,7 +39,7 @@ class ProfileFragment : Fragment() {
             profileVM.signOut(activity as BaseActivity)
         }
         binding.cvUpdateProfile.setOnClickListener {
-            setUpTransactionFragment(UpdateProfileFragment())
+            startActivity(Intent(context,UpdateProfileActivity::class.java))
         }
         binding.btnReminder.setOnClickListener {
             val intent = Intent(activity, PrescriptionActivity::class.java)
@@ -48,6 +47,11 @@ class ProfileFragment : Fragment() {
             startActivity(intent)
             requireActivity().finish()
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        setData()
     }
 
     private fun setData() {
@@ -60,13 +64,6 @@ class ProfileFragment : Fragment() {
                     .into(binding.ivProfile)
             }
         }
-    }
-
-    private fun setUpTransactionFragment(fragment: Fragment) {
-        val fragmentTransaction = parentFragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.fragmentBottomNav, fragment)
-        fragmentTransaction.addToBackStack(fragment.tag)
-        fragmentTransaction.commit()
     }
 
 

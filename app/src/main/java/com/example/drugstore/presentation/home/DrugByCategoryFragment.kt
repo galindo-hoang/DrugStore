@@ -1,23 +1,22 @@
 package com.example.drugstore.presentation.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.drugstore.R
-import com.example.drugstore.databinding.FragmentDrugByCategoryBinding
 import com.example.drugstore.data.models.Category
 import com.example.drugstore.data.models.Product
+import com.example.drugstore.databinding.FragmentDrugByCategoryBinding
 import com.example.drugstore.presentation.adapter.ProductAdapter
 import com.example.drugstore.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+
 @AndroidEntryPoint
 class DrugByCategoryFragment : Fragment() {
     private var listProduct: List<Product>? = null
@@ -51,7 +50,7 @@ class DrugByCategoryFragment : Fragment() {
                 productAdapter.setList(it)
             }
         }
-        productAdapter.onItemClick = {product -> transitProductDetail(product) }
+        productAdapter.onItemClick = {product -> startActivityProductDetail(product) }
         binding.rvProduct.adapter = productAdapter
         binding.rvProduct.layoutManager = GridLayoutManager(context,2)
 
@@ -79,14 +78,9 @@ class DrugByCategoryFragment : Fragment() {
         return binding.root
     }
 
-    private fun transitProductDetail(product: Product) {
-        val fragmentTransaction = parentFragmentManager.beginTransaction()
-        val bundle = Bundle()
-        bundle.putParcelable(Constants.OBJECT_PRODUCT,product)
-        val fragment = ProductDetailFragment()
-        fragment.arguments = bundle
-        fragmentTransaction.replace(R.id.fragmentBottomNav,fragment)
-        fragmentTransaction.addToBackStack("DrugDetail")
-        fragmentTransaction.commit()
+    private fun startActivityProductDetail(product: Product) {
+        val intent = Intent(context,ProductDetailActivity::class.java)
+        intent.putExtra(Constants.PRODUCT_ID,product.ProID)
+        startActivity(intent)
     }
 }

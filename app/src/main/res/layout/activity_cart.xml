@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.home.CartFragment">
+    tools:context=".presentation.home.CartActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/tb"
@@ -28,30 +29,26 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcViewCart"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         tools:listitem="@layout/item_cart"
+        android:layout_marginHorizontal="10dp"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tb"
-        app:layout_constraintBottom_toTopOf="@id/glFirst"/>
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/glFirst"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.57"/>
+        app:layout_constraintBottom_toTopOf="@id/cv"
+        android:layout_marginBottom="10dp" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardView7"
+        android:id="@+id/cv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
         app:cardCornerRadius="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/glFirst">
-
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="20dp">
         <LinearLayout
             android:id="@+id/linearLayout3"
             android:layout_margin="10dp"
@@ -91,7 +88,6 @@
                 android:orientation="horizontal"
                 android:paddingHorizontal="20dp"
                 android:paddingVertical="10dp">
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -99,7 +95,6 @@
                     android:gravity="center"
                     android:text="Tạm tính"
                     android:textColor="@color/black" />
-
                 <TextView
                     android:id="@+id/tvRawPrice"
                     android:layout_width="0dp"
@@ -121,7 +116,6 @@
                 android:orientation="horizontal"
                 android:paddingHorizontal="20dp"
                 android:paddingVertical="10dp">
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -129,7 +123,6 @@
                     android:gravity="center"
                     android:text="Điểm tích lũy"
                     android:textColor="@color/black" />
-
                 <TextView
                     android:id="@+id/tvPlus"
                     android:layout_width="0dp"
@@ -182,7 +175,7 @@
                 android:backgroundTint="#FF03DAC5"
                 android:text="Continue"
                 android:textStyle="bold"/>
-
         </LinearLayout>
     </androidx.cardview.widget.CardView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

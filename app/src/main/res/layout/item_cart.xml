@@ -3,149 +3,132 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="382dp"
-    android:layout_height="173dp"
+    android:layout_width="match_parent"
     android:layout_margin="10dp"
-    android:layout_marginBottom="100dp"
+    android:layout_height="wrap_content"
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="10dp"
     app:cardElevation="10dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="170dp">
+        android:layout_height="wrap_content">
 
 
         <ImageView
-            android:id="@+id/imgProduct"
-            android:layout_width="92dp"
-            android:layout_height="81dp"
+            android:id="@+id/ivProduct"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:scaleType="fitCenter"
             android:adjustViewBounds="true"
+            android:layout_margin="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/glFirst"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.344" />
 
-        <LinearLayout
-            android:id="@+id/linearLayout4"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginBottom="80dp"
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glFirst"
             android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            app:layout_constraintGuide_percent="0.3" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="5dp"
+            android:orientation="vertical"
+            app:layout_constraintStart_toEndOf="@id/glFirst"
+            app:layout_constraintEnd_toStartOf="@id/glSecond"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imgProduct"
             app:layout_constraintTop_toTopOf="parent">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Items"
+                android:textSize="14sp"
+                android:textColor="@color/secondary_text_color"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/tvNameProduct"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:text="Kit Test Covid 19"
+                android:maxLines="2"
+                android:fontFamily="sans-serif-black"
+                android:textSize="16sp"
+                android:textColor="@color/black"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="ITEMS" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/nameProduct"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Kit Test Covid 19"
-                    android:textColor="@color/black" />
-            </LinearLayout>
-
-
-        </LinearLayout>
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:orientation="vertical"
-            app:layout_constraintGuide_begin="16dp"
-            app:layout_constraintStart_toStartOf="parent" />
-
-
-        <LinearLayout
-            android:id="@+id/linearLayout5"
-            android:layout_width="265dp"
-            android:layout_height="32dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="8dp"
-            android:orientation="horizontal"
-            app:layout_constraintStart_toEndOf="@+id/imgProduct"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
-
+                android:text="Price"
+                android:textSize="14sp"
+                android:textColor="@color/secondary_text_color"
+                android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/priceProduct"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:layout_gravity="start"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="72dp"
-                android:fontFamily="sans-serif-black"
-                android:gravity="center"
+                android:id="@+id/tvPriceProduct"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
                 android:text="285.000VNĐ"
+                android:textSize="15sp"
+                android:textColor="@color/price_color"/>
+        </LinearLayout>
 
 
-                android:textSize="15dp"
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glSecond"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            app:layout_constraintGuide_percent="0.68"/>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="5dp"
+            app:layout_constraintStart_toEndOf="@id/glSecond"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@drawable/solid_gray_button">
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnMinus"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:background="@drawable/btn_sub"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imgViewOrderHistory" />
-
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_weight="4"
-                android:background="@drawable/solid_gray_button">
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnSub"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:background="@drawable/btn_sub"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/productQuantity"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@id/btnAdd"
-                    app:layout_constraintStart_toStartOf="@id/btnSub"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnAdd"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:background="@drawable/btn_add"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-            <ImageButton
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/productQuantity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:layout_marginEnd="10dp"
-                android:background="@drawable/background_transparent"
-                android:src="@drawable/ic_cart_30" />
+                android:text="0"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/btnAdd"
+                app:layout_constraintStart_toStartOf="@id/btnMinus"
+                app:layout_constraintTop_toTopOf="parent" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnAdd"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:background="@drawable/btn_add"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </LinearLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

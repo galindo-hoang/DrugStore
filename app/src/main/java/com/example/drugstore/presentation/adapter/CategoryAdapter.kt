@@ -1,14 +1,13 @@
 package com.example.drugstore.presentation.adapter
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.drugstore.R
-import com.example.drugstore.databinding.ItemCategoryBinding
 import com.example.drugstore.data.models.Category
+import com.example.drugstore.databinding.ItemCategoryBinding
 
 class CategoryAdapter(
     var onItemClick: ((Category) -> Unit)? = null

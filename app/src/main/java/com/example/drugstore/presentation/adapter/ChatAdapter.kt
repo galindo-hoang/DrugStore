@@ -8,14 +8,20 @@ import com.example.drugstore.databinding.ItemSendBinding
 import com.example.drugstore.data.firebase.FirebaseClass
 import com.example.drugstore.data.models.Chat
 
-class ChatAdapter(private val chatList: ArrayList<Chat>):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ChatAdapter(val ID: String):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val SEND = 0
     private val RECEIVE = 1
+    var chatList: List<Chat> = listOf()
+
+    fun setItems(list: List<Chat>){
+        this.chatList = list
+        notifyDataSetChanged()
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        if(viewType == SEND){
-            return SendViewHolder(ItemSendBinding.inflate(LayoutInflater.from(parent.context),parent,false))
+        return if(viewType == SEND){
+            SendViewHolder(ItemSendBinding.inflate(LayoutInflater.from(parent.context),parent,false))
         }else{
-            return ReceiveViewHolder(ItemReceiveBinding.inflate(LayoutInflater.from(parent.context),parent,false))
+            ReceiveViewHolder(ItemReceiveBinding.inflate(LayoutInflater.from(parent.context),parent,false))
         }
     }
 
@@ -29,7 +35,7 @@ class ChatAdapter(private val chatList: ArrayList<Chat>):RecyclerView.Adapter<Re
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if(FirebaseClass.getFirebaseAuth().currentUser!!.uid == chatList[position].sendID){
+        return if(ID == chatList[position].sendID){
             SEND
         }else RECEIVE
     }

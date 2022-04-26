@@ -1,18 +1,17 @@
 package com.example.drugstore.presentation.admin.profile
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.drugstore.R
-import com.example.drugstore.databinding.FragmentProfileAdminBinding
 import com.example.drugstore.databinding.FragmentProfileSettingAdminBinding
 import com.example.drugstore.presentation.BaseActivity
 import com.example.drugstore.presentation.user.ProfileVM
-import com.example.drugstore.presentation.user.UpdateProfileFragment
+import com.example.drugstore.presentation.user.UpdateProfileActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -29,7 +28,6 @@ class ProfileSettingAdminFragment : Fragment() {
         binding = FragmentProfileSettingAdminBinding.inflate(inflater,container,false)
         // Inflate the layout for this fragment
         bindComponents()
-        setData()
         return binding.root
     }
 
@@ -38,8 +36,13 @@ class ProfileSettingAdminFragment : Fragment() {
             profileVM.signOut(activity as BaseActivity)
         }
         binding.cvUpdateProfile.setOnClickListener {
-            setUpTransactionFragment(UpdateProfileFragment())
+            startActivity(Intent(context,UpdateProfileActivity::class.java))
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        setData()
     }
 
     private fun setData() {
@@ -52,12 +55,5 @@ class ProfileSettingAdminFragment : Fragment() {
                     .into(binding.ivProfile)
             }
         }
-    }
-
-    private fun setUpTransactionFragment(fragment: Fragment) {
-        val fragmentTransaction = parentFragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.flProfileAdmin, fragment)
-        fragmentTransaction.addToBackStack(fragment.tag)
-        fragmentTransaction.commit()
     }
 }

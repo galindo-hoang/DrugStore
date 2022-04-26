@@ -1,20 +1,22 @@
 package com.example.drugstore.presentation.user
 
-import android.app.*
-import android.content.*
+import android.app.Activity
+import android.app.AlertDialog
+import android.app.DatePickerDialog
+import android.content.ActivityNotFoundException
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.provider.*
-import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.*
-import android.widget.*
-import androidx.activity.result.*
+import android.provider.MediaStore
+import android.provider.Settings
+import android.widget.ArrayAdapter
+import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import com.bumptech.glide.Glide
 import com.example.drugstore.R
-import com.example.drugstore.databinding.FragmentUpdateProfileBinding
-import com.example.drugstore.presentation.order.AddPlaceActivity
+import com.example.drugstore.databinding.ActivityUpdateProfileBinding
+import com.example.drugstore.presentation.BaseActivity
 import com.example.drugstore.presentation.utils.DatePickerDialogFactory
 import com.example.drugstore.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,25 +26,20 @@ import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class UpdateProfileFragment : Fragment() {
+class UpdateProfileActivity : BaseActivity() {
     private lateinit var genderList: List<String>
-    private lateinit var loadAddress: ActivityResultLauncher<Intent>
-
     private lateinit var calendar: DatePickerDialog
     private lateinit var loadImageFromGallery: ActivityResultLauncher<Intent>
-    private lateinit var binding: FragmentUpdateProfileBinding
+    private lateinit var binding: ActivityUpdateProfileBinding
     private val dataUser = hashMapOf<String, Any>()
 
-    @Inject
-    lateinit var profileVM: ProfileVM
-
-    @Inject
-    lateinit var storageVM: StorageVM
-
+    @Inject lateinit var profileVM: ProfileVM
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityUpdateProfileBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        calendar = DatePickerDialogFactory.create(requireContext()) {
+        calendar = DatePickerDialogFactory.create(this) {
             binding.tvBirth.text =
                 SimpleDateFormat(
                     "dd-MM-yyyy",
@@ -52,36 +49,21 @@ class UpdateProfileFragment : Fragment() {
             dataUser[Constants.BIRTH_DATE] = DatePickerDialogFactory.getDate()
         }
         genderList = resources.getStringArray(R.array.gender).toList()
-    }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentUpdateProfileBinding.inflate(inflater, container, false)
-        // Inflate the layout for this fragment
-        setupLoadDataFromOtherActivity()
 
-        context?.let {
-            ArrayAdapter.createFromResource(
-                it,
-                R.array.gender,
-                android.R.layout.simple_spinner_item
-            ).also { adapter ->
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                binding.spinner.adapter = adapter
-            }
+        ArrayAdapter.createFromResource(this, R.array.gender, android.R.layout.simple_spinner_item).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            binding.spinner.adapter = adapter
         }
+        setupLoadDataFromOtherActivity()
         onBindComponents()
-        profileVM.getCurrentUser().observe(viewLifecycleOwner) {
+
+        profileVM.getCurrentUser().observe(this) {
             if (it != null) {
                 binding.etName.setText(it.UserName)
                 binding.tvName.text = it.UserName
-                binding.tvBirth.text =
-                    SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(it.Birthday)
-                binding.tvAddress.text = it.Address
+                binding.tvBirth.text = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(it.Birthday)
                 DatePickerDialogFactory.setPreviousDate(it.Birthday)
-
                 if (it.PhoneNumber.isNotEmpty()) {
                     binding.etPhoneNumber.setText(it.PhoneNumber)
                     binding.etPhoneNumber.keyListener = null
@@ -93,21 +75,15 @@ class UpdateProfileFragment : Fragment() {
                     .into(binding.ivCircle)
             }
         }
-        return binding.root
     }
 
     private fun onBindComponents() {
         binding.ivCircle.setOnClickListener {
-            if (context?.let { it1 -> Constants.checkPermissionRead(it1) } == true) {
+            if (Constants.checkPermissionRead(this)) {
                 loadImage()
             } else {
                 showDialogPermission()
             }
-        }
-        binding.tvAddress.setOnClickListener {
-            val intent = Intent(context, AddPlaceActivity::class.java)
-            intent.putExtra(Constants.ADDRESS, true)
-            loadAddress.launch(intent)
         }
 
         binding.tvBirth.setOnClickListener {
@@ -115,13 +91,14 @@ class UpdateProfileFragment : Fragment() {
         }
 
         binding.btnUpdate.setOnClickListener {
+            showProgressDialog(resources.getString(R.string.please_wait))
             if (binding.etName.text.isEmpty()) {
-                Toast.makeText(context, "Please fill name", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Please fill name", Toast.LENGTH_SHORT).show()
             } else dataUser[Constants.USER_NAME] = binding.etName.text.toString()
 
             if (binding.etPhoneNumber.text.length in 9..12 || binding.etPhoneNumber.text.isEmpty()) {
                 dataUser[Constants.PHONE_NUMBER] = binding.etPhoneNumber.text.toString()
-            } else Toast.makeText(context, "phone number invalid", Toast.LENGTH_SHORT).show()
+            } else Toast.makeText(this, "phone number invalid", Toast.LENGTH_SHORT).show()
 
             dataUser[Constants.GENDER] = when (binding.spinner.selectedItem.toString()) {
                 "Others" -> 0
@@ -129,20 +106,20 @@ class UpdateProfileFragment : Fragment() {
                 "Male" -> 2
                 else -> 0
             }
-            context?.let { it1 -> profileVM.updateUser(dataUser,parentFragmentManager, it1) }
+            profileVM.updateUser(dataUser,this)
         }
     }
 
 
     private fun showDialogPermission() {
-        AlertDialog.Builder(context)
+        AlertDialog.Builder(this)
             .setMessage("It Looks like you have turned off permissions required for this feature. It can be enabled under Application Settings")
             .setPositiveButton(
                 "GO TO SETTINGS"
             ) { _, _ ->
                 try {
                     val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                    val uri = Uri.fromParts("package", requireActivity().packageName, null)
+                    val uri = Uri.fromParts("package", this.packageName, null)
                     intent.data = uri
                     startActivity(intent)
                 } catch (e: ActivityNotFoundException) {
@@ -182,7 +159,7 @@ class UpdateProfileFragment : Fragment() {
                         } catch (e: IOException) {
                             e.printStackTrace()
                             Toast.makeText(
-                                context,
+                                this,
                                 "Failed to load image from camera",
                                 Toast.LENGTH_SHORT
                             ).show()
@@ -190,15 +167,6 @@ class UpdateProfileFragment : Fragment() {
                     }
                 }
 
-            }
-
-        loadAddress =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-                if (result.resultCode == Activity.RESULT_OK) {
-                    result.data?.getStringExtra(Constants.ADDRESS)
-                        ?.let { dataUser[Constants.ADDRESS] = it }
-                    binding.tvAddress.text = dataUser[Constants.ADDRESS].toString()
-                }
             }
     }
 }

@@ -1,20 +1,19 @@
 package com.example.drugstore.presentation.user
 
-import android.content.Context
+import android.app.Activity
 import android.content.Intent
-import android.util.Log
 import android.widget.Toast
-import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
+import com.example.drugstore.data.models.Address
 import com.example.drugstore.presentation.BaseActivity
 import com.example.drugstore.presentation.auth.SplashActivity
 import com.example.drugstore.service.AuthService
 import com.example.drugstore.service.StorageService
 import com.example.drugstore.utils.Constants
 import com.example.drugstore.utils.Result
-import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -22,9 +21,10 @@ import javax.inject.Inject
 
 class ProfileVM @Inject constructor(
     private val authService: AuthService,
-    private val firebaseAuth: FirebaseAuth,
     private val storageService: StorageService
 ) : ViewModel() {
+    private val _listAddress:MutableLiveData<List<Address>> = MutableLiveData()
+    val getListAddress: MutableLiveData<List<Address>> get() = _listAddress
     fun signOut(context: BaseActivity) {
         viewModelScope.launch {
             authService.signOut()
@@ -36,20 +36,45 @@ class ProfileVM @Inject constructor(
     }
 
     fun getCurrentUser() = liveData(Dispatchers.IO){
-        emit(firebaseAuth.currentUser?.let { authService.findUserByID(it) })
+        emit(authService.findUserByID())
     }
 
-    fun updateUser(dataUser: HashMap<String, Any>,fragmentManager: FragmentManager,context: Context) {
+    fun setupListAddress() {
+        viewModelScope.launch {
+            _listAddress.postValue(
+                authService.findUserByID()?.Address ?: listOf()
+            )
+        }
+    }
+
+    fun addAddress(address: Address, addPlaceActivity: Activity) {
+        viewModelScope.launch {
+            val callback = Intent()
+            if(authService.addAddress(address) == true) {
+                callback.putExtra(Constants.ADDRESS,true)
+            }
+            else {
+                Toast.makeText(addPlaceActivity,"cant add this address",Toast.LENGTH_SHORT).show()
+                callback.putExtra(Constants.ADDRESS,false)
+            }
+            addPlaceActivity.setResult(Activity.RESULT_OK,callback)
+            addPlaceActivity.finish()
+        }
+    }
+
+
+    fun updateUser(dataUser: HashMap<String, Any>, updateProfileActivity: BaseActivity) {
         viewModelScope.launch {
             if(dataUser.containsKey(Constants.USER_URL_IMAGE)){
                 dataUser[Constants.USER_URL_IMAGE] = storageService.uploadImageToStorage("profile",dataUser[Constants.USER_URL_IMAGE].toString())?.data.toString()
             }
-            when(firebaseAuth.currentUser?.uid?.let { authService.updateUser(it,dataUser) }){
-                is Result.Success -> fragmentManager.popBackStack()
+            when(authService.updateUser(dataUser)){
+                is Result.Success -> updateProfileActivity.finish()
                 else -> {
-                    Toast.makeText(context,"cant update profile",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(updateProfileActivity,"cant update profile",Toast.LENGTH_SHORT).show()
                 }
             }
+            updateProfileActivity.hideProgressDialog()
         }
     }
 

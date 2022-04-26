@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.drugstore.data.firebase.FirebaseClass
 import com.example.drugstore.presentation.BaseActivity
 import com.example.drugstore.presentation.admin.MainAdminActivity
-import com.example.drugstore.presentation.admin.home.HomeAdminFragment
 import com.example.drugstore.presentation.home.HomeActivity
 import com.example.drugstore.service.AuthService
 import com.google.firebase.FirebaseException
@@ -40,8 +39,7 @@ class AuthVM @Inject constructor(
 
     private suspend fun postConnect(context: BaseActivity, isNewUser: Boolean) {
         withContext(Dispatchers.Main) {
-            val user = firebaseAuth.currentUser?.let { authService.findUserByID(it) }
-            if(user?.Permission == 0){
+            if(authService.findUserByID()?.Permission == 0){
                 val intent = Intent(context, HomeActivity::class.java)
                 intent.putExtra("isNewUser", isNewUser)
                 context.startActivity(intent)
