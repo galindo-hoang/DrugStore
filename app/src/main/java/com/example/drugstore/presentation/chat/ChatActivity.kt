@@ -1,6 +1,7 @@
 package com.example.drugstore.presentation.chat
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.drugstore.databinding.ActivityChatBinding
@@ -34,8 +35,10 @@ class ChatActivity : AppCompatActivity() {
         binding.rvContent.layoutManager = LinearLayoutManager(this)
 
         binding.btnSend.setOnClickListener {
-            orderID?.let { it1 -> chatVM.sendMess(it1,binding.etMess.text.toString()) }
-            binding.etMess.setText("")
+            if(binding.etMess.text.toString().trim() != ""){
+                orderID?.let { it1 -> chatVM.sendMess(it1,binding.etMess.text.toString()) }
+                binding.etMess.setText("")
+            }else Toast.makeText(this,"Please fill mess",Toast.LENGTH_SHORT).show()
         }
 
         binding.tb.setNavigationOnClickListener {
