@@ -11,6 +11,7 @@ import com.example.drugstore.R
 import com.example.drugstore.databinding.FragmentProfileBinding
 import com.example.drugstore.presentation.BaseActivity
 import com.example.drugstore.presentation.home.CartVM
+import com.example.drugstore.presentation.user.address.AddressActivity
 import com.example.drugstore.presentation.user.reminder.PrescriptionActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -38,19 +39,27 @@ class ProfileFragment : Fragment() {
     }
 
     private fun bindComponents() {
-        binding.btnLogout.setOnClickListener {
-            profileVM.signOut(activity as BaseActivity)
-            cartVM.deleteAll()
+        binding.run {
+            btnLogout.setOnClickListener {
+                profileVM.signOut(activity as BaseActivity)
+                cartVM.deleteAll()
+            }
+            cvUpdateProfile.setOnClickListener {
+                startActivity(Intent(context, UpdateProfileActivity::class.java))
+            }
+            btnReminder.setOnClickListener {
+                val intent = Intent(activity, PrescriptionActivity::class.java)
+                intent.putExtra(PrescriptionActivity.REMINDER_FRAGMENT, true)
+                startActivity(intent)
+                requireActivity().finish()
+            }
+            btnMyAddress.setOnClickListener {
+                val intent = Intent(activity, AddressActivity::class.java)
+                startActivity(intent)
+                requireActivity().finish()
+            }
         }
-        binding.cvUpdateProfile.setOnClickListener {
-            startActivity(Intent(context,UpdateProfileActivity::class.java))
-        }
-        binding.btnReminder.setOnClickListener {
-            val intent = Intent(activity, PrescriptionActivity::class.java)
-            intent.putExtra(PrescriptionActivity.REMINDER_FRAGMENT, true)
-            startActivity(intent)
-            requireActivity().finish()
-        }
+
     }
 
     override fun onStart() {

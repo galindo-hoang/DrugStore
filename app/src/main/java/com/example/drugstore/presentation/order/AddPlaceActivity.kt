@@ -30,13 +30,15 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class AddPlaceActivity : BaseActivity() {
-//    private var profile: Boolean = false
+    //    private var profile: Boolean = false
     private var latLong: LatLng? = null
     private lateinit var mLocationRequest: LocationRequest
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var binding: ActivityAddPlaceBinding
     private lateinit var mapVM: MapVM
-    @Inject lateinit var profileVM: ProfileVM
+
+    @Inject
+    lateinit var profileVM: ProfileVM
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddPlaceBinding.inflate(layoutInflater)
@@ -64,7 +66,7 @@ class AddPlaceActivity : BaseActivity() {
     private fun insertAddress() {
         val title = binding.tvTitle.text.toString()
         val phoneNumber = binding.tvPhoneNumber.text.toString()
-        if(title != "" && phoneNumber != ""){
+        if (title != "" && phoneNumber != "") {
             profileVM.addAddress(
                 Address(
                     longitude = mapVM.selectedItem.value?.longitude ?: 0.0,
@@ -72,29 +74,51 @@ class AddPlaceActivity : BaseActivity() {
                     phoneNumber = phoneNumber,
                     address = binding.tvCurrentLocation.text.toString(),
                     title = title,
-                    false),
-                this)
-        }else{
-            Toast.makeText(this,"Please input place holder",Toast.LENGTH_SHORT).show()
+                    false
+                ),
+                this
+            )
+        } else {
+            Toast.makeText(this, "Please input place holder", Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun checkPermissionCurrentLocation() {
-        if(isEnableLocation()){
-            if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
-                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION),Constants.REQUEST_CURRENT_LOCATION)
-            }else{
-                fusedLocationProviderClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper()!!)
+        if (isEnableLocation()) {
+            if (ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    ),
+                    Constants.REQUEST_CURRENT_LOCATION
+                )
+            } else {
+                fusedLocationProviderClient.requestLocationUpdates(
+                    mLocationRequest,
+                    mLocationCallback,
+                    Looper.myLooper()!!
+                )
             }
-        }else{
-            Toast.makeText(this,"Please turn on Location access",Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, "Please turn on Location access", Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun isEnableLocation():Boolean{
+    private fun isEnableLocation(): Boolean {
         val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
+            LocationManager.GPS_PROVIDER
+        )
     }
 
     override fun onRequestPermissionsResult(
@@ -105,7 +129,7 @@ class AddPlaceActivity : BaseActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             Constants.REQUEST_CURRENT_LOCATION -> {
-                if(!(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)){
+                if (!(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                     val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
                     val uri = Uri.fromParts("package", packageName, null)
                     intent.data = uri
@@ -130,15 +154,21 @@ class AddPlaceActivity : BaseActivity() {
         override fun onLocationResult(p0: LocationResult?) {
             latLong = LatLng(p0!!.lastLocation.latitude, p0.lastLocation.longitude)
             convertLatLongToAddress(latLong!!)
-            if(isNetworkAvailable(this@AddPlaceActivity)) {
+            if (isNetworkAvailable(this@AddPlaceActivity)) {
                 transactionGoogleMapFragment()
-            }
-            else Toast.makeText(this@AddPlaceActivity,"Please access internet",Toast.LENGTH_LONG).show()
+            } else Toast.makeText(
+                this@AddPlaceActivity,
+                "Please access internet",
+                Toast.LENGTH_LONG
+            ).show()
         }
     }
 
     private fun convertLatLongToAddress(latLng: LatLng) {
-        val addressList:List<Address>? = Geocoder(this@AddPlaceActivity, Locale.getDefault()).getFromLocation(latLng.latitude,latLng.longitude,1)
+        val addressList: List<Address>? = Geocoder(
+            this@AddPlaceActivity,
+            Locale.getDefault()
+        ).getFromLocation(latLng.latitude, latLng.longitude, 1)
 
         if (addressList != null && addressList.isNotEmpty()) {
             val address: Address = addressList[0]
@@ -154,13 +184,13 @@ class AddPlaceActivity : BaseActivity() {
     private fun transactionGoogleMapFragment() {
         val fmTransaction = supportFragmentManager.beginTransaction()
         val bundle = Bundle()
-        if(latLong != null){
+        if (latLong != null) {
             bundle.putDouble(Constants.LONGITUDE, latLong!!.longitude)
             bundle.putDouble(Constants.LATITUDE, latLong!!.latitude)
         }
         val addPlacesFragment = AddPlacesFragment()
         addPlacesFragment.arguments = bundle
-        fmTransaction.replace(binding.flmap.id,addPlacesFragment)
+        fmTransaction.replace(binding.flmap.id, addPlacesFragment)
         fmTransaction.commit()
     }
 }

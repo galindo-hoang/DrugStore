@@ -18,6 +18,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DrugStore.NoActionBar">
         <activity
+            android:name=".presentation.user.address.AddressActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.home.CartActivity"
             android:exported="false" />
         <activity
