@@ -1,4 +1,4 @@
-package com.example.drugstore
+package com.example.drugstore.data.firebase
 
 import android.annotation.SuppressLint
 import android.app.NotificationChannel
@@ -10,6 +10,7 @@ import android.media.RingtoneManager
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import com.example.drugstore.R
 import com.example.drugstore.presentation.auth.SplashActivity
 import com.example.drugstore.utils.Constants
 import com.google.firebase.messaging.FirebaseMessagingService
