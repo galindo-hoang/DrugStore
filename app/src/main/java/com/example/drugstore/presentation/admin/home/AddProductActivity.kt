@@ -9,7 +9,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.Settings
-import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.activity.result.ActivityResultLauncher
@@ -164,11 +163,7 @@ class AddProductActivity : BaseActivity() {
         var viewRowAdding: View = layoutInflater.inflate(R.layout.row_add, null, false)
         var imgClose: ImageView = viewRowAdding.findViewById(R.id.image_remove)
         listView.add(viewRowAdding)
-        imgClose.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(p0: View?) {
-                removeView(viewRowAdding)
-            }
-        })
+        imgClose.setOnClickListener { removeView(viewRowAdding) }
         binding.layoutList.addView(viewRowAdding)
     }
 

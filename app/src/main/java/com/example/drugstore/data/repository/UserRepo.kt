@@ -48,6 +48,17 @@ class UserRepo @Inject constructor() {
         }
     }
 
+    suspend fun fetchAllUser(): Result<List<User>> = withContext(Dispatchers.IO){
+        try {
+            val documents = collection.get().await()
+            val result = mutableListOf<User>()
+            for(i in documents) result.add(i.toObject(User::class.java))
+            Result.Success(result)
+        }catch (e: Exception) {
+            Result.Error(e.message.toString(),null)
+        }
+    }
+
     suspend fun addAddress(address: Address, currentUserId: String):Boolean = withContext(Dispatchers.IO) {
         try {
             collection.document(currentUserId).update(Constants.USER_ADDRESS,FieldValue.arrayUnion(address)).await()
