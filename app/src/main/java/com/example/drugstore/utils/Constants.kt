@@ -32,6 +32,7 @@ object Constants {
     const val PRODUCT_QUANTITY: String = "quantity"
     const val PRODUCT_PRICE: String = "price"
     const val PRODUCT_NAME: String = "proName"
+    const val PRODUCT_NUTRITION_LIST: String = "nutritionList"
 
 
     const val BIRTH_DATE: String = "birthday"
