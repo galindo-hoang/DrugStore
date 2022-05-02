@@ -151,7 +151,6 @@ class AddProductActivity : BaseActivity() {
             override fun onClick(p0: View?) {
                 removeView(viewRowAdding)
             }
-
         })
         binding.layoutList.addView(viewRowAdding)
     }

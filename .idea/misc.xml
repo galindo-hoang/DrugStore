@@ -8,6 +8,7 @@
         <entry key="..\:/Nam3-hk2/App/DrugStore/DrugStore/app/src/main/res/drawable-v24/ic_baseline_close_24.xml" value="0.1" />
         <entry key="..\:/Nam3-hk2/App/DrugStore/DrugStore/app/src/main/res/drawable-v24/rounded.xml" value="0.1625" />
         <entry key="..\:/Nam3-hk2/App/DrugStore/DrugStore/app/src/main/res/drawable/background_transparent.xml" value="0.1625" />
+        <entry key="..\:/Nam3-hk2/App/DrugStore/DrugStore/app/src/main/res/drawable/ic_arrow_forward_24.xml" value="0.172" />
         <entry key="..\:/Nam3-hk2/App/DrugStore/DrugStore/app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.1625" />
         <entry key="..\:/Nam3-hk2/App/DrugStore/DrugStore/app/src/main/res/drawable/ic_link_24.xml" value="0.1" />
         <entry key="..\:/Nam3-hk2/App/DrugStore/DrugStore/app/src/main/res/drawable/ic_notifications_24.xml" value="0.1" />
@@ -19,6 +20,7 @@
         <entry key="..\:/Nam3-hk2/App/DrugStore/DrugStore/app/src/main/res/layout/activity_order.xml" value="0.25" />
         <entry key="..\:/Nam3-hk2/App/DrugStore/DrugStore/app/src/main/res/layout/activity_order_summary.xml" value="0.25" />
         <entry key="..\:/Nam3-hk2/App/DrugStore/DrugStore/app/src/main/res/layout/fragment_home.xml" value="0.12635869565217392" />
+        <entry key="..\:/Nam3-hk2/App/DrugStore/DrugStore/app/src/main/res/layout/fragment_home_admin.xml" value="0.25" />
         <entry key="..\:/Nam3-hk2/App/DrugStore/DrugStore/app/src/main/res/layout/fragment_notification.xml" value="0.12635869565217392" />
         <entry key="..\:/Nam3-hk2/App/DrugStore/DrugStore/app/src/main/res/layout/fragment_order.xml" value="0.12635869565217392" />
         <entry key="..\:/Nam3-hk2/App/DrugStore/DrugStore/app/src/main/res/layout/fragment_order_already.xml" value="0.1" />
@@ -26,9 +28,14 @@
         <entry key="..\:/Nam3-hk2/App/DrugStore/DrugStore/app/src/main/res/layout/fragment_profile.xml" value="0.12635869565217392" />
         <entry key="..\:/Nam3-hk2/App/DrugStore/DrugStore/app/src/main/res/layout/fragment_remind_drug.xml" value="0.17074275362318841" />
         <entry key="..\:/Nam3-hk2/App/DrugStore/DrugStore/app/src/main/res/layout/fragment_reminder.xml" value="0.17074275362318841" />
+        <entry key="..\:/Nam3-hk2/App/DrugStore/DrugStore/app/src/main/res/layout/item_admin_category.xml" value="0.25" />
+        <entry key="..\:/Nam3-hk2/App/DrugStore/DrugStore/app/src/main/res/layout/item_admin_product.xml" value="0.25" />
+        <entry key="..\:/Nam3-hk2/App/DrugStore/DrugStore/app/src/main/res/layout/item_category.xml" value="0.20416666666666666" />
         <entry key="..\:/Nam3-hk2/App/DrugStore/DrugStore/app/src/main/res/layout/item_notification.xml" value="0.17074275362318841" />
         <entry key="..\:/Nam3-hk2/App/DrugStore/DrugStore/app/src/main/res/layout/item_order.xml" value="0.458128078817734" />
+        <entry key="..\:/Nam3-hk2/App/DrugStore/DrugStore/app/src/main/res/layout/item_product.xml" value="0.20416666666666666" />
         <entry key="..\:/Nam3-hk2/App/DrugStore/DrugStore/app/src/main/res/layout/row_add.xml" value="0.20416666666666666" />
+        <entry key="..\:/Nam3-hk2/App/DrugStore/DrugStore/app/src/main/res/menu/bottom_menu.xml" value="0.18333333333333332" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/drawable-v24/button_rounded.xml" value="0.205" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/drawable-v24/cart_blue_border_button.xml" value="0.193" />
         <entry key="..\:/Users/huy/AndroidStudioProjects/hcmus/DrugStore/app/src/main/res/drawable-v24/ic_pencil_24.xml" value="0.103" />
