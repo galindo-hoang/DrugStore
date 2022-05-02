@@ -9,7 +9,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.Settings
-import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.activity.result.ActivityResultLauncher
@@ -103,8 +102,16 @@ class AddProductActivity : BaseActivity() {
         binding.switchcompat.setOnCheckedChangeListener(object :
             CompoundButton.OnCheckedChangeListener {
             override fun onCheckedChanged(p0: CompoundButton?, p1: Boolean) {
-                if (p1) binding.buttonAddMore.visibility = View.VISIBLE
-                else binding.buttonAddMore.visibility = View.GONE
+                if (p1) {
+                    for (i in listView) i.visibility=View.VISIBLE
+                    binding.buttonAddMore.visibility = View.VISIBLE
+                    binding.layoutList.visibility=View.VISIBLE
+                }
+                else{
+                    binding.buttonAddMore.visibility = View.GONE
+                    binding.layoutList.visibility=View.GONE
+                    for (i in listView) i.visibility=View.GONE
+                }
             }
 
         })
@@ -117,10 +124,19 @@ class AddProductActivity : BaseActivity() {
                 Toast.makeText(this, "Please fill blank", Toast.LENGTH_SHORT).show()
             } else {
                 if (update) {
+                    var NutritionList: ArrayList<Nutrition> = arrayListOf()
                     dataProduct[Constants.PRODUCT_NAME] = name
                     dataProduct[Constants.PRODUCT_PRICE] = price.toInt()
                     dataProduct[Constants.PRODUCT_QUANTITY] = quantity.toInt()
                     dataProduct[Constants.DESCRIPTION] = binding.etDes.text.toString()
+                    for (views:View in listView){
+                        indexRow++
+                        var nutrion: EditText = views.findViewById(R.id.nutrion)
+                        var unit: EditText = views.findViewById(R.id.unit)
+                        NutritionList.add(Nutrition(indexRow,nutrion.text.toString(),
+                            unit.text.toString()))
+                    }
+                    dataProduct[Constants.PRODUCT_NUTRITION_LIST]=NutritionList
                     productVM.updateProduct(dataProduct, product.ProID.toString(), this)
                 } else {
                     product.ProName = name
@@ -147,11 +163,7 @@ class AddProductActivity : BaseActivity() {
         var viewRowAdding: View = layoutInflater.inflate(R.layout.row_add, null, false)
         var imgClose: ImageView = viewRowAdding.findViewById(R.id.image_remove)
         listView.add(viewRowAdding)
-        imgClose.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(p0: View?) {
-                removeView(viewRowAdding)
-            }
-        })
+        imgClose.setOnClickListener { removeView(viewRowAdding) }
         binding.layoutList.addView(viewRowAdding)
     }
 
@@ -165,11 +177,20 @@ class AddProductActivity : BaseActivity() {
         binding.etPrice.setText(product.Price.toString())
         binding.etQuantity.setText(product.Quantity.toString())
         binding.etDes.setText(product.Description)
+        val listNutrition:List<Nutrition> = product.NutritionList
+        for (i in listNutrition){
+            var viewRowAdding: View = layoutInflater.inflate(R.layout.row_add, null, false)
+            viewRowAdding.findViewById<EditText>(R.id.nutrion).setText(i.NutritionName)
+            viewRowAdding.findViewById<EditText>(R.id.unit).setText(i.Unit)
+            binding.layoutList.addView(viewRowAdding)
+            listView.add(viewRowAdding)
+        }
         Glide.with(binding.root)
             .load(product.ProImage)
             .placeholder(R.drawable.ic_launcher_foreground)
             .centerCrop()
             .into(binding.ivProduct)
+        binding.layoutList.visibility=View.GONE
     }
 
     private fun showDialogPermission() {

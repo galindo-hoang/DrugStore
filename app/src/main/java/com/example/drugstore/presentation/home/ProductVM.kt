@@ -8,6 +8,7 @@ import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.example.drugstore.data.models.Product
 import com.example.drugstore.presentation.admin.home.AddProductActivity
+import com.example.drugstore.service.AuthService
 import com.example.drugstore.service.ProductService
 import com.example.drugstore.service.StorageService
 import com.example.drugstore.utils.Constants
@@ -18,7 +19,8 @@ import javax.inject.Inject
 
 class ProductVM @Inject constructor(
     private val productService: ProductService,
-    private val storageService: StorageService
+    private val storageService: StorageService,
+    private val authService: AuthService
 ) : ViewModel() {
     private val _product: MutableLiveData<Product> = MutableLiveData()
     val product: MutableLiveData<Product> get() = _product
@@ -77,6 +79,7 @@ class ProductVM @Inject constructor(
 
     fun addProduct(product: Product,addProductActivity: AddProductActivity) {
         viewModelScope.launch {
+
             val count: Int? = productService.countProduct().data
             if (product.ProImage != "") {
                 product.ProImage =
@@ -90,9 +93,14 @@ class ProductVM @Inject constructor(
             else {
                 product.ProID = count
                 when (productService.addProduct(product)) {
-                    is Result.Success -> addProductActivity.finish()
+                    is Result.Success -> {
+                        val listToken = authService.getTokenFromUser()
+                        for(i in listToken) Constants.pushNotification(addProductActivity,i,"add product",product.ProName,product.ProID)
+                        addProductActivity.finish()
+                    }
                     else -> Toast.makeText(addProductActivity,"cant add product",Toast.LENGTH_SHORT).show()
                 }
+
             }
             addProductActivity.hideProgressDialog()
         }
