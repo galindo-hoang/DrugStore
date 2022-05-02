@@ -6,11 +6,14 @@ import com.example.drugstore.data.models.User
 import com.example.drugstore.data.repository.AuthRepo
 import com.example.drugstore.data.repository.UserRepo
 import com.example.drugstore.presentation.BaseActivity
+import com.example.drugstore.utils.Result
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.tasks.await
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -27,35 +30,41 @@ class AuthService @Inject constructor(
 
         val userCheck = userRepo.fetchUserByID(user.uid)
 
+        val token = FirebaseMessaging.getInstance().token.await().toString()
+        Log.e("=======",token)
         if (userCheck == null) {
             userRepo.connectUser(
                 User(
                     UserID = user.uid,
-                    UserName = user.email.toString()
+                    UserName = user.email.toString(),
+                    Token = token
                 )
             )
             return true
-        }
+        }else userRepo.updateUser(user.uid, hashMapOf("token" to token))
         return false
     }
 
     suspend fun connectUserByPhone(user: FirebaseUser): Boolean {
         val userCheck = userRepo.fetchUserByID(user.uid)
 
+        val token = FirebaseMessaging.getInstance().token.await().toString()
         if (userCheck == null) {
             userRepo.connectUser(
                 User(
                     UserID = user.uid,
                     UserName = user.phoneNumber.toString(),
-                    PhoneNumber = user.phoneNumber.toString()
+                    PhoneNumber = user.phoneNumber.toString(),
+                    Token = token
                 )
             )
             return true
-        }
+        }else userRepo.updateUser(user.uid, hashMapOf("token" to token))
         return false
     }
 
     suspend fun signOut() {
+        authRepo.getCurrentUserId()?.let { userRepo.updateUser(it,hashMapOf("token" to "")) }
         if (isGoogleSignIn()) {
             authRepo.signOutGoogle()
         }
@@ -93,4 +102,18 @@ class AuthService @Inject constructor(
 
     suspend fun addAddress(address: Address) =
         authRepo.getCurrentUserId()?.let { userRepo.addAddress(address, it) }
+
+    suspend fun getTokenFromUser(): List<String> {
+        return when(val result = userRepo.fetchAllUser()){
+            is Result.Success -> {
+                val listToken: MutableList<String> = mutableListOf()
+                for(i in result.data!!){
+                    if(i.Token != "" && i.UserID != authRepo.getCurrentUserId()) listToken.add(i.Token)
+                }
+                Log.e("=====",listToken.toString())
+                listToken
+            }
+            else -> mutableListOf()
+        }
+    }
 }

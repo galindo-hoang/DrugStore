@@ -20,11 +20,6 @@ import java.util.*
 
 object Constants {
 
-    const val FCM_TOKEN_UPDATE: String = "fcmTokenUpdate"
-    const val FCM_TOKEN: String = "fcmToken"
-    const val  DRUGSTORE_PREFERENCES = "DRUGSTORE_PREFERENCES"
-
-
     const val PRODUCT_DATE_RECEIVE: String = "dateReceive"
     const val PRODUCT_STATUS: String = "status"
     const val PRODUCT_URL_IMAGE: String = "proImage"
@@ -93,30 +88,31 @@ object Constants {
 
 
 
-    const val REMOTE_MSG_AUTHORIZATION = "Authorization"
-    const val REMOTE_MSG_CONTENT_TYPE = "Content-Type"
-    const val REMOTE_MSG_DATA = "data"
-    const val REMOTE_MSG_REGISTRATION_IDS = "registration_ids"
-
-    var remoteMsgHeaders:HashMap<String,String>? = hashMapOf(
-        REMOTE_MSG_AUTHORIZATION to "key=AAAAqYRpWb0:APA91bEfISCx8Sv35Xff-TK0XXctShJ-y5DNY2MPF3GkCHWSPSPuojLwuD87cTiBZOFu7Ulkjjzip8fAcxGwsDS0CUjIoLAceffK2MiTp45VBLoejBSGX-nC0b1VVl5LfM1-qku4357z",
-        REMOTE_MSG_CONTENT_TYPE to "application/json")
+    var remoteMsgHeaders:HashMap<String,String> = hashMapOf(
+        "Authorization" to "key=AAAAqYRpWb0:APA91bEfISCx8Sv35Xff-TK0XXctShJ-y5DNY2MPF3GkCHWSPSPuojLwuD87cTiBZOFu7Ulkjjzip8fAcxGwsDS0CUjIoLAceffK2MiTp45VBLoejBSGX-nC0b1VVl5LfM1-qku4357z",
+        "Content-Type" to "application/json")
 
     const val BASE_URL_MESS = "https://fcm.googleapis.com/fcm/send"
-    const val SERVER_KEY = "key=AAAAqYRpWb0:APA91bEfISCx8Sv35Xff-TK0XXctShJ-y5DNY2MPF3GkCHWSPSPuojLwuD87cTiBZOFu7Ulkjjzip8fAcxGwsDS0CUjIoLAceffK2MiTp45VBLoejBSGX-nC0b1VVl5LfM1-qku4357z"
 
-    fun pushNotification(context: Context,token: String){
+    fun pushNotification(context: Context, token: String, title: String, body: String, proID: Int){
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
         StrictMode.setThreadPolicy(policy)
 
         val queue = Volley.newRequestQueue(context)
 
+        Log.e("+++++++",title)
+        Log.e("+++++++",body)
+
         try {
             val json = JSONObject()
             json.put("to",token)
             val notification = JSONObject()
-            notification.put("title","cc")
-            notification.put("body","lz")
+            notification.put("title",title)
+            notification.put("body",body)
+            notification.put("icon","https://drugicon.cc/wp-content/uploads/2020/09/cropped-cropped-drugicon-1.png")
+            notification.put("click_action",proID.toString())
+
+
             json.put("notification",notification)
 
             val req: JsonObjectRequest = object : JsonObjectRequest(
@@ -132,10 +128,7 @@ object Constants {
                  */
                 @Throws(AuthFailureError::class)
                 override fun getHeaders(): Map<String, String> {
-                    val headers = HashMap<String, String>()
-                    headers["Content-Type"] = "application/json";
-                    headers["Authorization"] = SERVER_KEY
-                    return headers
+                    return remoteMsgHeaders
                 }
             }
 
@@ -147,18 +140,5 @@ object Constants {
         }
     }
 
-//    CoroutineScope(Dispatchers.IO).launch {
-//
-//
-//        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-//            if (!task.isSuccessful) {
-//                Log.e("========token", "Fetching FCM registration token failed", task.exception)
-//                return@OnCompleteListener
-//            }
-//            val token = task.result
-//            binding.etSearch.setText(token)
-//            Log.e("========token", token)
-//        })
-//    }
 
 }
