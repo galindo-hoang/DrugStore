@@ -1,5 +1,6 @@
 package com.example.drugstore.presentation.notify
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.drugstore.databinding.FragmentNotificationBinding
 import com.example.drugstore.presentation.adapter.NotificationAdapter
+import com.example.drugstore.presentation.home.ProductDetailActivity
+import com.example.drugstore.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -26,6 +29,7 @@ class NotificationFragment : Fragment() {
         // Inflate the layout for this fragment
 
         onBindView()
+        onBindEvent()
         return binding.root
     }
 
@@ -35,6 +39,16 @@ class NotificationFragment : Fragment() {
         notificationVM.getNotification().observe(viewLifecycleOwner){
             if (it != null) {
                 notificationAdapter.setList(it)
+            }
+        }
+    }
+
+    private fun onBindEvent(){
+        notificationAdapter.onItemClick = {notification ->
+            if(notification.type == 0) {
+                val intent = Intent(context,ProductDetailActivity::class.java)
+                intent.putExtra(Constants.PRODUCT_ID,notification.contentType.toInt())
+                startActivity(intent)
             }
         }
     }

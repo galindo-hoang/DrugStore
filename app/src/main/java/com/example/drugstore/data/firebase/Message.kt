@@ -1,6 +1,7 @@
 package com.example.drugstore.data.firebase
 
 import android.annotation.SuppressLint
+import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Intent
 import android.graphics.Bitmap
@@ -63,7 +64,7 @@ class Message: FirebaseMessagingService() {
             .setLargeIcon(mess.icon?.let { getBitmapFromURL(it) })
             .setAutoCancel(true)
             .setSound(defaultSoundUri)
-            .setPriority(mess.notificationPriority!!)
+            .setPriority(NotificationManager.IMPORTANCE_HIGH)
             .setContentIntent(pendingIntent)
             .build()
 
@@ -72,7 +73,6 @@ class Message: FirebaseMessagingService() {
     }
     private fun getBitmapFromURL(src: String): Bitmap? {
         return try {
-            System.out.printf("src", src)
             val url = URL(src)
             val connection: HttpURLConnection = url.openConnection() as HttpURLConnection
             connection.doInput = true

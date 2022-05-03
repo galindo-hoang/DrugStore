@@ -42,6 +42,10 @@ class NotificationAdapter(): RecyclerView.Adapter<NotificationAdapter.Notificati
         holder.binding.tvContent.text = model.body
         holder.binding.tvTitle.text = model.title
         holder.binding.tvDate.text = SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.getDefault()).format(model.time)
+
+        holder.binding.root.setOnClickListener {
+            onItemClick?.invoke(model)
+        }
     }
 
     override fun getItemCount(): Int {
