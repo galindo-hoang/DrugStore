@@ -41,8 +41,8 @@ class OrderAdapter() : RecyclerView.Adapter<OrderAdapter.OrderViewHolder>() {
 
         holder.binding.ivOrder.setImageResource(
             when(model.Status){
-                false -> R.drawable.ic_wait_shipping_24
-                else -> R.drawable.ic_done_shipping_24
+                false -> R.drawable.ic_delivery
+                else -> R.drawable.ic_delivered
             }
         )
         holder.binding.root.setOnClickListener {

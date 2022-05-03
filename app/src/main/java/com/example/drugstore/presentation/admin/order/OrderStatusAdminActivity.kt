@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.drugstore.data.models.Notification
 import com.example.drugstore.databinding.ActivityOrderStatusAdminBinding
+import com.example.drugstore.presentation.BaseActivity
 import com.example.drugstore.presentation.adapter.OrderProductAdapter
 import com.example.drugstore.presentation.admin.MainAdminActivity
 import com.example.drugstore.presentation.chat.ChatActivity
@@ -22,7 +23,7 @@ import java.text.DecimalFormat
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class OrderStatusAdminActivity : AppCompatActivity() {
+class OrderStatusAdminActivity : BaseActivity() {
     private lateinit var userID: String
     private var orderID: String? = null
     private val orderProductAdapter = OrderProductAdapter()
