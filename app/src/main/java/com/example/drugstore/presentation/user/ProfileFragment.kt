@@ -51,12 +51,12 @@ class ProfileFragment : Fragment() {
                 val intent = Intent(activity, PrescriptionActivity::class.java)
                 intent.putExtra(PrescriptionActivity.REMINDER_FRAGMENT, true)
                 startActivity(intent)
-                requireActivity().finish()
+              /*  requireActivity().finish()*/
             }
             btnMyAddress.setOnClickListener {
                 val intent = Intent(activity, AddressActivity::class.java)
                 startActivity(intent)
-                requireActivity().finish()
+               /* requireActivity().finish()*/
             }
         }
 

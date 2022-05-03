@@ -20,9 +20,7 @@
         <activity
             android:name=".presentation.user.address.AddressInfoActivity"
             android:exported="false" />
-        <activity
-            android:name=".presentation.user.address.AddressMapActivity"
-            android:exported="false" />
+
         <activity
             android:name=".presentation.user.address.AddressActivity"
             android:exported="false" />
