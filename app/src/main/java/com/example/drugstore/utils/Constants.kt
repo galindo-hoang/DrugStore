@@ -13,12 +13,15 @@ import com.android.volley.AuthFailureError
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import com.example.drugstore.data.models.Notification
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
 
 
 object Constants {
+
+    const val LIST_USER: String = "listUser"
 
     const val PRODUCT_DATE_RECEIVE: String = "dateReceive"
     const val PRODUCT_STATUS: String = "status"
@@ -94,49 +97,45 @@ object Constants {
 
     const val BASE_URL_MESS = "https://fcm.googleapis.com/fcm/send"
 
-    fun pushNotification(context: Context, token: String, title: String, body: String, proID: Int){
+    fun pushNotification(context: Context, notification: Notification){
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
         StrictMode.setThreadPolicy(policy)
 
-        val queue = Volley.newRequestQueue(context)
+        for(token in notification.listToken){
+            val queue = Volley.newRequestQueue(context)
+            try {
+                val json = JSONObject()
+                json.put("to",token)
+                val notificationJsonObject = JSONObject()
+                notificationJsonObject.put("title","Add product")
+                notificationJsonObject.put("body",notification.body)
+                notificationJsonObject.put("icon",notification.largeIcon)
+                notificationJsonObject.put("click_action",notification.contentType)
+                notificationJsonObject.put("tag",notification.type.toString())
+                notificationJsonObject.put("notification_priority",notification.priority)
+                json.put("notification",notificationJsonObject)
 
-        Log.e("+++++++",title)
-        Log.e("+++++++",body)
-
-        try {
-            val json = JSONObject()
-            json.put("to",token)
-            val notification = JSONObject()
-            notification.put("title",title)
-            notification.put("body",body)
-            notification.put("icon","https://drugicon.cc/wp-content/uploads/2020/09/cropped-cropped-drugicon-1.png")
-            notification.put("click_action",proID.toString())
-
-
-            json.put("notification",notification)
-
-            val req: JsonObjectRequest = object : JsonObjectRequest(
-                Method.POST,
-                BASE_URL_MESS,
-                json,
-                Response.Listener { response -> Log.e("FCM", response.toString()) }, Response.ErrorListener {
-                    error ->
-                    error.message?.let { Log.e("====", it) }
-                }) {
-                /**
-                 * Passing some request headers
-                 */
-                @Throws(AuthFailureError::class)
-                override fun getHeaders(): Map<String, String> {
-                    return remoteMsgHeaders
+                val req: JsonObjectRequest = object : JsonObjectRequest(
+                    Method.POST,
+                    BASE_URL_MESS,
+                    json,
+                    Response.Listener { response ->
+                        Log.e("FCM", response.toString())
+                    },
+                    Response.ErrorListener { error ->
+                        error.message?.let { Log.e("====", it) }
+                    }
+                ) {
+                    /**
+                     * Passing some request headers
+                     */
+                    @Throws(AuthFailureError::class)
+                    override fun getHeaders(): Map<String, String> = remoteMsgHeaders
                 }
+                queue.add(req)
+            }catch (e:JSONException){
+                e.printStackTrace()
             }
-
-            queue.add(req)
-
-
-        }catch (e:JSONException){
-            e.printStackTrace()
         }
     }
 

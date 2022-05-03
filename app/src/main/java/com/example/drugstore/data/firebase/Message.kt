@@ -1,7 +1,6 @@
 package com.example.drugstore.data.firebase
 
 import android.annotation.SuppressLint
-import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Intent
 import android.graphics.Bitmap
@@ -12,7 +11,9 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.drugstore.R
+import com.example.drugstore.presentation.chat.ChatActivity
 import com.example.drugstore.presentation.home.ProductDetailActivity
+import com.example.drugstore.presentation.user.reminder.PrescriptionActivity
 import com.example.drugstore.utils.Constants
 import com.example.drugstore.utils.Constants.getNotificationId
 import com.google.firebase.messaging.FirebaseMessagingService
@@ -34,12 +35,26 @@ class Message: FirebaseMessagingService() {
     @RequiresApi(Build.VERSION_CODES.N)
     @SuppressLint("UnspecifiedImmutableFlag")
     private fun sendNotification(mess: RemoteMessage.Notification){
-        val intent = Intent(this,ProductDetailActivity::class.java)
-        intent.putExtra(Constants.PRODUCT_ID, mess.clickAction?.toInt() ?: -1)
+        var intent:Intent
+        when(mess.tag.toString().toInt()){
+            0 -> {
+                intent = Intent(this,ProductDetailActivity::class.java)
+                intent.putExtra(Constants.PRODUCT_ID, mess.clickAction?.toInt() ?: -1)
+            }
+            1 -> {
+                intent = Intent(this,ChatActivity::class.java)
+                intent.putExtra(Constants.ORDER_ID,mess.clickAction)
+            }
+            else -> {
+                intent = Intent(this,PrescriptionActivity::class.java)
+            }
+        }
+
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-        val pendingIntent = PendingIntent.getActivity(this, getNotificationId(),intent,PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE       )
+        val pendingIntent = PendingIntent.getActivity(this, getNotificationId(),intent,PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
         val channelId = this.resources.getString(R.string.default_notification_channel_id)
         val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+
 
         val notificationCompat = NotificationCompat.Builder(this, channelId)
             .setContentTitle(mess.title)
@@ -48,11 +63,9 @@ class Message: FirebaseMessagingService() {
             .setLargeIcon(mess.icon?.let { getBitmapFromURL(it) })
             .setAutoCancel(true)
             .setSound(defaultSoundUri)
-            .setPriority(NotificationManager.IMPORTANCE_HIGH)
+            .setPriority(mess.notificationPriority!!)
             .setContentIntent(pendingIntent)
             .build()
-
-
 
         val notificationManagerCompat = NotificationManagerCompat.from(this)
         notificationManagerCompat.notify(getNotificationId(),notificationCompat)
