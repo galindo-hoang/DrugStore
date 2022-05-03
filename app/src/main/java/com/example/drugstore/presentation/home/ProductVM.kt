@@ -71,7 +71,7 @@ class ProductVM @Inject constructor(
         viewModelScope.launch {
             if(dataUpdate.containsKey(Constants.PRODUCT_URL_IMAGE)) {
                 dataUpdate[Constants.PRODUCT_URL_IMAGE] = storageService.uploadImageProductToStorage("product",
-                    dataUpdate[Constants.PRODUCT_URL_IMAGE] as String,ID).toString()
+                    dataUpdate[Constants.PRODUCT_URL_IMAGE].toString(),ID).data.toString()
             }
             when(productService.updateProduct(ID,dataUpdate)){
                 is Result.Success -> addProductActivity.finish()
