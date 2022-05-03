@@ -392,6 +392,7 @@
 
                     <androidx.cardview.widget.CardView
                         android:layout_width="fill_parent"
+                        android:id="@+id/btn_support"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:layout_weight="11"
