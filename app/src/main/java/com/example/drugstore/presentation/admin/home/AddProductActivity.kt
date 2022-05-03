@@ -99,10 +99,22 @@ class AddProductActivity : BaseActivity() {
                 showDialogPermission()
             }
         }
-        binding.switchcompat.setOnCheckedChangeListener { p0, p1 ->
-            if (p1) binding.buttonAddMore.visibility = View.VISIBLE
-            else binding.buttonAddMore.visibility = View.GONE
-        }
+        binding.switchcompat.setOnCheckedChangeListener(object :
+            CompoundButton.OnCheckedChangeListener {
+            override fun onCheckedChanged(p0: CompoundButton?, p1: Boolean) {
+                if (p1) {
+                    for (i in listView) i.visibility=View.VISIBLE
+                    binding.buttonAddMore.visibility = View.VISIBLE
+                    binding.layoutList.visibility=View.VISIBLE
+                }
+                else{
+                    binding.buttonAddMore.visibility = View.GONE
+                    binding.layoutList.visibility=View.GONE
+                    for (i in listView) i.visibility=View.GONE
+                }
+            }
+
+        })
         binding.btnAdd.setOnClickListener {
             showProgressDialog("please wait a minute ...")
             val name = binding.etName.text.toString()
@@ -112,10 +124,19 @@ class AddProductActivity : BaseActivity() {
                 Toast.makeText(this, "Please fill blank", Toast.LENGTH_SHORT).show()
             } else {
                 if (update) {
+                    var NutritionList: ArrayList<Nutrition> = arrayListOf()
                     dataProduct[Constants.PRODUCT_NAME] = name
                     dataProduct[Constants.PRODUCT_PRICE] = price.toInt()
                     dataProduct[Constants.PRODUCT_QUANTITY] = quantity.toInt()
                     dataProduct[Constants.DESCRIPTION] = binding.etDes.text.toString()
+                    for (views:View in listView){
+                        indexRow++
+                        var nutrion: EditText = views.findViewById(R.id.nutrion)
+                        var unit: EditText = views.findViewById(R.id.unit)
+                        NutritionList.add(Nutrition(indexRow,nutrion.text.toString(),
+                            unit.text.toString()))
+                    }
+                    dataProduct[Constants.PRODUCT_NUTRITION_LIST]=NutritionList
                     productVM.updateProduct(dataProduct, product.ProID.toString(), this)
                 } else {
                     product.ProName = name
@@ -156,11 +177,20 @@ class AddProductActivity : BaseActivity() {
         binding.etPrice.setText(product.Price.toString())
         binding.etQuantity.setText(product.Quantity.toString())
         binding.etDes.setText(product.Description)
+        val listNutrition:List<Nutrition> = product.NutritionList
+        for (i in listNutrition){
+            var viewRowAdding: View = layoutInflater.inflate(R.layout.row_add, null, false)
+            viewRowAdding.findViewById<EditText>(R.id.nutrion).setText(i.NutritionName)
+            viewRowAdding.findViewById<EditText>(R.id.unit).setText(i.Unit)
+            binding.layoutList.addView(viewRowAdding)
+            listView.add(viewRowAdding)
+        }
         Glide.with(binding.root)
             .load(product.ProImage)
             .placeholder(R.drawable.ic_launcher_foreground)
             .centerCrop()
             .into(binding.ivProduct)
+        binding.layoutList.visibility=View.GONE
     }
 
     private fun showDialogPermission() {

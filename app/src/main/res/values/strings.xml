@@ -18,7 +18,10 @@
     <string name="bottom_nav_home">Home</string>
     <string name="bottom_nav_order">Orders</string>
     <string name="bottom_nav_notification">Notification</string>
+
     <string name="bottom_nav_profile">Profile</string>
+    <string name="update_profile">Update Profile</string>
+    <string name="help_support">Help  Support</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="top_trending">Top trending</string>
@@ -54,4 +57,27 @@
     <string name="channel_name">channel_name</string>
     <string name="ordersearch">Order Search</string>
     <string name="my_address">My Address</string>
+
+    <!-- Permission -->
+    <string name="permission_rationale_location">Access to the location service is required to demonstrate the \'my location\' feature, which shows your current location on the map.</string>
+    <string name="location_permission_denied">This sample requires location permission to enable the \'my location\' layer. Please try again and grant access to use the location.\nIf the permission has been permanently denied, it can be enabled from the System Settings &gt; Apps &gt; \'Google Maps API Demos\'.</string>
+    <string name="permission_required_toast">Location permission is required for this demo.</string>
+
+    <!--  Camera -->
+    <string name="map_not_ready">Map is not ready</string>
+    <string name="animate">Animate</string>
+    <string name="camera_demo_description">Demonstrates Camera Functions</string>
+    <string name="camera_demo_label">Camera</string>
+    <string name="down_arrow">\u2193</string>
+    <string name="duration">Custom Duration</string>
+    <string name="go_to_bondi">Go to Bondi</string>
+    <string name="go_to_sydney">Go to Sydney</string>
+    <string name="left_arrow">\u2190</string>
+    <string name="right_arrow">\u2192</string>
+    <string name="stop_animation">\u25A0</string>
+    <string name="tilt_less">\u2193</string>
+    <string name="tilt_more">\u2191</string>
+    <string name="up_arrow">\u2191</string>
+    <string name="zoom_in">+</string>
+    <string name="zoom_out">-</string>
 </resources>

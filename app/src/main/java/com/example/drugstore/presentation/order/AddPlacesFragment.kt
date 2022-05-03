@@ -23,10 +23,10 @@ class AddPlacesFragment : Fragment() {
     private val callback = OnMapReadyCallback { googleMap ->
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(curLatLng!!))
         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(curLatLng!!, 15f))
-//        googleMap.setOnCameraIdleListener {
-//            val midLatLng: LatLng = googleMap.cameraPosition.target
-//            viewModel.selectItem(midLatLng)
-//        }
+        googleMap.setOnCameraIdleListener {
+            val midLatLng: LatLng = googleMap.cameraPosition.target
+            viewModel.selectItem(midLatLng)
+        }
     }
 
     override fun onCreateView(

@@ -34,7 +34,7 @@ class CartAdapter : RecyclerView.Adapter<CartAdapter.ViewHolder>() {
             .into(holder.binding.ivProduct)
 
         holder.binding.productQuantity.text = model.Quantity.toString()
-        holder.binding.tvPriceProduct.text = "${DecimalFormat("##,###").format(model.Price*model.Quantity)}"
+        holder.binding.tvPriceProduct.text = "${DecimalFormat("##,###").format(model.Price*model.Quantity)}"+ " VNĐ"
         holder.binding.btnAdd.setOnClickListener {
             onAddClick?.invoke(model)
         }
