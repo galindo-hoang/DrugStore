@@ -1,5 +1,6 @@
 package com.example.drugstore.presentation.user.address
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,8 +9,10 @@ import android.view.ViewGroup
 import com.example.drugstore.databinding.FragmentAddressListBinding
 import com.example.drugstore.presentation.adapter.AddressAdapter
 import com.example.drugstore.presentation.adapter.AddressProfileAdapter
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class AddressListFragment : Fragment() {
     private var _binding: FragmentAddressListBinding? = null
     val binding get() = _binding!!
@@ -26,8 +29,14 @@ class AddressListFragment : Fragment() {
         _binding = FragmentAddressListBinding.inflate(inflater, container, false)
         val view = binding.root;
         observeViewModel()
-
+        bindComponents();
         return view;
+    }
+
+    private fun bindComponents() {
+        binding.btnAdd.setOnClickListener {
+            startActivity(Intent(context, AddressInfoActivity::class.java))
+        }
     }
 
     private fun observeViewModel() {
@@ -42,14 +51,9 @@ class AddressListFragment : Fragment() {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-    }
-
     companion object {
         @JvmStatic
         fun newInstance() =
             AddressListFragment()
-
     }
 }

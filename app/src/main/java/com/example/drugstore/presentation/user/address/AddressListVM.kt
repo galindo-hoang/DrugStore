@@ -1,6 +1,7 @@
 package com.example.drugstore.presentation.user.address
 
 import android.content.Context
+import android.location.Geocoder
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,10 +10,12 @@ import androidx.lifecycle.viewModelScope
 import com.example.drugstore.data.models.Address
 import com.example.drugstore.service.UserService
 import com.example.drugstore.utils.Result
+import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.qualifiers.ActivityContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.*
 import javax.inject.Inject
 
 class AddressListVM @Inject constructor(
@@ -24,6 +27,7 @@ class AddressListVM @Inject constructor(
     val addresses: LiveData<List<Address>>
         get() = _addresses
 
+
     fun fetchAddresses() {
         viewModelScope.launch {
             userService.getUserAddress().run {
@@ -33,6 +37,22 @@ class AddressListVM @Inject constructor(
                     showError(message!!);
                 }
             }
+        }
+    }
+
+    private fun convertLatLongToAddress(latLng: LatLng) {
+        val addressList: List<android.location.Address>? = Geocoder(
+            context,
+            Locale.getDefault()
+        ).getFromLocation(latLng.latitude, latLng.longitude, 1)
+
+        if (addressList != null && addressList.isNotEmpty()) {
+            val address: android.location.Address = addressList[0]
+            val sb = StringBuilder()
+            for (i in 0..address.maxAddressLineIndex) {
+                sb.append(address.getAddressLine(i)).append(",")
+            }
+            sb.deleteCharAt(sb.length - 1)
         }
     }
 
