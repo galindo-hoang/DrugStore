@@ -30,7 +30,9 @@ class AddressMapFragment :
     private val binding get() = _binding!!
 
     private var permissionDenied = false
-    private lateinit var mGoogleMap: GoogleMap
+    private var _mGoogleMap: GoogleMap? = null
+    private val mGoogleMap get() = _mGoogleMap!!
+    private var latLng: LatLng? = null
 
     private var _viewModel: AddressListVM? = null
     val viewModel get() = _viewModel!!
@@ -55,11 +57,16 @@ class AddressMapFragment :
     }
 
     fun moveCamera(lat: Double, long: Double) {
-        mGoogleMap.moveCamera(
-            CameraUpdateFactory.newLatLng(
-                LatLng(lat, long)
+        if (_mGoogleMap != null) {
+            mGoogleMap.moveCamera(
+                CameraUpdateFactory.newLatLngZoom(
+                    LatLng(lat, long),
+                    10f
+                )
             )
-        )
+        } else {
+            latLng = LatLng(lat, long)
+        }
     }
 
     private fun observeViewModel() {
@@ -71,7 +78,14 @@ class AddressMapFragment :
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
-        mGoogleMap = googleMap
+        _mGoogleMap = googleMap
+
+        if (latLng != null) {
+            mGoogleMap.moveCamera(
+                CameraUpdateFactory.newLatLngZoom(latLng!!, 10f)
+            )
+            latLng = null
+        }
 
         // Add a marker in Sydney and move the camera
         googleMap.setOnMyLocationButtonClickListener(this)

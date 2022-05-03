@@ -83,7 +83,7 @@ class AddressListFragment : Fragment() {
                     AddressInfoActivity.EDIT,
                 )
                 intent.putExtra(AddressInfoActivity.ADDRESS_TITLE, address.title)
-                startActivity(intent)
+                launcher.launch(intent)
             }
         }
 

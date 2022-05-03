@@ -21,23 +21,25 @@ class AddressInfoActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        _binding = ActivityAddressInfoBinding.inflate(layoutInflater)
+        mapFragment = AddressMapFragment.newInstance(addressListVM)
+
         intent.getStringExtra(TYPE)?.let {
             type = it
             if (type == EDIT) {
-                val addressTitle = intent.getStringExtra(ADDRESS_TITLE)!!
+                val addressTitle = intent.getStringExtra(ADDRESS_TITLE)
                 binding.etTitle.run {
                     setText(addressTitle)
                     isFocusable = false
                 }
-                getAddress(addressTitle)
+                getAddress(addressTitle!!)
             }
         }
-        _binding = ActivityAddressInfoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         bindComponents()
 
-        mapFragment = AddressMapFragment.newInstance(addressListVM)
         replaceFragment(mapFragment)
     }
 
