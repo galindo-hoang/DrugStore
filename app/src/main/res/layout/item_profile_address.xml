@@ -32,7 +32,7 @@
             android:layout_marginHorizontal="10dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/ib"
+            app:layout_constraintEnd_toStartOf="@id/btnDelete"
             app:layout_constraintStart_toEndOf="@id/rb"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -66,6 +66,17 @@
         </LinearLayout>
 
         <ImageView
+            android:id="@+id/btnDelete"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@drawable/background_transparent"
+            android:padding="5dp"
+            android:src="@drawable/ic_xmark"
+            app:layout_constraintBottom_toTopOf="@id/btnEdit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
             android:id="@+id/btnEdit"
             android:layout_width="32dp"
             android:layout_height="32dp"
@@ -74,7 +85,7 @@
             android:src="@drawable/ic_pencil_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/btnDelete"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

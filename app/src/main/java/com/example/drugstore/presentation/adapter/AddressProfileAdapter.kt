@@ -11,6 +11,7 @@ import com.example.drugstore.databinding.ItemProfileAddressBinding
 
 class AddressProfileAdapter constructor(
     var onEditClick: ((Address) -> Unit)? = null,
+    var onDeleteClick: ((Address) -> Unit)? = null,
 ) : RecyclerView.Adapter<AddressProfileAdapter.AddressViewHolder>() {
     class AddressViewHolder(view: ItemProfileAddressBinding) : RecyclerView.ViewHolder(view.root) {
         val binding = view
@@ -43,6 +44,10 @@ class AddressProfileAdapter constructor(
 
         holder.binding.btnEdit.setOnClickListener {
             onEditClick?.invoke(model)
+        }
+
+        holder.binding.btnDelete.setOnClickListener {
+            onDeleteClick?.invoke(model)
         }
     }
 

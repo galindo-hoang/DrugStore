@@ -74,4 +74,16 @@ class UserService @Inject constructor(
             }
         } ?: Result.Error("Address not found")
     }
+
+    suspend fun removeAddress(listAddresses: MutableList<Address>): Result<Boolean?> {
+        return getUserAddress().data?.let {
+            authRepo.getCurrentUserId()?.let { userId ->
+                if (userRepo.updateAddresses(listAddresses, userId)) {
+                    Result.Success(true)
+                } else {
+                    Result.Error("Unexpected Error")
+                }
+            } ?: Result.Error("Unauthenticated")
+        } ?: Result.Error("Address not updated")
+    }
 }

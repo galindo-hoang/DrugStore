@@ -2,6 +2,7 @@ package com.example.drugstore.presentation.user.address
 
 import android.content.Context
 import android.location.Geocoder
+import android.os.Build
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -130,6 +131,24 @@ class AddressListVM @Inject constructor(
                     withContext(Dispatchers.Main) {
                         moveCamera(data.latitude, data.longitude)
                     }
+                } else {
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(context, message.toString(), Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                }
+            }
+        }
+    }
+
+    fun removeAddress(address: Address) {
+        val listAddresses = addresses.value!!.toMutableList()
+        listAddresses.remove(address)
+
+        viewModelScope.launch(Dispatchers.IO) {
+            userService.removeAddress(listAddresses).run {
+                if (this is Result.Success) {
+                    _addresses.postValue(listAddresses)
                 } else {
                     withContext(Dispatchers.Main) {
                         Toast.makeText(context, message.toString(), Toast.LENGTH_SHORT)

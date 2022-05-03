@@ -85,6 +85,9 @@ class AddressListFragment : Fragment() {
                 intent.putExtra(AddressInfoActivity.ADDRESS_TITLE, address.title)
                 launcher.launch(intent)
             }
+            onDeleteClick = { address ->
+                viewModel.removeAddress(address)
+            }
         }
 
         viewModel.addresses.observe(viewLifecycleOwner) { addresses ->
