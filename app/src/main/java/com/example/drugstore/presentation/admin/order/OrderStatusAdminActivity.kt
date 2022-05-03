@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.drugstore.databinding.ActivityOrderStatusAdminBinding
 import com.example.drugstore.presentation.adapter.OrderProductAdapter
+import com.example.drugstore.presentation.admin.MainAdminActivity
 import com.example.drugstore.presentation.chat.ChatActivity
 import com.example.drugstore.presentation.home.HomeActivity
 import com.example.drugstore.presentation.order.OrderVM
@@ -90,7 +91,7 @@ class OrderStatusAdminActivity : AppCompatActivity() {
         }
         binding.tb.title = ""
         binding.tb.setNavigationOnClickListener {
-            startActivity(Intent(this, HomeActivity::class.java))
+            startActivity(Intent(this,MainAdminActivity::class.java))
             finishAffinity()
         }
     }

@@ -78,7 +78,7 @@ class UpdateProfileActivity : BaseActivity() {
     }
 
     private fun onBindComponents() {
-        binding.ivCircle.setOnClickListener {
+        binding.btnEditImage.setOnClickListener {
             if (Constants.checkPermissionRead(this)) {
                 loadImage()
             } else {
