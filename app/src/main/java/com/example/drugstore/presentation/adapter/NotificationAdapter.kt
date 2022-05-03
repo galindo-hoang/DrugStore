@@ -37,7 +37,7 @@ class NotificationAdapter(): RecyclerView.Adapter<NotificationAdapter.Notificati
 
         Glide.with(holder.binding.root)
             .load(model.largeIcon)
-            .placeholder(R.drawable.ic_launcher_foreground)
+            .placeholder(R.drawable.ic_ordered)
             .into(holder.binding.ivNotify)
         holder.binding.tvContent.text = model.body
         holder.binding.tvTitle.text = model.title

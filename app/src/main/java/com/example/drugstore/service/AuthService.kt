@@ -95,7 +95,9 @@ class AuthService @Inject constructor(
 
     fun isAuth() = authRepo.getCurrentUserId() != null
 
-    suspend fun findUserByID() = authRepo.getCurrentUserId()?.let { userRepo.fetchUserByID(it) }
+    suspend fun findCurrentUser() = authRepo.getCurrentUserId()?.let { userRepo.fetchUserByID(it) }
+
+    suspend fun findUserByID(ID:String) = userRepo.fetchUserByID(ID)
 
 
     suspend fun getUserHaveToken(): List<User> {

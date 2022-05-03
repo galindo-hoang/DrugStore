@@ -1,28 +1,36 @@
 package com.example.drugstore.presentation.admin.order
 
 import android.annotation.SuppressLint
+import android.app.NotificationManager
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.drugstore.data.models.Notification
 import com.example.drugstore.databinding.ActivityOrderStatusAdminBinding
+import com.example.drugstore.presentation.BaseActivity
 import com.example.drugstore.presentation.adapter.OrderProductAdapter
 import com.example.drugstore.presentation.admin.MainAdminActivity
 import com.example.drugstore.presentation.chat.ChatActivity
 import com.example.drugstore.presentation.home.HomeActivity
+import com.example.drugstore.presentation.notify.NotificationVM
 import com.example.drugstore.presentation.order.OrderVM
+import com.example.drugstore.presentation.user.ProfileVM
 import com.example.drugstore.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.DecimalFormat
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class OrderStatusAdminActivity : AppCompatActivity() {
+class OrderStatusAdminActivity : BaseActivity() {
+    private lateinit var userID: String
     private var orderID: String? = null
     private val orderProductAdapter = OrderProductAdapter()
     private lateinit var binding: ActivityOrderStatusAdminBinding
     @Inject lateinit var  orderVM: OrderVM
+    @Inject lateinit var profileVM: ProfileVM
+    @Inject lateinit var notificationVM: NotificationVM
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityOrderStatusAdminBinding.inflate(layoutInflater)
@@ -54,6 +62,7 @@ class OrderStatusAdminActivity : AppCompatActivity() {
                     it.ProductList.forEach { i ->
                         sumPrice += i.Price*i.Quantity
                     }
+                    userID = it.UserID
                     binding.tvSumPrice.text = "${DecimalFormat("##,###").format(sumPrice)} VND"
                     orderProductAdapter.setItems(it.ProductList)
                 }
@@ -76,6 +85,20 @@ class OrderStatusAdminActivity : AppCompatActivity() {
     private fun onBindEvent() {
         binding.btnAccept.setOnClickListener {
             orderVM.acceptOrder(orderID)
+            profileVM.getUserByID(userID).observe(this){
+                if(it != null){
+                    val notification = Notification(
+                        title = "Congratulation",
+                        body = "Your order $orderID has been accepted",
+                        priority = NotificationManager.IMPORTANCE_HIGH,
+                        type = 3,
+                        contentType = orderID.toString(),
+                        listToken = listOf(it.Token),
+                        listUser = listOf(it.UserID)
+                    )
+                    notificationVM.insertNotification(this,notification)
+                }
+            }
         }
         binding.btnChat.setOnClickListener {
             val intent = Intent(this,ChatActivity::class.java)
