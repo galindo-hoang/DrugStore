@@ -13,6 +13,7 @@ data class Notification(
     // 0: add product
     // 1: chat
     // 2: reminder
+    // 3: accept order
     var type:Int = 0,
     var contentType:String = "",
     var listToken: List<String> = listOf(),

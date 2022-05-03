@@ -39,7 +39,7 @@ class AuthVM @Inject constructor(
 
     private suspend fun postConnect(context: BaseActivity, isNewUser: Boolean) {
         withContext(Dispatchers.Main) {
-            if(authService.findUserByID()?.Permission == 0){
+            if(authService.findCurrentUser()?.Permission == 0){
                 val intent = Intent(context, HomeActivity::class.java)
                 intent.putExtra("isNewUser", isNewUser)
                 context.startActivity(intent)

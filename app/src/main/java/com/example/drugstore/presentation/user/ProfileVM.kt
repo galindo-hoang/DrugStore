@@ -36,13 +36,13 @@ class ProfileVM @Inject constructor(
     }
 
     fun getCurrentUser() = liveData(Dispatchers.IO){
-        emit(authService.findUserByID())
+        emit(authService.findCurrentUser())
     }
 
     fun setupListAddress() {
         viewModelScope.launch {
             _listAddress.postValue(
-                authService.findUserByID()?.Address ?: listOf()
+                authService.findCurrentUser()?.Address ?: listOf()
             )
         }
     }
@@ -76,6 +76,10 @@ class ProfileVM @Inject constructor(
             }
             updateProfileActivity.hideProgressDialog()
         }
+    }
+
+    fun getUserByID(userID: String) = liveData(Dispatchers.IO) {
+        emit(authService.findUserByID(userID))
     }
 
 }

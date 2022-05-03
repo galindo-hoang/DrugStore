@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.drugstore.databinding.FragmentNotificationBinding
 import com.example.drugstore.presentation.adapter.NotificationAdapter
 import com.example.drugstore.presentation.home.ProductDetailActivity
+import com.example.drugstore.presentation.order.OrderStatusActivity
 import com.example.drugstore.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -45,10 +46,17 @@ class NotificationFragment : Fragment() {
 
     private fun onBindEvent(){
         notificationAdapter.onItemClick = {notification ->
-            if(notification.type == 0) {
-                val intent = Intent(context,ProductDetailActivity::class.java)
-                intent.putExtra(Constants.PRODUCT_ID,notification.contentType.toInt())
-                startActivity(intent)
+            when(notification.type){
+                0 -> {
+                    val intent = Intent(context,ProductDetailActivity::class.java)
+                    intent.putExtra(Constants.PRODUCT_ID,notification.contentType.toInt())
+                    startActivity(intent)
+                }
+                3 -> {
+                    val intent = Intent(context,OrderStatusActivity::class.java)
+                    intent.putExtra(Constants.ORDER_ID,notification.contentType)
+                    startActivity(intent)
+                }
             }
         }
     }
