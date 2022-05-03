@@ -103,15 +103,14 @@ class AuthService @Inject constructor(
     suspend fun addAddress(address: Address) =
         authRepo.getCurrentUserId()?.let { userRepo.addAddress(address, it) }
 
-    suspend fun getTokenFromUser(): List<String> {
+    suspend fun getUserHaveToken(): List<User> {
         return when(val result = userRepo.fetchAllUser()){
             is Result.Success -> {
-                val listToken: MutableList<String> = mutableListOf()
+                val listUser: MutableList<User> = mutableListOf()
                 for(i in result.data!!){
-                    if(i.Token != "" && i.UserID != authRepo.getCurrentUserId()) listToken.add(i.Token)
+                    if(i.Token != "" && i.UserID != authRepo.getCurrentUserId()) listUser.add(i)
                 }
-                Log.e("=====",listToken.toString())
-                listToken
+                listUser
             }
             else -> mutableListOf()
         }
