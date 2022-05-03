@@ -74,7 +74,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             app:boxStrokeColor="@color/colorAccent">
             <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/tvTitle"
+                android:id="@+id/tv_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
@@ -92,7 +92,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             app:boxStrokeColor="@color/colorAccent">
             <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/tvPhoneNumber"
+                android:id="@+id/tv_phone_number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"

@@ -80,4 +80,5 @@
     <string name="up_arrow">\u2191</string>
     <string name="zoom_in">+</string>
     <string name="zoom_out">-</string>
+    <string name="confirm">Confirm</string>
 </resources>

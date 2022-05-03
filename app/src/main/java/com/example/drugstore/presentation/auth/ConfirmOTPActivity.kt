@@ -38,7 +38,7 @@ class ConfirmOTPActivity : BaseActivity() {
 
         if (intent.hasExtra(Constants.PHONE_NUMBER)) {
             phoneNumber = intent.getStringExtra(Constants.PHONE_NUMBER)!!
-            binding.tvPhoneNumber.text = phoneNumber
+            binding.etPhoneNumber.text = phoneNumber
         }
         if (intent.hasExtra(Constants.VERIFICATION_ID)) verification =
             intent.getStringExtra(Constants.VERIFICATION_ID)!!

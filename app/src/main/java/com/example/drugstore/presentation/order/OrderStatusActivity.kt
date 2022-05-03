@@ -37,7 +37,7 @@ class OrderStatusActivity : AppCompatActivity() {
         orderID?.let { ID ->
             orderVM.getOrderByID(ID).observe(this){
                 if (it != null) {
-                    binding.tvPhoneNumber.text = it.Address.phoneNumber
+                    binding.etPhoneNumber.text = it.Address.phoneNumber
                     binding.tvAddress.text = it.Address.address
                     binding.tvOrderID.text = it.OrderID
                     binding.tvPayment.text = when(it.PaymentID){

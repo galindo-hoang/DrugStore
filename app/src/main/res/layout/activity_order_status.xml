@@ -81,7 +81,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/tvPhoneNumber"
+                    android:id="@+id/et_phone_number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="0812312321" />

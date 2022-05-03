@@ -16,9 +16,8 @@ import androidx.core.content.ContextCompat
 import com.example.drugstore.R
 import com.example.drugstore.databinding.FragmentAddressMapBinding
 import com.example.drugstore.presentation.utils.PermissionUtils
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.*
+import com.google.android.gms.maps.model.LatLng
 
 class AddressMapFragment :
     Fragment(),
@@ -32,6 +31,9 @@ class AddressMapFragment :
 
     private var permissionDenied = false
     private lateinit var mGoogleMap: GoogleMap
+
+    private var _viewModel: AddressListVM? = null
+    val viewModel get() = _viewModel!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,7 +49,25 @@ class AddressMapFragment :
             .findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment!!.getMapAsync(this)
 
+        observeViewModel()
+
         return view
+    }
+
+    fun moveCamera(lat: Double, long: Double) {
+        mGoogleMap.moveCamera(
+            CameraUpdateFactory.newLatLng(
+                LatLng(lat, long)
+            )
+        )
+    }
+
+    private fun observeViewModel() {
+        binding.run {
+            viewModel.addressText.observe(viewLifecycleOwner) {
+                address.setText(it)
+            }
+        }
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -171,13 +191,15 @@ class AddressMapFragment :
             .show(childFragmentManager, "dialog")
     }
 
+    override fun onCameraIdle() {
+        viewModel.setAddress(mGoogleMap.cameraPosition.target)
+    }
+
     companion object {
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1
 
-        fun newInstance() = AddressMapFragment()
-    }
-
-    override fun onCameraIdle() {
-        Log.d("HAGL", mGoogleMap.cameraPosition.target.toString())
+        fun newInstance(addressListVM: AddressListVM) = AddressMapFragment().apply {
+            _viewModel = addressListVM
+        }
     }
 }

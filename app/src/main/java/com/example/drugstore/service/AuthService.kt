@@ -97,11 +97,6 @@ class AuthService @Inject constructor(
 
     suspend fun findUserByID() = authRepo.getCurrentUserId()?.let { userRepo.fetchUserByID(it) }
 
-    suspend fun updateUser(dataUser: HashMap<String, Any>) =
-        authRepo.getCurrentUserId()?.let { userRepo.updateUser(it, dataUser) }
-
-    suspend fun addAddress(address: Address) =
-        authRepo.getCurrentUserId()?.let { userRepo.addAddress(address, it) }
 
     suspend fun getUserHaveToken(): List<User> {
         return when(val result = userRepo.fetchAllUser()){

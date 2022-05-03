@@ -23,7 +23,7 @@ class UserRepo @Inject constructor() {
             val document = collection.document(Id).get().await()
             document.toObject(User::class.java)
         } catch (e: Exception) {
-            Log.e("Repository--User",e.message.toString())
+            Log.e("Repository--User", e.message.toString())
             null
         }
     }
@@ -39,32 +39,46 @@ class UserRepo @Inject constructor() {
         return result
     }
 
-    suspend fun updateUser(ID:String, dataUser: HashMap<String,Any>): Result<Boolean> = withContext(Dispatchers.IO){
-        try {
-            collection.document(ID).update(dataUser).await()
-            Result.Success(true)
-        }catch (e:Exception){
-            Result.Error(e.message.toString(),false)
+    suspend fun updateUser(ID: String, dataUser: HashMap<String, Any>): Result<Boolean> =
+        withContext(Dispatchers.IO) {
+            try {
+                collection.document(ID).update(dataUser).await()
+                Result.Success(true)
+            } catch (e: Exception) {
+                Result.Error(e.message.toString(), false)
+            }
         }
-    }
 
-    suspend fun fetchAllUser(): Result<List<User>> = withContext(Dispatchers.IO){
+    suspend fun fetchAllUser(): Result<List<User>> = withContext(Dispatchers.IO) {
         try {
             val documents = collection.get().await()
             val result = mutableListOf<User>()
-            for(i in documents) result.add(i.toObject(User::class.java))
+            for (i in documents) result.add(i.toObject(User::class.java))
             Result.Success(result)
-        }catch (e: Exception) {
-            Result.Error(e.message.toString(),null)
+        } catch (e: Exception) {
+            Result.Error(e.message.toString(), null)
         }
     }
 
-    suspend fun addAddress(address: Address, currentUserId: String):Boolean = withContext(Dispatchers.IO) {
-        try {
-            collection.document(currentUserId).update(Constants.USER_ADDRESS,FieldValue.arrayUnion(address)).await()
+    suspend fun addAddress(address: Address, currentUserId: String): Boolean =
+        withContext(Dispatchers.IO) {
+            try {
+                collection.document(currentUserId)
+                    .update(Constants.USER_ADDRESS, FieldValue.arrayUnion(address)).await()
+                true
+            } catch (e: Exception) {
+                Log.e("Repository--User", e.message.toString())
+                false
+            }
+        }
+
+    suspend fun updateAddresses(newList: MutableList<Address>, currentUserId: String): Boolean {
+        return try {
+            collection.document(currentUserId)
+                .update(Constants.USER_ADDRESS, newList).await()
             true
-        }catch (e:Exception){
-            Log.e("Repository--User",e.message.toString())
+        } catch (e: Exception) {
+            Log.e("Repository--User", e.message.toString())
             false
         }
     }

@@ -36,7 +36,7 @@
             app:layout_constraintEnd_toStartOf="@id/ib">
 
             <TextView
-                android:id="@+id/tvTitle"
+                android:id="@+id/tv_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Nhà"
@@ -45,7 +45,7 @@
                 android:textColor="@color/primary_text_color"/>
 
             <TextView
-                android:id="@+id/tvPhoneNumber"
+                android:id="@+id/tv_phone_number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="0908989898"
