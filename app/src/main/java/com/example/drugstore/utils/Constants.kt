@@ -6,8 +6,17 @@ import android.content.pm.PackageManager
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
+import android.os.StrictMode
+import android.util.Log
 import androidx.core.app.ActivityCompat
+import com.android.volley.AuthFailureError
+import com.android.volley.Response
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.Volley
+import org.json.JSONException
+import org.json.JSONObject
 import java.util.*
+
 
 object Constants {
 
@@ -18,6 +27,7 @@ object Constants {
     const val PRODUCT_QUANTITY: String = "quantity"
     const val PRODUCT_PRICE: String = "price"
     const val PRODUCT_NAME: String = "proName"
+    const val PRODUCT_NUTRITION_LIST: String = "nutritionList"
 
 
     const val BIRTH_DATE: String = "birthday"
@@ -76,4 +86,60 @@ object Constants {
     fun getNotificationId(): Int {
         return Date().time.toInt()
     }
+
+
+
+    var remoteMsgHeaders:HashMap<String,String> = hashMapOf(
+        "Authorization" to "key=AAAAqYRpWb0:APA91bEfISCx8Sv35Xff-TK0XXctShJ-y5DNY2MPF3GkCHWSPSPuojLwuD87cTiBZOFu7Ulkjjzip8fAcxGwsDS0CUjIoLAceffK2MiTp45VBLoejBSGX-nC0b1VVl5LfM1-qku4357z",
+        "Content-Type" to "application/json")
+
+    const val BASE_URL_MESS = "https://fcm.googleapis.com/fcm/send"
+
+    fun pushNotification(context: Context, token: String, title: String, body: String, proID: Int){
+        val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
+        StrictMode.setThreadPolicy(policy)
+
+        val queue = Volley.newRequestQueue(context)
+
+        Log.e("+++++++",title)
+        Log.e("+++++++",body)
+
+        try {
+            val json = JSONObject()
+            json.put("to",token)
+            val notification = JSONObject()
+            notification.put("title",title)
+            notification.put("body",body)
+            notification.put("icon","https://drugicon.cc/wp-content/uploads/2020/09/cropped-cropped-drugicon-1.png")
+            notification.put("click_action",proID.toString())
+
+
+            json.put("notification",notification)
+
+            val req: JsonObjectRequest = object : JsonObjectRequest(
+                Method.POST,
+                BASE_URL_MESS,
+                json,
+                Response.Listener { response -> Log.e("FCM", response.toString()) }, Response.ErrorListener {
+                    error ->
+                    error.message?.let { Log.e("====", it) }
+                }) {
+                /**
+                 * Passing some request headers
+                 */
+                @Throws(AuthFailureError::class)
+                override fun getHeaders(): Map<String, String> {
+                    return remoteMsgHeaders
+                }
+            }
+
+            queue.add(req)
+
+
+        }catch (e:JSONException){
+            e.printStackTrace()
+        }
+    }
+
+
 }

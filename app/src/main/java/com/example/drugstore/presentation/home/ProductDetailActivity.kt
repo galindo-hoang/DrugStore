@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.drugstore.R
@@ -22,6 +23,7 @@ class ProductDetailActivity : BaseActivity() {
     private var cartProduct: CartProduct? = null
     private var product: Product = Product()
     private var productID: Int = -1
+    private var maxQuantity = true
     private lateinit var binding: ActivityProductDetailBinding
 
     @Inject
@@ -61,8 +63,10 @@ class ProductDetailActivity : BaseActivity() {
         }
 
         binding.btnAdd.setOnClickListener {
-            if(cartProduct == null) cartVM.insertProduct(product)
-            else cartVM.increaseQuantityProduct(cartProduct!!.Quantity,product.ProID)
+            if(!maxQuantity){
+                if(cartProduct == null) cartVM.insertProduct(product)
+                else cartVM.increaseQuantityProduct(cartProduct!!.Quantity,product.ProID)
+            }else Toast.makeText(this,"Product out of stock",Toast.LENGTH_SHORT).show()
         }
 
         binding.btnCartTop.setOnClickListener {
@@ -101,9 +105,11 @@ class ProductDetailActivity : BaseActivity() {
         cartVM.getProductById(product.ProID).observe(this){
             cartProduct = it
             if(it != null){
+                maxQuantity = it.Quantity >= product.Quantity
                 binding.tvProductQuantityInCart.text = it.Quantity.toString()
                 binding.tvSumPrice.text = DecimalFormat("##,###").format(it.Quantity*product.Price.toDouble())
             }else{
+                maxQuantity = product.Quantity == 0
                 binding.tvProductQuantityInCart.text = "0"
                 binding.tvSumPrice.text = DecimalFormat("##,###").format(product.Price.toDouble())
             }

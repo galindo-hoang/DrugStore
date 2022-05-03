@@ -2,7 +2,6 @@ package com.example.drugstore.service
 
 import com.example.drugstore.data.models.Order
 import com.example.drugstore.data.repository.OrderRepo
-import java.util.HashMap
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -15,4 +14,5 @@ class OrderService @Inject constructor(
     suspend fun fetchOrderByUser(ID: String,status:Boolean) = orderRepo.fetchOrderByUser(ID,status)
     suspend fun fetchAllOrder() = orderRepo.fetchAllOrder()
     suspend fun acceptOrder(orderID: String?, dataUpdate: HashMap<String, Any>) = orderRepo.acceptOrder(orderID,dataUpdate)
+    suspend fun fetchOrdersByProduct(name: String) = orderRepo.fetchOrdersByProduct(name)
 }

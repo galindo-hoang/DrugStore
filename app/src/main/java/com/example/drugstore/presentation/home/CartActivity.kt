@@ -42,8 +42,8 @@ class CartActivity : AppCompatActivity() {
             it.forEach { i ->
                 sum += i.Quantity*i.Price
             }
-            binding.tvRawPrice.text = DecimalFormat("##,###").format(sum)
-            binding.tvSumPrice.text = DecimalFormat("##,###").format(sum)
+            binding.tvRawPrice.text = DecimalFormat("##,###").format(sum) + " VNĐ"
+            binding.tvSumPrice.text = DecimalFormat("##,###").format(sum) +" VNĐ"
         }
         binding.rcViewCart.adapter = cartAdapter
         binding.rcViewCart.layoutManager = LinearLayoutManager(this)

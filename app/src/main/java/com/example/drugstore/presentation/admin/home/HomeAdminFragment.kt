@@ -7,7 +7,9 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.drugstore.databinding.FragmentHomeAdminBinding
+import com.example.drugstore.presentation.adapter.CategoryAdminAdapter
 import com.example.drugstore.presentation.adapter.ProductAdapter
+import com.example.drugstore.presentation.home.CategoryVM
 import com.example.drugstore.presentation.home.ProductVM
 import com.example.drugstore.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,6 +20,9 @@ class HomeAdminFragment : Fragment() {
     private lateinit var binding:FragmentHomeAdminBinding
     @Inject
     lateinit var productVM: ProductVM
+
+    @Inject
+    lateinit var categoryVM: CategoryVM
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -34,6 +39,28 @@ class HomeAdminFragment : Fragment() {
         binding.rvSearch.adapter = productAdapter
         binding.rvSearch.layoutManager = GridLayoutManager(context,2,GridLayoutManager.VERTICAL,false)
 
+        //category
+        val adapterCate = CategoryAdminAdapter()
+        categoryVM.getAllCategories().observe(viewLifecycleOwner) {
+            if (it != null) {
+                adapterCate.setList(it)
+            }
+        }
+        //product filter
+        adapterCate.onItemClick = {category->
+            productVM.getListProductsByCategory(category.CatID).observe(viewLifecycleOwner) {
+                if (it != null) {
+                    productAdapter.setList(it)
+                }
+            }
+        }
+        //
+        binding.rcCategoryAdmin.adapter = adapterCate
+        binding.rcCategoryAdmin.layoutManager = GridLayoutManager(
+            context, 1,
+            GridLayoutManager.HORIZONTAL, false
+        )
+        //
         binding.etSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
@@ -66,7 +93,7 @@ class HomeAdminFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        productVM.getAllListProducts().observe(viewLifecycleOwner){
+        productVM.getListProductsByCategory(0).observe(viewLifecycleOwner) {
             if (it != null) {
                 (binding.rvSearch.adapter as ProductAdapter).setList(it)
             }

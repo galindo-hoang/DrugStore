@@ -8,6 +8,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.drugstore.R
 import com.example.drugstore.data.firebase.FirebaseClass
 import com.example.drugstore.data.models.Address
 import com.example.drugstore.data.models.CartProduct
@@ -73,6 +74,7 @@ class OrderActivity : BaseActivity() {
 
 
     private fun setUpOrder() {
+        this.showProgressDialog(resources.getString(R.string.please_wait))
         val payment = when{
             binding.rbCash.isChecked -> 0
             binding.rbVisa.isChecked -> 1
@@ -86,9 +88,14 @@ class OrderActivity : BaseActivity() {
             val order = Order(UserID = FirebaseClass.getCurrentUserId(), Address = currentAddress!!, Point = 0, PaymentID = payment, ProductList = listProduct)
             val intent = Intent(this,OrderStatusActivity::class.java)
             orderVM.insertOrder(order).observe(this){
-                intent.putExtra(Constants.ORDER_ID,it.toString())
-                startActivity(intent)
-                cartVM.deleteAll()
+                this.hideProgressDialog()
+                if(it != ""){
+                    intent.putExtra(Constants.ORDER_ID,it.toString())
+                    startActivity(intent)
+                    cartVM.deleteAll()
+                }else{
+                    Toast.makeText(this,"Cant order products",Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }

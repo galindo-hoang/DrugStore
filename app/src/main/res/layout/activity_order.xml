@@ -337,14 +337,18 @@
                 android:orientation="vertical"
                 app:layout_constraintGuide_end="16dp" />
 
+
+
+
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnOrder"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
-                android:background="@drawable/button_rounded"
-                android:backgroundTint="#FF03DAC5"
+                android:background="@drawable/solid_blue_button"
                 android:text="Order"
                 android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/guideline8"
                 app:layout_constraintStart_toStartOf="@+id/guideline7"

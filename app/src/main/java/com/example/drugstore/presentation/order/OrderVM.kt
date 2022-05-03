@@ -4,7 +4,9 @@ import android.util.Log
 import androidx.lifecycle.*
 import com.example.drugstore.data.models.Order
 import com.example.drugstore.service.OrderService
-import com.example.drugstore.utils.*
+import com.example.drugstore.service.ProductService
+import com.example.drugstore.utils.Constants
+import com.example.drugstore.utils.Result
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -13,6 +15,7 @@ import javax.inject.Inject
 
 class OrderVM @Inject constructor(
     private val orderService: OrderService,
+    private val productService: ProductService,
     private val firebaseAuth: FirebaseAuth
 ): ViewModel() {
     private val _statusOrder: MutableLiveData<Boolean> = MutableLiveData(false)
@@ -54,6 +57,33 @@ class OrderVM @Inject constructor(
     }
 
     fun insertOrder(order: Order) = liveData(Dispatchers.IO) {
+        var cur = -1
+        for (i in 0 until order.ProductList.size){
+            val product = productService.fetchProductByID(order.ProductList[i].ProID)
+            if (product != null) {
+                if(productService.updateProduct(
+                    order.ProductList[i].ProID.toString(),
+                    hashMapOf(Constants.PRODUCT_QUANTITY to product.Quantity - order.ProductList[i].Quantity)
+                ).data == false) {
+                    cur = i
+                    break
+                }
+            }else {
+                cur = i
+                break
+            }
+        }
+        if(cur != -1){
+            for(i in 0 until cur){
+                val product = productService.fetchProductByID(order.ProductList[i].ProID)
+                productService.updateProduct(
+                    order.ProductList[i].ProID.toString(),
+                    hashMapOf(Constants.PRODUCT_QUANTITY to product!!.Quantity + order.ProductList[i].Quantity)
+                )
+            }
+            emit("")
+        }
+
         when(val result = orderService.insertOrder(order)){
             is Result.Success -> {
                 emit(result.data.toString())
@@ -71,6 +101,16 @@ class OrderVM @Inject constructor(
             dataUpdate[Constants.PRODUCT_STATUS] = true
             dataUpdate[Constants.PRODUCT_DATE_RECEIVE] = Date()
             _statusOrder.postValue(orderService.acceptOrder(orderID, dataUpdate))
+        }
+    }
+
+    fun getOrdersByProduct(name: String) = liveData(Dispatchers.IO){
+        when(val result = orderService.fetchOrdersByProduct(name)){
+            is Result.Success -> emit(result.data)
+            else -> {
+                emit(result.data)
+                result.message?.let { Log.e("ViewModel--Order", it) }
+            }
         }
     }
 }

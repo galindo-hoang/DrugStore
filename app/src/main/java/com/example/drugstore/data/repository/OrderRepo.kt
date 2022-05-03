@@ -6,9 +6,10 @@ import com.example.drugstore.utils.Constants
 import com.example.drugstore.utils.Result
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
-import java.util.HashMap
+import kotlinx.coroutines.withContext
+import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -74,6 +75,25 @@ class OrderRepo @Inject constructor() {
         }catch (e:Exception){
             Log.e("Order==Repo",e.message.toString())
             false
+        }
+    }
+
+    suspend fun fetchOrdersByProduct(name: String): Result<List<Order>> = withContext(Dispatchers.IO) {
+        try {
+            val documents = collection.get().await()
+            val result: MutableList<Order> = mutableListOf()
+            for (i in documents){
+                val model = i.toObject(Order::class.java)
+                for(j in model.ProductList) {
+                    if (j.ProName.lowercase(Locale.getDefault()).contains(name)) {
+                        result.add(model)
+                        break
+                    }
+                }
+            }
+            Result.Success(result)
+        }catch (e:Exception){
+            Result.Error(e.message.toString(),null)
         }
     }
 }

@@ -21,5 +21,6 @@ data class User(
     // 2: Admin
     var Permission: Int = 0,
     // list of productID
-    var FavoriteProducts: ArrayList<Int> = arrayListOf()
+    var FavoriteProducts: ArrayList<Int> = arrayListOf(),
+    var Token: String = ""
 )
