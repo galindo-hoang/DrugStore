@@ -9,6 +9,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.Settings
+import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.activity.result.ActivityResultLauncher
@@ -231,7 +232,8 @@ class AddProductActivity : BaseActivity() {
                     val data: Intent? = result.data
                     if (data != null) {
                         try {
-                            if (update) dataProduct[Constants.USER_URL_IMAGE] = data.data.toString()
+                            Log.i("alo",data.data.toString())
+                            if (update) dataProduct[Constants.PRODUCT_URL_IMAGE] = data.data.toString()
                             else product.ProImage = data.data.toString()
                             Glide
                                 .with(this)
