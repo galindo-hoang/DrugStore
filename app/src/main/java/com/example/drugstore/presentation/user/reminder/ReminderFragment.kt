@@ -8,15 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.drugstore.R
 import com.example.drugstore.databinding.FragmentReminderBinding
+import com.example.drugstore.presentation.adapter.PrescriptionAdapter
 import com.example.drugstore.presentation.home.HomeActivity
 
 class ReminderFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
     private var _binding: FragmentReminderBinding? = null
     private val binding get() = _binding!!
+    private lateinit var adapter: PrescriptionAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,11 +23,24 @@ class ReminderFragment : Fragment() {
         _binding = FragmentReminderBinding.inflate(inflater, container, false)
         val view = binding.root
         bindComponents()
+        observeViewModel()
         return view
+    }
+
+    private fun observeViewModel() {
+        adapter = PrescriptionAdapter().apply {
+
+        }
+
+
     }
 
     private fun bindComponents() {
         binding.run {
+            btnAdd.setOnClickListener {
+                val activity = requireActivity() as PrescriptionActivity
+                activity.replaceFragment(NewPrescriptionFragment())
+            }
             btnBack.setOnClickListener {
                 back()
             }

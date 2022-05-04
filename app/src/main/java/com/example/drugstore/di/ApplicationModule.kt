@@ -41,7 +41,8 @@ object ApplicationModule {
     fun provideFirebaseAuth(): FirebaseAuth = FirebaseAuth.getInstance()
 
     @Provides
-    fun provideFirebaseDatabase(): FirebaseDatabase = FirebaseDatabase.getInstance("https://drugstore-bda06-default-rtdb.asia-southeast1.firebasedatabase.app/")
+    fun provideFirebaseDatabase(): FirebaseDatabase =
+        FirebaseDatabase.getInstance("https://drugstore-bda06-default-rtdb.asia-southeast1.firebasedatabase.app/")
 
     @Provides
     fun provideFirebaseClass(googleSignInClient: GoogleSignInClient): FirebaseClass =
@@ -53,7 +54,7 @@ object ApplicationModule {
         Room.databaseBuilder(
             context,
             MedicineDatabase::class.java, "MedicineDatabase"
-        ).build()
+        ).fallbackToDestructiveMigration().build()
 
     @Provides
     fun providePrescriptionDao(medicineDatabase: MedicineDatabase): PrescriptionDao =

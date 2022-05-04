@@ -8,6 +8,7 @@ import com.example.drugstore.data.mapper.PrescriptionMapper
 import com.example.drugstore.data.models.Category
 import com.example.drugstore.data.models.Prescription
 import com.example.drugstore.data.models.Product
+import com.example.drugstore.data.repository.AuthRepo
 import com.example.drugstore.data.repository.CategoryRepo
 import com.example.drugstore.data.repository.PrescriptionRepo
 import com.example.drugstore.data.repository.ProductRepo
@@ -23,7 +24,8 @@ class PrescriptionService @Inject constructor(
     private val prescriptionRepo: PrescriptionRepo,
     private val prescriptionDao: PrescriptionDao,
     private val prescriptionDetailDao: PrescriptionDetailDao,
-    private val prescriptionMapper: PrescriptionMapper
+    private val prescriptionMapper: PrescriptionMapper,
+    private val authRepo: AuthRepo
 ) {
     suspend fun getPrescriptionDto(): Result<PrescriptionDto> {
         val prescription = prescriptionDao.getPrescription()
@@ -51,12 +53,14 @@ class PrescriptionService @Inject constructor(
     suspend fun checkExists() = prescriptionDao.getPrescription().isEmpty()
 
     suspend fun updatePrescription(
+        newName: String?,
         startDate: Date?,
         endDate: Date?,
         time: Pair<Int, Int>?
     ): Result<Long> {
         val rowId = prescriptionDao.insertProduct(
             PrescriptionDto().also { prescription ->
+                newName?.let { prescription.name = it }
                 startDate?.let { prescription.startDate = it }
                 endDate?.let { prescription.endDate = it }
                 time?.let {
@@ -157,9 +161,12 @@ class PrescriptionService @Inject constructor(
         val prescription = prescriptionMapper.toEntity(prescriptionDto.data)
 
         return try {
-            val prescriptionId = prescriptionRepo.insertPrescription(prescription)
+            authRepo.getCurrentUserId()?.let {
+                prescription.userId = it
+                val prescriptionId = prescriptionRepo.insertPrescription(prescription)
 
-            Result.Success(prescriptionId)
+                Result.Success(prescriptionId)
+            } ?: Result.Error("Unauthenticated")
         } catch (e: Exception) {
             Result.Error("Failed to save prescription")
         }
@@ -186,5 +193,16 @@ class PrescriptionService @Inject constructor(
     suspend fun clearLocal() {
         prescriptionDao.deleteAll()
         prescriptionDetailDao.deleteAll()
+    }
+
+    suspend fun getAllPrescriptions(): Result<List<Prescription>> {
+        return authRepo.getCurrentUserId()?.let { userId ->
+            try {
+                val prescriptions = prescriptionRepo.getAllPrescriptions(userId)
+                Result.Success(prescriptions)
+            } catch (e: Exception) {
+                Result.Error(e.message.toString())
+            }
+        } ?: Result.Error("Unauthenticated")
     }
 }

@@ -22,12 +22,14 @@ class ReminderDetailVM @Inject constructor(
     @ActivityContext private val context: Context,
     private val prescriptionService: PrescriptionService
 ) : ViewModel() {
+    private val _name: MutableLiveData<String> = MutableLiveData()
     private val _startDate: MutableLiveData<Date> = MutableLiveData(Date())
     private val _endDate: MutableLiveData<Date> = MutableLiveData(Date())
     private val _time: MutableLiveData<Pair<Int, Int>> = MutableLiveData(Pair(0, 0))
     private val _prescriptionDetails: MutableLiveData<MutableList<PrescriptionDetail>> =
         MutableLiveData()
 
+    val name: LiveData<String> get() = _name
     val startDate: LiveData<Date> get() = _startDate
     val endDate: LiveData<Date> get() = _endDate
     val time: LiveData<Pair<Int, Int>> get() = _time
@@ -39,7 +41,8 @@ class ReminderDetailVM @Inject constructor(
             prescriptionService.getPrescription(id, includeAll = true)
                 .run {
                     if (this is Result.Success) {
-                        _startDate.postValue(data!!.startDate!!)
+                        _name.postValue(data!!.name!!)
+                        _startDate.postValue(data.startDate!!)
                         _endDate.postValue(data.endDate!!)
                         _time.postValue(
                             Pair(

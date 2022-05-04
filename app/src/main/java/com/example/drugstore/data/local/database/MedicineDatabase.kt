@@ -9,7 +9,7 @@ import com.example.drugstore.data.local.dao.PrescriptionDetailDao
 import com.example.drugstore.data.local.dto.PrescriptionDetailDto
 import com.example.drugstore.data.local.dto.PrescriptionDto
 
-@Database(entities = [PrescriptionDto::class, PrescriptionDetailDto::class], version = 1)
+@Database(entities = [PrescriptionDto::class, PrescriptionDetailDto::class], version = 2)
 @TypeConverters(DateConverter::class)
 abstract class MedicineDatabase : RoomDatabase() {
     abstract fun prescriptionDao(): PrescriptionDao

@@ -80,9 +80,10 @@ class NewPrescriptionVM @Inject constructor(
         ).show()
     }
 
-    fun updatePrescription() {
+    fun updatePrescription(newName: String) {
         viewModelScope.launch(Dispatchers.IO) {
             prescriptionService.updatePrescription(
+                newName,
                 _startDate.value,
                 _endDate.value,
                 _time.value

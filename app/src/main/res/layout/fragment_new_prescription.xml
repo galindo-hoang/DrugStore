@@ -53,7 +53,7 @@
 
         <androidx.cardview.widget.CardView
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="match_parent"
             android:layout_marginEnd="20dp"
             android:backgroundTint="@color/white"
@@ -66,6 +66,7 @@
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/etName"
+                android:textAlignment="textEnd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/transparent"

@@ -14,6 +14,7 @@ class PrescriptionMapper @Inject constructor(
         prescriptionDto: PrescriptionDto,
     ): Prescription =
         Prescription(
+            name = prescriptionDto.name,
             startDate = prescriptionDto.startDate,
             endDate = prescriptionDto.endDate,
             time = mapOf(
