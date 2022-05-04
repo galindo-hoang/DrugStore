@@ -60,6 +60,10 @@ class NewPrescriptionFragment : Fragment() {
             ).format(startDate)
         }
 
+        prescriptionVM.name.observe(viewLifecycleOwner) { name ->
+            binding.etName.setText(name)
+        }
+
         prescriptionVM.endDate.observe(viewLifecycleOwner) { endDate ->
             binding.textViewContentEndDate.text = SimpleDateFormat(
                 "dd-MM-yyyy",
