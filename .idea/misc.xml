@@ -56,6 +56,7 @@
         <entry key="..\:/ProjectApp/DrugStore/drug/DrugStore/app/src/main/res/layout/activity_order_status_admin.xml" value="0.1" />
         <entry key="..\:/ProjectApp/DrugStore/drug/DrugStore/app/src/main/res/layout/activity_update_profile.xml" value="0.12360688956433637" />
         <entry key="..\:/ProjectApp/DrugStore/drug/DrugStore/app/src/main/res/layout/fragment_chat_admin.xml" value="0.1" />
+        <entry key="..\:/ProjectApp/DrugStore/drug/DrugStore/app/src/main/res/layout/fragment_notification.xml" value="0.1" />
         <entry key="..\:/ProjectApp/DrugStore/drug/DrugStore/app/src/main/res/layout/fragment_order.xml" value="0.1" />
         <entry key="..\:/ProjectApp/DrugStore/drug/DrugStore/app/src/main/res/layout/fragment_order_admin.xml" value="0.1" />
         <entry key="..\:/ProjectApp/DrugStore/drug/DrugStore/app/src/main/res/layout/fragment_order_history.xml" value="0.1" />
@@ -66,7 +67,7 @@
         <entry key="..\:/ProjectApp/DrugStore/drug/DrugStore/app/src/main/res/layout/fragment_profile_setting_admin.xml" value="0.1" />
         <entry key="..\:/ProjectApp/DrugStore/drug/DrugStore/app/src/main/res/layout/fragment_reminder.xml" value="0.12360688956433637" />
         <entry key="..\:/ProjectApp/DrugStore/drug/DrugStore/app/src/main/res/layout/item_admin_category.xml" value="0.1" />
-        <entry key="..\:/ProjectApp/DrugStore/drug/DrugStore/app/src/main/res/layout/item_notification.xml" value="0.1" />
+        <entry key="..\:/ProjectApp/DrugStore/drug/DrugStore/app/src/main/res/layout/item_notification.xml" value="0.264" />
         <entry key="..\:/ProjectApp/DrugStore/drug/DrugStore/app/src/main/res/layout/item_order.xml" value="0.12360688956433637" />
         <entry key="..\:/ProjectApp/DrugStore/drug/DrugStore/app/src/main/res/layout/item_order_admin.xml" value="0.1" />
         <entry key="..\:/ProjectApp/DrugStore/drug/DrugStore/app/src/main/res/layout/item_product.xml" value="0.1" />
