@@ -9,6 +9,7 @@ import java.util.*
 data class PrescriptionDto(
     @PrimaryKey(autoGenerate = true)
     var id: Int = 1,
+    var name: String = "",
     var startDate: Date = Date(),
     var endDate: Date = Date(),
     var minutes: Int = 0,

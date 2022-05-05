@@ -10,11 +10,17 @@ import dagger.hilt.android.AndroidEntryPoint
 class PrescriptionActivity : BaseActivity() {
     private var _binding: ActivityPrescriptionBinding? = null
     private val binding get() = _binding!!
+    var fromActivity: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityPrescriptionBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        if (intent.getBooleanExtra(HOME, false)) {
+            fromActivity = HOME
+        }
+
         if (intent.getBooleanExtra(REMINDER_FRAGMENT, false)) {
             replaceFragment(ReminderFragment())
         } else {
@@ -30,5 +36,6 @@ class PrescriptionActivity : BaseActivity() {
 
     companion object {
         const val REMINDER_FRAGMENT = "RemindFragment"
+        const val HOME = "HOME"
     }
 }

@@ -60,6 +60,10 @@ class NewPrescriptionFragment : Fragment() {
             ).format(startDate)
         }
 
+        prescriptionVM.name.observe(viewLifecycleOwner) { name ->
+            binding.etName.setText(name)
+        }
+
         prescriptionVM.endDate.observe(viewLifecycleOwner) { endDate ->
             binding.textViewContentEndDate.text = SimpleDateFormat(
                 "dd-MM-yyyy",
@@ -115,12 +119,20 @@ class NewPrescriptionFragment : Fragment() {
                 prescriptionActivity.replaceFragment(RemindDrugFragment())
             }
             btnSave.setOnClickListener {
-                prescriptionVM.savePrescription(::onSavePrescriptionSuccess)
+                prescriptionVM.savePrescription(
+                    ::onSavePrescriptionSuccess
+                )
             }
             btnBack.setOnClickListener {
-                val intent = Intent(requireContext(), HomeActivity::class.java)
-                startActivity(intent)
-                requireActivity().finish()
+                val activity = requireActivity() as PrescriptionActivity
+                if (activity.fromActivity == PrescriptionActivity.HOME) {
+                    val intent =
+                        Intent(requireContext(), HomeActivity::class.java)
+                    startActivity(intent)
+                    requireActivity().finish()
+                } else {
+                    activity.replaceFragment(ReminderFragment())
+                }
             }
             rvMedicines.apply {
                 adapter = newPrescriptionAdapter
@@ -141,6 +153,8 @@ class NewPrescriptionFragment : Fragment() {
 
     override fun onPause() {
         super.onPause()
-        prescriptionVM.updatePrescription()
+        prescriptionVM.updatePrescription(
+            binding.etName.text.toString()
+        )
     }
 }

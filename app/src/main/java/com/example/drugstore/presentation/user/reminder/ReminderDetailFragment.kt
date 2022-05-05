@@ -58,6 +58,9 @@ class ReminderDetailFragment private constructor() : Fragment() {
             startDate.observe(viewLifecycleOwner) { date ->
                 binding.tvStartDate.text = SimpleDateFormat("dd-MM-yyyy").format(date)
             }
+            name.observe(viewLifecycleOwner) { name->
+                binding.tvName.text = name
+            }
             endDate.observe(viewLifecycleOwner) { date ->
                 binding.tvEndDate.text = SimpleDateFormat("dd-MM-yyyy").format(date)
             }

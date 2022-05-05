@@ -21,12 +21,14 @@ class NewPrescriptionVM @Inject constructor(
     @SuppressLint("StaticFieldLeak") @ActivityContext private val context: Context,
     private val prescriptionService: PrescriptionService
 ) : ViewModel() {
+    private val _name: MutableLiveData<String> = MutableLiveData()
     private val _startDate: MutableLiveData<Date> = MutableLiveData(Date())
     private val _endDate: MutableLiveData<Date> = MutableLiveData(Date())
     private val _time: MutableLiveData<Pair<Int, Int>> = MutableLiveData(Pair(0, 0))
     private val _prescriptionDetails: MutableLiveData<MutableList<PrescriptionDetailDto>> =
         MutableLiveData()
 
+    val name: LiveData<String> get() = _name
     val startDate: LiveData<Date> get() = _startDate
     val endDate: LiveData<Date> get() = _endDate
     val time: LiveData<Pair<Int, Int>> get() = _time
@@ -78,9 +80,10 @@ class NewPrescriptionVM @Inject constructor(
         ).show()
     }
 
-    fun updatePrescription() {
+    fun updatePrescription(newName: String) {
         viewModelScope.launch(Dispatchers.IO) {
             prescriptionService.updatePrescription(
+                newName,
                 _startDate.value,
                 _endDate.value,
                 _time.value

@@ -69,6 +69,7 @@ class HomeActivity : BaseActivity() {
                     this@HomeActivity,
                     PrescriptionActivity::class.java
                 )
+                intent.putExtra(PrescriptionActivity.HOME, true)
                 startActivity(intent)
                 finish()
             }
