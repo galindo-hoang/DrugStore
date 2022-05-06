@@ -43,19 +43,4 @@ class ReminderVM @Inject constructor(
             Toast.makeText(context, "Error: ${error}", Toast.LENGTH_LONG).show()
         }
     }
-
-    fun delete(prescription: Prescription) {
-        viewModelScope.launch(Dispatchers.IO) {
-            prescriptionService.deletePrescription(prescription.id!!).run {
-                if (this is Result.Success) {
-                    var value = _prescriptions.value!!.toMutableList()
-
-                    _prescriptions.postValue(
-                        value.filter { existPrescription -> existPrescription.id != prescription.id })
-                } else {
-                    showError(message.toString())
-                }
-            }
-        }
-    }
 }

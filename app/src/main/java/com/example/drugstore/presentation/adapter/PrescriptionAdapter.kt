@@ -10,7 +10,6 @@ import com.example.drugstore.data.models.PrescriptionDetail
 import com.example.drugstore.databinding.ItemAddressBinding
 import com.example.drugstore.databinding.ItemPrescriptionBinding
 import com.example.drugstore.databinding.ItemProfileAddressBinding
-import java.text.SimpleDateFormat
 
 class PrescriptionAdapter constructor(
     var onEditClick: ((Prescription) -> Unit)? = null,
@@ -42,23 +41,7 @@ class PrescriptionAdapter constructor(
     override fun onBindViewHolder(holder: AddressViewHolder, position: Int) {
         val model = list[position]
         holder.binding.tvName.text = model.name
-        val format = SimpleDateFormat("dd-MM-yyyy")
-
-        holder.binding.tvDate.text =
-            "${format.format(model.startDate)} - ${format.format(model.endDate)}"
-
-        var hour = "${model.time!!["hours"]}"
-        if (model.time["hours"]!! < 10) {
-            hour = "0${model.time["hours"]}"
-        }
-
-        var minute = "${model.time["minutes"]}"
-        if (model.time["minutes"]!! < 10) {
-            minute = "0${model.time["minutes"]}"
-        }
-
-        holder.binding.tvTime.text =
-            "${hour}:${minute}"
+        holder.binding.tvDate.text = "${model.startDate} - ${model.endDate}"
 
         holder.binding.btnEdit.setOnClickListener {
             onEditClick?.invoke(model)

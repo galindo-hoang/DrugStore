@@ -38,16 +38,8 @@ class PrescriptionRepo @Inject constructor() {
             .get()
             .await()
         val result: MutableList<Prescription> = mutableListOf()
-        for (i in document) {
-            val prescription = i.toObject(Prescription::class.java)
-            prescription.id = i.id
-            result.add(prescription)
-        }
+        for (i in document) result.add(i.toObject(Prescription::class.java))
 
         return result
-    }
-
-    suspend fun deletePrescription(id: String) {
-        collection.document(id).delete().await()
     }
 }

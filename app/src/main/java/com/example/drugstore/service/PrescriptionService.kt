@@ -205,13 +205,4 @@ class PrescriptionService @Inject constructor(
             }
         } ?: Result.Error("Unauthenticated")
     }
-
-    suspend fun deletePrescription(id: String): Result<Boolean> {
-        return try {
-            prescriptionRepo.deletePrescription(id)
-            Result.Success(true)
-        } catch (error: Exception) {
-            Result.Error(error.toString())
-        }
-    }
 }
